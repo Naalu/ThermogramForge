@@ -136,9 +136,17 @@ ENV/
 env.bak/
 venv.bak/
 
+# VS Code
+.vscode/
+
 # Spyder project settings
 .spyderproject
 .spyproject
+
+# Other IDE files
+.idea/
+*.swo
+*.swp
 
 # Rope project settings
 .ropeproject
@@ -160,12 +168,18 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
-
 # PyPI configuration file
 .pypirc
+
+# OS
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# Project Specific
+# Ignore the following files in the project root
+data/raw/
+data/processed/
+data/interim/
+data/external/
