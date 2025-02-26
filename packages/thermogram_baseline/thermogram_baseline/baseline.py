@@ -60,7 +60,11 @@ def auto_baseline(
 
     # Subtract baseline using detected endpoints
     baseline_result = subtract_baseline(
-        data=data, lower_temp=endpoints.lower, upper_temp=endpoints.upper, plot=plot
+        data=data,
+        lower_temp=endpoints.lower,
+        upper_temp=endpoints.upper,
+        method=point_selection,
+        plot=plot,
     )
 
     if verbose:

@@ -92,12 +92,17 @@ def test_detect_endpoints_input_validation():
     with pytest.raises(ValueError, match="Not enough data points"):
         detect_endpoints(small_data, window_size=30)
 
+    # Make a dataset with enough points for window size but wrong exclusion bounds
+    larger_data = ThermogramData(
+        temperature=np.linspace(50, 85, 100), dcp=np.random.normal(0, 0.1, 100)
+    )
+
     # Test exclusion bounds outside data range
     with pytest.raises(ValueError, match="Exclusion zone lower bound"):
-        detect_endpoints(small_data, exclusion_lower=40.0)
+        detect_endpoints(larger_data, window_size=30, exclusion_lower=40.0)
 
     with pytest.raises(ValueError, match="Exclusion zone upper bound"):
-        detect_endpoints(small_data, exclusion_upper=90.0)
+        detect_endpoints(larger_data, window_size=30, exclusion_upper=90.0)
 
 
 def test_detect_endpoints_with_multi_peak_thermogram():

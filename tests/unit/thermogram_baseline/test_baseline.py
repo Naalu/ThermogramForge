@@ -41,8 +41,8 @@ def test_auto_baseline_with_simple_thermogram():
 
     # Check grid properties
     assert len(result.data.temperature) == 451  # Default grid: 45 to 90 by 0.1
-    assert result.data.temperature[0] == 45.0
-    assert result.data.temperature[-1] == 90.0
+    assert np.isclose(result.data.temperature[0], 45.0)
+    assert np.isclose(result.data.temperature[-1], 90.0)
 
     # Check baseline subtraction effect
     # The peak should still be present in the processed data
@@ -91,8 +91,8 @@ def test_auto_baseline_with_custom_grid():
 
     # Check grid properties
     assert len(result.data.temperature) == 100
-    assert result.data.temperature[0] == 50.0
-    assert result.data.temperature[-1] == 85.0
+    assert np.isclose(result.data.temperature[0], 50.0)
+    assert np.isclose(result.data.temperature[-1], 85.0)
     assert np.allclose(result.data.temperature, custom_grid)
 
 

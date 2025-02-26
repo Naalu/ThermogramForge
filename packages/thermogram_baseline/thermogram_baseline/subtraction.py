@@ -1,6 +1,6 @@
 """Baseline subtraction algorithms for thermogram data."""
 
-from typing import Optional, Union
+from typing import Literal, Optional, Union
 
 import numpy as np
 import polars as pl
@@ -13,6 +13,7 @@ def subtract_baseline(
     data: Union[ThermogramData, pl.DataFrame],
     lower_temp: float,
     upper_temp: float,
+    method: Literal["innermost", "outmost", "mid"] = "innermost",
     smoothing_factor: Optional[float] = None,
     plot: bool = False,
 ) -> BaselineResult:
@@ -27,6 +28,7 @@ def subtract_baseline(
         data: Thermogram data to process
         lower_temp: Lower temperature endpoint for baseline
         upper_temp: Upper temperature endpoint for baseline
+        method: Method for selecting endpoints
         smoothing_factor: Optional smoothing factor for spline fitting
         plot: Whether to generate plots (will be implemented separately)
 
@@ -117,7 +119,7 @@ def subtract_baseline(
     subtracted = ThermogramData(temperature=temperatures, dcp=subtracted_values)
 
     # Create endpoints object
-    endpoints = Endpoints(lower=lower_temp, upper=upper_temp)
+    endpoints = Endpoints(lower=lower_temp, upper=upper_temp, method=method)
 
     # Return result
     return BaselineResult(

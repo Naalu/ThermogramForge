@@ -77,8 +77,8 @@ def test_interpolate_sample_with_baseline_result():
 
     # Check default grid properties
     assert len(result.data.temperature) == 451  # Default grid: 45 to 90 by 0.1
-    assert result.data.temperature[0] == 45.0
-    assert result.data.temperature[-1] == 90.0
+    assert np.isclose(result.data.temperature[0], 45.0)
+    assert np.isclose(result.data.temperature[-1], 90.0)
 
 
 def test_interpolate_sample_with_dataframe():
@@ -112,6 +112,6 @@ def test_interpolate_sample_with_custom_grid():
 
     # Check grid properties
     assert len(result.data.temperature) == 100
-    assert result.data.temperature[0] == 50.0
-    assert result.data.temperature[-1] == 85.0
+    assert np.isclose(result.data.temperature[0], 50.0)
+    assert np.isclose(result.data.temperature[-1], 85.0)
     assert np.allclose(result.data.temperature, custom_grid)
