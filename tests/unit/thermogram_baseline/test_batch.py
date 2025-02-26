@@ -134,6 +134,9 @@ def test_process_multiple_with_output_file():
             assert "sample1" in content
             assert "sample2" in content
 
+        # Check result structure
+        assert isinstance(result, BatchProcessingResult)
+
 
 def test_combine_results():
     """Test combining multiple results into a DataFrame."""
