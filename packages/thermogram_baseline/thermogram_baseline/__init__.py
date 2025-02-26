@@ -3,6 +3,7 @@
 __version__ = "0.1.0"
 
 from .detection import detect_endpoints
+from .subtraction import subtract_baseline
 from .types import (
     BaselineResult,
     BatchProcessingResult,
