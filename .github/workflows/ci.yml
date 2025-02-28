@@ -30,7 +30,6 @@ jobs:
       run: |
         source .venv/bin/activate
         uv pip install pytest pytest-cov ruff mypy
-        uv pip install -e .
         uv pip install -e packages/thermogram_baseline
         
     - name: Lint with ruff
