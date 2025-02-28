@@ -11,45 +11,46 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.12]  # Reduced to most relevant versions
+        python-version: [3.12]  # Keeping the latest version for testing
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
     
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-        
+
     - name: Install UV and create virtual environment
       run: |
         pip install uv
         uv venv
-        
+
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: .venv
+        key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
+        restore-keys: |
+          venv-${{ runner.os }}-${{ matrix.python-version }}-
+
     - name: Install dependencies
       run: |
-        source .venv/bin/activate
-        uv pip install pytest pytest-cov ruff mypy
         uv pip install -e ".[dev]"
-        uv pip install -e packages/thermogram_baseline
-        
-    - name: Lint with ruff
+
+    - name: Lint with Ruff
       run: |
-        source .venv/bin/activate
-        # Execute ruff with the full path to ensure it's found
-        python -m ruff check .
-        
+        uv pip run ruff check .
+
     - name: Type check with mypy
       run: |
-        source .venv/bin/activate
-        # Execute mypy with the full path to ensure it's found
-        python -m mypy --install-types --non-interactive .
-        
+        uv pip run mypy --install-types --non-interactive .
+
     - name: Test with pytest
       run: |
-        source .venv/bin/activate
-        python -m pytest --cov=packages/thermogram_baseline --cov-report=xml
-        
+        uv pip run pytest --cov=thermogram_baseline --cov-report=xml
+
     - name: Upload coverage report
       uses: codecov/codecov-action@v3
       with:
