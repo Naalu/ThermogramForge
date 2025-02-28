@@ -30,6 +30,7 @@ jobs:
       run: |
         source .venv/bin/activate
         uv pip install pytest pytest-cov ruff mypy
+        mypy --install-types --non-interactive
         uv pip install -e ".[dev]"
         uv pip install -e packages/thermogram_baseline
         
