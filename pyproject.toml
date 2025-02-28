@@ -32,6 +32,7 @@ dependencies = [
     "numpy>=1.26.0",
     "scipy>=1.12.0",
     "numba>=0.58.0",
+    "thermogram_baseline @ file:///${PROJECT_ROOT}/packages/thermogram_baseline"
 ]
 
 [project.optional-dependencies]
@@ -64,3 +65,6 @@ disallow_incomplete_defs = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = "test_*.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["packages"]

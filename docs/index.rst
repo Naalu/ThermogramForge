@@ -7,11 +7,21 @@ ThermogramForge is a Python toolkit for thermal biopsy data analysis, including 
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: User Documentation:
 
-   user/index
-   developer/index
-   maintenance/index
+   user/thermogram_baseline_guide
+
+.. toctree::
+   :maxdepth: 2
+   :caption: API Reference:
+
+   api/modules
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Developer Documentation:
+
+   developer/thermogram_baseline_dev_guide
 
 Indices and tables
 ==================
@@ -19,7 +29,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-.. Add your content using ``reStructuredText`` syntax. See the
-.. `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-.. documentation for details.

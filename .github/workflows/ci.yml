@@ -14,35 +14,55 @@ jobs:
         python-version: [3.12]
 
     steps:
-    - uses: actions/checkout@v3
-    
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-        
+
+    # Install UV before setting up virtual environment
     - name: Install UV
-      run: pip install uv
-        
+      run: |
+        pip install uv
+
+    # Create virtual environment using UV
+    - name: Create virtual environment
+      run: |
+        uv venv
+
+    # Ensure local package path is correctly referenced in pyproject.toml
+    - name: Fix local package path for Hatch
+      run: |
+        sed -i "s|file:///absolute/path/will/be/injected|file://$(pwd)/packages/thermogram_baseline|g" pyproject.toml
+
+    # Install dependencies using UV
     - name: Install dependencies
       run: |
-        uv pip install pytest pytest-cov
-        uv pip install -e .
-        
-    - name: Lint with ruff
+        uv pip install -e ".[dev]"
+
+    # Debug: Verify installed packages
+    - name: List installed packages
       run: |
-        uv pip install ruff
-        ruff check .
-        
-    - name: Type check with mypy
+        uv pip list
+
+    # Run Ruff for linting
+    - name: Lint with Ruff
       run: |
-        uv pip install mypy
-        mypy --install-types --non-interactive .
-        
+        uv pip ruff check .
+
+    # Run Mypy for type checking
+    - name: Type check with Mypy
+      run: |
+        uv pip mypy --install-types --non-interactive .
+
+    # Run tests with pytest
     - name: Test with pytest
       run: |
-        pytest --cov=./ --cov-report=xml
-        
+        uv pip pytest --cov=thermogram_baseline --cov-report=xml
+
+    # Upload test coverage report
     - name: Upload coverage report
       uses: codecov/codecov-action@v3
       with:
