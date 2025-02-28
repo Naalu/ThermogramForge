@@ -22,46 +22,56 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    # Install UV before setting up virtual environment
     - name: Install UV
       run: |
         pip install uv
 
-    - name: Cache dependencies
+    # Cache UV virtual environment for faster builds
+    - name: Cache UV virtual environment
       uses: actions/cache@v3
       with:
-        path: .venv
-        key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml', 'packages/thermogram_baseline/pyproject.toml') }}
+        path: .uv
+        key: uv-venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}
         restore-keys: |
-          venv-${{ runner.os }}-${{ matrix.python-version }}-
+          uv-venv-${{ runner.os }}-${{ matrix.python-version }}-
 
+    # Create virtual environment using UV
     - name: Create virtual environment
       run: |
         uv venv
 
+    # Ensure local package path is correctly referenced in pyproject.toml
     - name: Fix local package path for Hatch
       run: |
         sed -i "s|file:///absolute/path/will/be/injected|file://$(pwd)/packages/thermogram_baseline|g" pyproject.toml
 
+    # Install dependencies using UV
     - name: Install dependencies
       run: |
         uv pip install -e ".[dev]"
 
+    # Debug: Verify installed packages
     - name: List installed packages
       run: |
         uv pip list
 
+    # Run Ruff for linting
     - name: Lint with Ruff
       run: |
-        ruff check .
+        uv pip ruff check .
 
-    - name: Type check with mypy
+    # Run Mypy for type checking
+    - name: Type check with Mypy
       run: |
-        mypy --install-types --non-interactive .
+        uv pip mypy --install-types --non-interactive .
 
+    # Run tests with pytest
     - name: Test with pytest
       run: |
-        pytest --cov=thermogram_baseline --cov-report=xml
+        uv pip pytest --cov=thermogram_baseline --cov-report=xml
 
+    # Upload test coverage report
     - name: Upload coverage report
       uses: codecov/codecov-action@v3
       with:
