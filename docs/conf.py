@@ -5,7 +5,7 @@
 import os
 import sys
 
-import sphinx_rtd_theme
+import sphinx_rtd_theme  # type: ignore
 
 # -- Path setup --------------------------------------------------------------
 # Paths to the source code

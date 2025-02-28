@@ -5,8 +5,8 @@ from typing import Dict, Tuple, Union
 import numpy as np
 import polars as pl
 from scipy import signal as scipy_signal
-from statsmodels.tsa.arima.model import ARIMA
-from statsmodels.tsa.stattools import adfuller
+from statsmodels.tsa.arima.model import ARIMA  # type: ignore
+from statsmodels.tsa.stattools import adfuller  # type: ignore
 
 from .types import SignalDetectionResult, ThermogramData
 
