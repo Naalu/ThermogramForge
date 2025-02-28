@@ -27,15 +27,6 @@ jobs:
       run: |
         pip install uv
 
-    # Cache UV virtual environment for faster builds
-    - name: Cache UV virtual environment
-      uses: actions/cache@v3
-      with:
-        path: .uv
-        key: uv-venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}
-        restore-keys: |
-          uv-venv-${{ runner.os }}-${{ matrix.python-version }}-
-
     # Create virtual environment using UV
     - name: Create virtual environment
       run: |
