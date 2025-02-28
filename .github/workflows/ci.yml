@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.12]
+        python-version: [3.10, 3.11, 3.12]  # Reduced to most relevant versions
 
     steps:
     - uses: actions/checkout@v3
@@ -21,32 +21,34 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
         
-    - name: Install UV
-      run: pip install uv
-
-    - name: Create virtual environment
-      run: uv venv
+    - name: Install UV and create virtual environment
+      run: |
+        pip install uv
+        uv venv
         
     - name: Install dependencies
       run: |
-        . .venv/bin/activate
-        uv pip install pytest pytest-cov
-        uv pip install -e packages/thermogram_baseline
+        source .venv/bin/activate
+        uv pip install pytest pytest-cov ruff mypy
         uv pip install -e .
+        uv pip install -e packages/thermogram_baseline
         
     - name: Lint with ruff
       run: |
-        uv pip install ruff
-        ruff check .
+        source .venv/bin/activate
+        # Execute ruff with the full path to ensure it's found
+        python -m ruff check .
         
     - name: Type check with mypy
       run: |
-        uv pip install mypy
-        mypy --install-types --non-interactive .
+        source .venv/bin/activate
+        # Execute mypy with the full path to ensure it's found
+        python -m mypy --install-types --non-interactive .
         
     - name: Test with pytest
       run: |
-        pytest --cov=./ --cov-report=xml
+        source .venv/bin/activate
+        python -m pytest --cov=packages/thermogram_baseline --cov-report=xml
         
     - name: Upload coverage report
       uses: codecov/codecov-action@v3
