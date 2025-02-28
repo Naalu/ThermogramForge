@@ -4,7 +4,7 @@ from typing import Optional, Sequence, Union
 
 import numpy as np
 import polars as pl
-from scipy import interpolate
+from scipy import interpolate  # type: ignore
 
 from .types import BaselineResult, InterpolatedResult, ThermogramData
 
