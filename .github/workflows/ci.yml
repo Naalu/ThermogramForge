@@ -11,62 +11,57 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.12]  # Using a single version for now; add more if needed
+        python-version: [3.12]
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-    
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
 
-    # Install UV first
     - name: Install UV
       run: |
         pip install uv
 
-    # Cache virtual environment for faster builds
-    - name: Cache virtual environment
+    - name: Cache dependencies
       uses: actions/cache@v3
       with:
         path: .venv
         key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml', 'packages/thermogram_baseline/pyproject.toml') }}
         restore-keys: |
           venv-${{ runner.os }}-${{ matrix.python-version }}-
-          
-    # Create virtual environment
+
     - name: Create virtual environment
       run: |
         uv venv
 
-    # Ensure the virtual environment is activated before installing dependencies
+    - name: Fix local package path for Hatch
+      run: |
+        sed -i "s|file:///absolute/path/will/be/injected|file://$(pwd)/packages/thermogram_baseline|g" pyproject.toml
+
     - name: Install dependencies
       run: |
         uv pip install -e ".[dev]"
 
-    # Debugging: Check installed packages
     - name: List installed packages
       run: |
         uv pip list
 
-    # Run Ruff for linting
     - name: Lint with Ruff
       run: |
         ruff check .
 
-    # Run mypy for type checking
     - name: Type check with mypy
       run: |
         mypy --install-types --non-interactive .
 
-    # Run tests with pytest
     - name: Test with pytest
       run: |
         pytest --cov=thermogram_baseline --cov-report=xml
 
-    # Upload test coverage report
     - name: Upload coverage report
       uses: codecov/codecov-action@v3
       with:
