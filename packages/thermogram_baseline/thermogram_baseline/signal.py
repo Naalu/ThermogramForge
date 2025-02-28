@@ -17,21 +17,29 @@ def detect_signal(
     method: str = "peaks",
     verbose: bool = False,
 ) -> SignalDetectionResult:
-    """
-    Determine if a thermogram contains meaningful signal or just noise.
+    """Determine if a thermogram contains meaningful signal or just noise.
 
-    This function analyzes thermogram data to distinguish between:
-    - Meaningful signals representing actual thermal transitions
-    - Random noise or baseline fluctuations
+    This function analyzes thermogram data to distinguish between meaningful thermal
+    transitions and random noise/baseline fluctuations using various statistical methods.
 
     Args:
-        data: Thermogram data to analyze
-        threshold: Detection threshold (significance level)
-        method: Method for signal detection ('peaks', 'arima', or 'adf')
-        verbose: Whether to print progress information
+        data: Input thermogram data as ThermogramData object or polars DataFrame.
+        threshold: Statistical significance level for detection. Defaults to 0.05.
+        method: Signal detection algorithm to use:
+            - "peaks": Peak detection (most reliable, default)
+            - "arima": ARIMA model comparison
+            - "adf": Augmented Dickey-Fuller test
+        verbose: Whether to print progress information. Defaults to False.
 
     Returns:
-        SignalDetectionResult indicating whether the thermogram contains signal
+        SignalDetectionResult containing:
+            - is_signal: Boolean indicating presence of signal
+            - confidence: Confidence level in the detection (0-1)
+            - details: Dictionary with method-specific statistics
+
+    Raises:
+        ValueError: If method is not one of ["peaks", "arima", "adf"]
+        TypeError: If data is not ThermogramData or polars DataFrame
     """
     # Validate method before proceeding
     if method not in ["peaks", "arima", "adf"]:
@@ -90,17 +98,22 @@ def detect_signal(
 def _detect_signal_peaks(
     temps: np.ndarray, values: np.ndarray, threshold: float, verbose: bool
 ) -> Tuple[bool, float, Dict]:
-    """
-    Detect signal based on peak analysis.
+    """Detect signal using peak analysis algorithm.
+
+    Uses scipy.signal.find_peaks to identify significant peaks and analyzes their
+    characteristics to distinguish between signal and noise.
 
     Args:
-        temps: Temperature values
-        values: dCp values
-        threshold: Detection threshold
-        verbose: Whether to print details
+        temps: Array of temperature values.
+        values: Array of heat capacity (dCp) values.
+        threshold: Minimum peak prominence threshold.
+        verbose: Whether to print detection details.
 
     Returns:
-        Tuple of (is_signal, confidence, details)
+        tuple: Contains:
+            - bool: True if signal detected
+            - float: Confidence level (0-1)
+            - dict: Detection statistics including peak count and prominence
     """
     # Use scipy's find_peaks to detect peaks
     # The prominence parameter helps filter out noise
@@ -151,16 +164,24 @@ def _detect_signal_peaks(
 def _detect_signal_arima(
     diff_values: np.ndarray, threshold: float, verbose: bool
 ) -> Tuple[bool, float, Dict]:
-    """
-    Detect signal using ARIMA model.
+    """Detect signal using ARIMA model comparison.
+
+    Compares ARIMA models with and without differencing using AIC to determine
+    if structured signal is present.
 
     Args:
-        diff_values: First difference of thermogram values
-        threshold: Detection threshold
-        verbose: Whether to print details
+        diff_values: First difference of heat capacity values.
+        threshold: AIC difference threshold for signal detection.
+        verbose: Whether to print model comparison details.
 
     Returns:
-        Tuple of (is_signal, confidence, details)
+        tuple: Contains:
+            - bool: True if signal detected
+            - float: Confidence level (0-1)
+            - dict: Model comparison statistics including AIC values
+
+    Raises:
+        Exception: If ARIMA model fitting fails
     """
     try:
         # Fit ARIMA model with no additional differencing
@@ -212,16 +233,24 @@ def _detect_signal_arima(
 def _detect_signal_adf(
     diff_values: np.ndarray, threshold: float, verbose: bool
 ) -> Tuple[bool, float, Dict]:
-    """
-    Detect signal using Augmented Dickey-Fuller test.
+    """Detect signal using Augmented Dickey-Fuller test.
+
+    Combines ADF test with zero-crossing analysis to detect both single
+    and multi-peak signals in thermogram data.
 
     Args:
-        diff_values: First difference of thermogram values
-        threshold: Significance level threshold
-        verbose: Whether to print details
+        diff_values: First difference of heat capacity values.
+        threshold: P-value threshold for statistical significance.
+        verbose: Whether to print test statistics and results.
 
     Returns:
-        Tuple of (is_signal, confidence, details)
+        tuple: Contains:
+            - bool: True if signal detected
+            - float: Confidence level (0-1)
+            - dict: Test statistics and zero-crossing analysis results
+
+    Raises:
+        Exception: If ADF test fails
     """
     try:
         # Perform ADF test

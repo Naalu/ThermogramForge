@@ -17,23 +17,50 @@ def subtract_baseline(
     smoothing_factor: Optional[float] = None,
     plot: bool = False,
 ) -> BaselineResult:
-    """
-    Subtract baseline from thermogram data using the specified endpoints.
+    """Subtract baseline from thermogram data using specified endpoints.
 
-    This function first fits splines to the regions outside the endpoints,
-    then connects these regions with a straight line to create a complete
-    baseline, which is then subtracted from the original data.
+    This function performs baseline subtraction by:
+    1. Fitting splines to regions outside the endpoints
+    2. Connecting endpoints with a straight line
+    3. Subtracting the resulting baseline from original data
 
     Args:
-        data: Thermogram data to process
-        lower_temp: Lower temperature endpoint for baseline
-        upper_temp: Upper temperature endpoint for baseline
-        method: Method for selecting endpoints
-        smoothing_factor: Optional smoothing factor for spline fitting
-        plot: Whether to generate plots (will be implemented separately)
+        data: Input thermogram data as ThermogramData object or polars DataFrame.
+        lower_temp: Lower temperature endpoint for baseline (°C).
+        upper_temp: Upper temperature endpoint for baseline (°C).
+        method: Method for selecting endpoints:
+            - "innermost": Points closest to transition region
+            - "outmost": Points farthest from transition region
+            - "mid": Points in middle of candidate regions
+            Defaults to "innermost".
+        smoothing_factor: Spline smoothing parameter. If None, uses data length.
+            Defaults to None.
+        plot: Whether to generate diagnostic plots. Defaults to False.
 
     Returns:
-        BaselineResult containing original data, baseline, and subtracted result
+        BaselineResult containing:
+            - original: Original thermogram data
+            - baseline: Calculated baseline curve
+            - subtracted: Baseline-subtracted data
+            - endpoints: Endpoint temperatures used
+
+    Raises:
+        ValueError: If endpoints are outside data range
+        TypeError: If input data format is not supported
+
+    Examples:
+        >>> # Basic usage with DataFrame input
+        >>> result = subtract_baseline(data_df, lower_temp=55, upper_temp=85)
+        >>> subtracted_data = result.subtracted
+        >>>
+        >>> # With custom smoothing and plotting
+        >>> result = subtract_baseline(
+        ...     data=therm_data,
+        ...     lower_temp=50,
+        ...     upper_temp=80,
+        ...     smoothing_factor=100,
+        ...     plot=True
+        ... )
     """
     # Convert input to ThermogramData if it's a DataFrame
     if isinstance(data, pl.DataFrame):
@@ -135,16 +162,21 @@ def _fit_spline_to_region(
     values: np.ndarray,
     smoothing_factor: Optional[float] = None,
 ) -> interpolate.UnivariateSpline:
-    """
-    Fit a smoothing spline to a region of the thermogram.
+    """Fit a smoothing spline to a region of the thermogram.
 
     Args:
-        temperatures: Temperature values
-        values: dCp values
-        smoothing_factor: Optional smoothing factor
+        temperatures: Array of temperature values (°C).
+        values: Array of heat capacity (dCp) values.
+        smoothing_factor: Spline smoothing parameter. If None, uses length of data.
+            Defaults to None.
 
     Returns:
-        Fitted spline object
+        interpolate.UnivariateSpline: Fitted spline object for interpolation.
+
+    Notes:
+        - Data is automatically sorted by temperature if not already sorted
+        - Default smoothing uses len(temperatures) as factor
+        - Uses scipy.interpolate.UnivariateSpline for fitting
     """
     # Sort by temperature if not already sorted
     if not np.all(np.diff(temperatures) >= 0):
@@ -174,18 +206,25 @@ def _create_connecting_line(
     y2: float,
     x_points: np.ndarray,
 ) -> np.ndarray:
-    """
-    Create a straight line connecting two points evaluated at given x positions.
+    """Create a straight line connecting two points.
+
+    Calculates y-values for a line passing through (x1,y1) and (x2,y2)
+    evaluated at the specified x_points using linear interpolation.
 
     Args:
-        x1: x-coordinate of first point
-        y1: y-coordinate of first point
-        x2: x-coordinate of second point
-        y2: y-coordinate of second point
-        x_points: x-coordinates to evaluate the line at
+        x1: x-coordinate of first point.
+        y1: y-coordinate of first point.
+        x2: x-coordinate of second point.
+        y2: y-coordinate of second point.
+        x_points: Array of x-coordinates to evaluate line at.
 
     Returns:
-        y-values of the line at the requested x-coordinates
+        np.ndarray: y-values of the line at requested x_points.
+
+    Notes:
+        Uses equation y = mx + b where:
+        m = (y2-y1)/(x2-x1)
+        b = y1 - m*x1
     """
     # Linear function: y = m*x + b
     slope = (y2 - y1) / (x2 - x1)

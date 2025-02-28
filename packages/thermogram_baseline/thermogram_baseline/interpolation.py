@@ -15,21 +15,32 @@ def interpolate_sample(
     smoothing_factor: Optional[float] = None,
     plot: bool = False,
 ) -> InterpolatedResult:
-    """
-    Interpolate thermogram data onto a uniform temperature grid.
+    """Interpolate thermogram data onto a uniform temperature grid.
 
-    This function fits a smoothing spline to the data and evaluates it
-    at the points specified by grid_temp to create a uniformly spaced
-    representation of the thermogram.
+    Fits a smoothing spline to the input data and evaluates it at specified grid points
+    to create a uniformly spaced representation of the thermogram.
 
     Args:
-        data: Thermogram data to interpolate
-        grid_temp: Temperature grid for interpolation (default: 45 to 90 by 0.1)
-        smoothing_factor: Optional smoothing factor for the spline
-        plot: Whether to generate plots
+        data: Input data in one of these formats:
+            - ThermogramData: Direct thermogram data
+            - BaselineResult: Result from baseline subtraction
+            - pl.DataFrame: Raw data in DataFrame format
+        grid_temp: Temperature points for interpolation. If None, uses range
+            45 to 90 by 0.1. Defaults to None.
+        smoothing_factor: Spline smoothing parameter. If None, uses data length.
+            Defaults to None.
+        plot: Whether to generate diagnostic plots. Defaults to False.
 
     Returns:
-        InterpolatedResult containing the interpolated data
+        InterpolatedResult containing:
+            - data: Interpolated thermogram on uniform grid
+            - grid_temp: Temperature grid used
+            - original_data: Original input data if available
+            - baseline_result: Baseline subtraction result if available
+
+    Raises:
+        ValueError: If input data contains invalid values
+        TypeError: If input data format is not supported
     """
     # Handle different input types
     original_data = None
@@ -80,16 +91,15 @@ def _create_default_grid(
     max_temp: float = 90.0,
     step: float = 0.1,
 ) -> np.ndarray:
-    """
-    Create a default temperature grid for interpolation.
+    """Create a default temperature grid for interpolation.
 
     Args:
-        min_temp: Minimum temperature
-        max_temp: Maximum temperature
-        step: Temperature step size
+        min_temp: Minimum temperature value. Defaults to 45.0.
+        max_temp: Maximum temperature value. Defaults to 90.0.
+        step: Temperature increment between points. Defaults to 0.1.
 
     Returns:
-        NumPy array containing the temperature grid
+        np.ndarray: Evenly spaced temperature grid from min_temp to max_temp
     """
     return np.arange(min_temp, max_temp + step / 2, step)
 
@@ -99,16 +109,20 @@ def _fit_interpolation_spline(
     values: np.ndarray,
     smoothing_factor: Optional[float] = None,
 ) -> interpolate.UnivariateSpline:
-    """
-    Fit a smoothing spline for interpolation.
+    """Fit a smoothing spline for interpolation.
 
     Args:
-        temperatures: Temperature values
-        values: dCp values
-        smoothing_factor: Optional smoothing factor
+        temperatures: Array of temperature values.
+        values: Array of heat capacity (dCp) values.
+        smoothing_factor: Spline smoothing parameter. If None, uses length of data.
+            Defaults to None.
 
     Returns:
-        Fitted spline object
+        interpolate.UnivariateSpline: Fitted spline object for interpolation.
+
+    Notes:
+        - Data is automatically sorted by temperature if not already sorted
+        - Default smoothing factor is set to number of data points
     """
     # Sort by temperature if not already sorted
     if not np.all(np.diff(temperatures) >= 0):

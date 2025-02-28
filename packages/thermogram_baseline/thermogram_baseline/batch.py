@@ -23,26 +23,49 @@ def process_multiple(
     output_file: Optional[Union[str, Path]] = None,
     detect_signal: bool = False,
 ) -> BatchProcessingResult:
-    """
-    Process multiple thermograms in batch mode.
+    """Process multiple thermograms in batch mode with parallel processing support.
+
+    This function handles batch processing of multiple thermogram samples, supporting
+    both sequential and parallel processing modes. It can handle input data in
+    various formats and optionally save results to file.
 
     Args:
-        data: Multiple thermograms to process. Can be:
-            - Dictionary mapping sample IDs to ThermogramData objects
-            - Dictionary mapping sample IDs to DataFrames
-            - DataFrame with a column specifying sample IDs
-        window_size: Window size for endpoint detection
-        exclusion_lower: Lower bound of the exclusion window
-        exclusion_upper: Upper bound of the exclusion window
-        grid_temp: Temperature grid for interpolation
-        point_selection: Method for endpoint selection
-        verbose: Whether to print progress information
-        max_workers: Maximum number of parallel workers (None for auto)
-        output_file: Optional path to save results
-        detect_signal: Whether to perform signal detection
+        data: Input thermogram data in one of these formats:
+            - Dict[str, ThermogramData]: Sample IDs mapping to ThermogramData
+            - Dict[str, pl.DataFrame]: Sample IDs mapping to DataFrames
+            - pl.DataFrame: Single DataFrame with sample ID column
+        window_size: Size of sliding window for endpoint detection. Defaults to 90.
+        exclusion_lower: Lower temperature bound for exclusion. Defaults to 60.
+        exclusion_upper: Upper temperature bound for exclusion. Defaults to 80.
+        grid_temp: Temperature points for interpolation. If None, uses default range.
+            Defaults to None.
+        point_selection: Method for selecting baseline endpoints:
+            - "innermost": Closest points to exclusion window
+            - "outmost": Farthest points from exclusion window
+            - "mid": Middle points in candidate ranges
+            Defaults to "outmost".
+        verbose: Whether to print processing status updates. Defaults to True.
+        max_workers: Number of parallel processing workers. If None, uses CPU count.
+            If 1, uses sequential processing. Defaults to None.
+        output_file: Path to save results file (.csv or .parquet). Defaults to None.
+        detect_signal: Enable signal detection preprocessing. Defaults to False.
 
     Returns:
-        BatchProcessingResult with processed thermograms
+        BatchProcessingResult containing:
+            - results: Dict mapping sample IDs to processed data
+            - grid_temp: Common temperature grid used
+            - processing_stats: Dictionary with processing statistics
+
+    Raises:
+        ValueError: If input data format is invalid or file format unsupported
+        TypeError: If input data types are incompatible
+
+    Examples:
+        >>> # Process dictionary of samples
+        >>> results = process_multiple(sample_dict, max_workers=4)
+        >>>
+        >>> # Process DataFrame with sample column
+        >>> results = process_multiple(df, output_file="results.parquet")
     """
     # Convert input to dictionary of ThermogramData if it's a DataFrame
     sample_data = _prepare_input_data(data)
@@ -160,14 +183,35 @@ def _prepare_input_data(
     data: Union[Dict[str, ThermogramData], Dict[str, pl.DataFrame], pl.DataFrame],
 ) -> Dict[str, ThermogramData]:
     """
-    Convert input data to a dictionary of ThermogramData objects.
+        This function handles various input formats and standardizes them into a dictionary
+    of ThermogramData objects keyed by sample IDs. It supports both single DataFrame
+    with multiple samples and dictionaries containing individual sample data.
 
     Args:
-        data: Input data in various formats
+        data (Union[Dict[str, ThermogramData], Dict[str, pl.DataFrame], pl.DataFrame]):
+            Input data in one of three formats:
+            - A polars DataFrame containing multiple samples with columns for sample ID,
+              temperature and dCp
+            - A dictionary mapping sample IDs to ThermogramData objects
+            - A dictionary mapping sample IDs to polars DataFrames
+
+        Dict[str, ThermogramData]: A dictionary where:
+            - Keys are sample IDs as strings
+            - Values are ThermogramData objects containing the sample data
 
     Returns:
-        Dictionary mapping sample IDs to ThermogramData objects
+        Dict[str, ThermogramData]: Dictionary of ThermogramData objects keyed by sample ID
+
+    Raises:
+        ValueError: If the input data type is not supported or if sample data in dictionary
+                   is neither ThermogramData nor polars DataFrame
+
+    Notes:
+        - For DataFrame input, the function looks for sample ID column with names like
+          "sample", "sampleid", "sample_id", or "id" (case insensitive)
+        - When converting from DataFrame, assumes presence of Temperature and dCp columns
     """
+    # Determine input data type and process accordingly
     if isinstance(data, pl.DataFrame):
         # DataFrame with multiple samples
         sample_col = [
@@ -235,6 +279,9 @@ def _save_results(
         results: Dictionary of processed results
         grid_temp: Temperature grid
         path: File path to save to
+
+    Raises:
+        ValueError: If the file format is unsupported
     """
     # Convert to string path if it's a Path object
     path = str(path)
@@ -275,16 +322,27 @@ def combine_results(
     results: Dict[str, InterpolatedResult],
     grid_temp: Optional[np.ndarray] = None,
 ) -> pl.DataFrame:
-    """
-    Combine multiple processed thermograms into a single DataFrame.
+    """Combine multiple processed thermograms into a single DataFrame.
+
+    Creates a long-format DataFrame containing all processed samples with their
+    temperature and heat capacity values interpolated to a common temperature grid.
 
     Args:
-        results: Dictionary mapping sample IDs to processed results
-        grid_temp: Common temperature grid (if None, use the grid from first result)
+        results: Dictionary mapping sample IDs to their processed results
+        grid_temp: Common temperature grid for all samples. If None, uses the
+            grid from the first result. Defaults to None.
 
     Returns:
-        DataFrame containing all samples in long format
+        pl.DataFrame with columns:
+            - SampleID: Identifier for each sample
+            - Temperature: Temperature points
+            - dCp: Heat capacity values
+
+    Examples:
+        >>> combined_df = combine_results(processed_results)
+        >>> combined_df.write_parquet("all_samples.parquet")
     """
+    # Return empty DataFrame if no results
     if not results:
         return pl.DataFrame()
 

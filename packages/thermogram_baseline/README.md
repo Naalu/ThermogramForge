@@ -50,9 +50,9 @@ fig = plot_baseline_result(result.baseline_result)
 
 For detailed documentation, please refer to:
 
-- [User Guide](./docs/user_guide.md)
-- [API Reference](./docs/api_reference.md)
-- [Developer Guide](./docs/developer_guide.md)
+- [User Guide](../../docs/user/thermogram_baseline_guide.md)
+- [API Reference](../../docs/api/thermogram_basline_api.md)
+- [Developer Guide](../../docs/developer/thermogram_baseline_dev_guide.md)
 
 ## License
 

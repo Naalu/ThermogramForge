@@ -21,25 +21,49 @@ def auto_baseline(
     plot: bool = False,
     verbose: bool = False,
 ) -> InterpolatedResult:
-    """
-    Perform automated baseline detection, subtraction and interpolation.
+    """Performs automated baseline detection, subtraction and interpolation.
 
-    This is the main function that combines endpoint detection, baseline subtraction,
-    and interpolation to a uniform grid. It implements the complete workflow for
-    thermogram baseline processing.
+    This function implements the complete workflow for processing thermogram data:
+    1. Detects baseline endpoints
+    2. Subtracts the baseline
+    3. Interpolates to a uniform temperature grid
 
     Args:
-        data: Thermogram data to process
-        window_size: Window size for endpoint detection
-        exclusion_lower: Lower bound of the exclusion window
-        exclusion_upper: Upper bound of the exclusion window
-        grid_temp: Temperature grid for interpolation (default: 45 to 90 by 0.1)
-        point_selection: Method for endpoint selection
-        plot: Whether to generate plots
-        verbose: Whether to print progress information
+        data (Union[ThermogramData, pl.DataFrame]): Thermogram data to process, either
+            as a ThermogramData object or polars DataFrame.
+        window_size (int, optional): Size of sliding window for endpoint detection.
+            Defaults to 90.
+        exclusion_lower (float, optional): Lower temperature bound of exclusion window.
+            Defaults to 60.
+        exclusion_upper (float, optional): Upper temperature bound of exclusion window.
+            Defaults to 80.
+        grid_temp (Optional[Union[Sequence[float], np.ndarray]], optional): Temperature
+            grid points for interpolation. If None, uses range 45 to 90 by 0.1.
+            Defaults to None.
+        point_selection (Literal["innermost", "outmost", "mid"], optional): Method for
+            selecting endpoints:
+            - innermost: Points closest to exclusion window
+            - outmost: Points farthest from exclusion window
+            - mid: Points in middle of candidate ranges
+            Defaults to "innermost".
+        plot (bool, optional): Whether to generate diagnostic plots. Defaults to False.
+        verbose (bool, optional): Whether to print progress information. Defaults to False.
 
     Returns:
-        InterpolatedResult containing the processed data
+        InterpolatedResult: Processed data containing:
+            - temp: Temperature values on uniform grid
+            - cp: Processed heat capacity values
+            - baseline: Calculated baseline
+            - endpoints: Detected baseline endpoints
+
+    Raises:
+        ValueError: If exclusion_upper <= exclusion_lower or no valid endpoints found
+        TypeError: If input data is not ThermogramData or polars DataFrame
+
+    Examples:
+        >>> from thermogram_baseline import auto_baseline
+        >>> result = auto_baseline(data, window_size=100, plot=True)
+        >>> processed_cp = result.cp
     """
     if verbose:
         print("Step 1: Detecting endpoints...")

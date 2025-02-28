@@ -22,20 +22,34 @@ def plot_thermogram(
     width: int = 800,
     height: int = 500,
 ) -> dict:
-    """
-    Create an interactive plot of thermogram data.
+    """Creates an interactive plot of thermogram data.
+
+    Generates a Plotly figure showing temperature vs excess heat capacity with
+    customizable appearance options.
 
     Args:
-        data: Thermogram data to plot
-        title: Plot title
-        show_grid: Whether to show grid lines
-        line_color: Line color (None for auto)
-        marker_size: Size of markers
-        width: Plot width in pixels
-        height: Plot height in pixels
+        data: Input thermogram data as ThermogramData or polars DataFrame
+        title: Plot title. Defaults to "Thermogram".
+        show_grid: Whether to show grid lines. Defaults to True.
+        line_color: Line color (None for auto). Defaults to None.
+        marker_size: Size of data point markers. Defaults to 3.
+        width: Plot width in pixels. Defaults to 800.
+        height: Plot height in pixels. Defaults to 500.
 
     Returns:
-        Plotly figure dictionary
+        dict: Plotly figure dictionary with plot configuration.
+
+    Examples:
+        >>> # Basic plot from ThermogramData
+        >>> fig = plot_thermogram(data)
+        >>>
+        >>> # Customized plot from DataFrame
+        >>> fig = plot_thermogram(
+        ...     data_df,
+        ...     title="Sample A Thermogram",
+        ...     line_color="blue",
+        ...     marker_size=5
+        ... )
     """
     # Convert input to ThermogramData if it's a DataFrame
     if isinstance(data, pl.DataFrame):
@@ -86,21 +100,33 @@ def plot_baseline_result(
     width: int = 800,
     height: int = 500,
 ) -> dict:
-    """
-    Create an interactive plot of baseline subtraction result.
+    """Creates an interactive plot of baseline subtraction results.
+
+    Visualizes original data, baseline, and corrected data with optional endpoints.
 
     Args:
         result: Baseline subtraction result to plot
-        title: Plot title
-        show_endpoints: Whether to show detected endpoints
-        show_original: Whether to show original data
-        show_baseline: Whether to show baseline
-        show_subtracted: Whether to show subtracted data
-        width: Plot width in pixels
-        height: Plot height in pixels
+        title: Plot title. Defaults to "Baseline Subtraction".
+        show_endpoints: Show detected baseline endpoints. Defaults to True.
+        show_original: Show original thermogram data. Defaults to True.
+        show_baseline: Show calculated baseline curve. Defaults to True.
+        show_subtracted: Show baseline-subtracted data. Defaults to True.
+        width: Plot width in pixels. Defaults to 800.
+        height: Plot height in pixels. Defaults to 500.
 
     Returns:
-        Plotly figure dictionary
+        dict: Plotly figure dictionary with multi-trace plot.
+
+    Examples:
+        >>> # Show all components
+        >>> fig = plot_baseline_result(baseline_result)
+        >>>
+        >>> # Show only original and subtracted data
+        >>> fig = plot_baseline_result(
+        ...     baseline_result,
+        ...     show_baseline=False,
+        ...     show_endpoints=False
+        ... )
     """
     # Create figure
     fig = {
@@ -188,18 +214,35 @@ def plot_interpolated_result(
     width: int = 800,
     height: int = 500,
 ) -> dict:
-    """
-    Create an interactive plot of interpolated result.
+    """Creates an interactive plot comparing original and interpolated thermogram data.
+
+    Visualizes the interpolated data on a uniform temperature grid alongside the
+    original data points if available.
 
     Args:
         result: Interpolated result to plot
-        title: Plot title
-        show_original: Whether to show original data (if available)
-        width: Plot width in pixels
-        height: Plot height in pixels
+        title: Plot title. Defaults to "Interpolated Thermogram".
+        show_original: Whether to show original data points. Defaults to True.
+        width: Plot width in pixels. Defaults to 800.
+        height: Plot height in pixels. Defaults to 500.
 
     Returns:
-        Plotly figure dictionary
+        dict: Plotly figure dictionary with plot configuration:
+            - Interpolated data as continuous line
+            - Original data as scatter points (if available and requested)
+            - Axes labels and title
+            - Interactive hover information
+
+    Examples:
+        >>> # Basic plot with original data
+        >>> fig = plot_interpolated_result(interp_result)
+        >>>
+        >>> # Show only interpolated data
+        >>> fig = plot_interpolated_result(
+        ...     interp_result,
+        ...     title="Sample A - Processed",
+        ...     show_original=False
+        ... )
     """
     # Create figure
     fig = {
@@ -256,21 +299,49 @@ def plot_multiple_thermograms(
     colormap: Optional[str] = None,
     normalize: bool = False,
 ) -> dict:
-    """
-    Create an interactive plot of multiple thermograms.
+    """Creates an interactive plot comparing multiple thermograms.
+
+    Generates a multi-line plot showing multiple thermograms with customizable
+    appearance and optional data normalization.
 
     Args:
-        data: Multiple thermograms to plot
-        title: Plot title
-        max_samples: Maximum number of samples to include (None for all)
-        sample_ids: Specific sample IDs to include (None for all)
-        width: Plot width in pixels
-        height: Plot height in pixels
-        colormap: Colormap name (None for default)
-        normalize: Whether to normalize data to 0-1 range
+        data: Multiple thermograms to plot in one of these formats:
+            - BatchProcessingResult: Result from batch processing
+            - Dict[str, ThermogramData]: Mapping of IDs to raw data
+            - Dict[str, InterpolatedResult]: Mapping of IDs to processed data
+        title: Plot title. Defaults to "Multiple Thermograms".
+        max_samples: Maximum number of samples to include. Defaults to None (all).
+        sample_ids: Specific sample IDs to include. Defaults to None (all).
+        width: Plot width in pixels. Defaults to 800.
+        height: Plot height in pixels. Defaults to 500.
+        colormap: Name of colormap for lines. Options:
+            - "rainbow": Basic spectral colors
+            - "viridis": Perceptually uniform sequential
+            - "plasma": High-contrast sequential
+            Defaults to None (default color cycle).
+        normalize: Whether to normalize dCp values to 0-1. Defaults to False.
 
     Returns:
-        Plotly figure dictionary
+        dict: Plotly figure dictionary with plot configuration:
+            - Multiple line traces (one per sample)
+            - Legend identifying samples
+            - Axes labels and title
+            - Interactive hover information
+
+    Raises:
+        ValueError: If data format is not supported or samples have invalid type
+
+    Examples:
+        >>> # Basic plot of all samples
+        >>> fig = plot_multiple_thermograms(batch_result)
+        >>>
+        >>> # Customized plot with subset of samples
+        >>> fig = plot_multiple_thermograms(
+        ...     data=sample_dict,
+        ...     sample_ids=['A', 'B', 'C'],
+        ...     colormap='viridis',
+        ...     normalize=True
+        ... )
     """
     # Extract sample data
     samples = {}
@@ -428,20 +499,34 @@ def create_heatmap(
     height: int = 600,
     colorscale: str = "Viridis",
 ) -> dict:
-    """
-    Create a heatmap visualization of multiple thermograms.
+    """Creates a heatmap visualization of multiple thermograms.
+
+    Generates a 2D heatmap showing heat capacity values across temperature range
+    for multiple samples, with customizable temperature range and sample ordering.
 
     Args:
-        batch_result: Batch processing result with multiple thermograms
-        temp_range: Optional temperature range to include (min, max)
-        sample_order: Optional list of sample IDs to define order
-        title: Plot title
-        width: Plot width in pixels
-        height: Plot height in pixels
-        colorscale: Colormap for the heatmap
+        batch_result: Batch processing result containing multiple thermograms
+        temp_range: Optional (min_temp, max_temp) to display. Defaults to None.
+        sample_order: Optional list of sample IDs to control order. Defaults to None.
+        title: Plot title. Defaults to "Thermogram Heatmap".
+        width: Plot width in pixels. Defaults to 800.
+        height: Plot height in pixels. Defaults to 600.
+        colorscale: Plotly colorscale name. Defaults to "Viridis".
 
     Returns:
-        Plotly figure dictionary
+        dict: Plotly figure dictionary with heatmap configuration.
+
+    Examples:
+        >>> # Basic heatmap of all samples
+        >>> fig = create_heatmap(batch_result)
+        >>>
+        >>> # Heatmap with custom range and ordering
+        >>> fig = create_heatmap(
+        ...     batch_result,
+        ...     temp_range=(50, 80),
+        ...     sample_order=['A', 'B', 'C'],
+        ...     colorscale='Plasma'
+        ... )
     """
     # Extract grid temperatures
     temps = batch_result.grid_temp

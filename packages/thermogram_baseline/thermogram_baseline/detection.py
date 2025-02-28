@@ -16,22 +16,37 @@ def detect_endpoints(
     point_selection: Literal["innermost", "outmost", "mid"] = "innermost",
     verbose: bool = False,
 ) -> Endpoints:
-    """
-    Detect optimal endpoints for baseline subtraction.
+    """Detect optimal endpoints for baseline subtraction.
 
-    This function scans through temperature regions outside the exclusion zone,
-    looking for windows with minimal variance to establish baseline endpoints.
+    Scans through temperature regions outside the exclusion zone to find windows
+    with minimal variance for establishing baseline endpoints.
 
     Args:
-        data: Thermogram data to analyze
-        window_size: Number of points to include in each variance window
-        exclusion_lower: Lower bound of the exclusion window (temperature)
-        exclusion_upper: Upper bound of the exclusion window (temperature)
-        point_selection: Method for selecting a point from the minimum variance window
-        verbose: Whether to print progress information
+        data: Input thermogram data as ThermogramData object or polars DataFrame.
+        window_size: Number of points to include in each variance window. Defaults to 90.
+        exclusion_lower: Lower bound of exclusion window (temperature). Defaults to 60.
+        exclusion_upper: Upper bound of exclusion window (temperature). Defaults to 80.
+        point_selection: Method for selecting endpoints. Options:
+            - "innermost": Points closest to exclusion window
+            - "outmost": Points farthest from exclusion window
+            - "mid": Points in middle of candidate ranges
+            Defaults to "innermost".
+        verbose: Whether to print progress information. Defaults to False.
 
     Returns:
-        Endpoints object containing the detected lower and upper endpoints
+        Endpoints: Object containing:
+            - lower: Lower temperature endpoint
+            - upper: Upper temperature endpoint
+            - method: Point selection method used
+
+    Raises:
+        ValueError: If insufficient data points or invalid exclusion bounds
+        TypeError: If input data is not ThermogramData or polars DataFrame
+
+    Examples:
+        >>> endpoints = detect_endpoints(data, window_size=100, verbose=True)
+        >>> print(f"Lower endpoint: {endpoints.lower}")
+        >>> print(f"Upper endpoint: {endpoints.upper}")
     """
     # Convert input to ThermogramData if it's a DataFrame
     if isinstance(data, pl.DataFrame):
@@ -118,17 +133,18 @@ def _scan_lower_region(
     window_size: int,
     exclusion_idx: int,
 ) -> Tuple[int, float]:
-    """
-    Scan the lower temperature region to find the window with minimum variance.
+    """Scan lower temperature region to find window with minimum variance.
 
     Args:
-        temperatures: Array of temperature values
-        values: Array of dCp values
-        window_size: Size of the window to analyze
-        exclusion_idx: Index where exclusion zone begins
+        temperatures: Array of temperature values.
+        values: Array of dCp values.
+        window_size: Size of the window to analyze.
+        exclusion_idx: Index where exclusion zone begins.
 
     Returns:
-        Tuple of (window_end_index, minimum_variance)
+        tuple: Contains:
+            - int: Index of window end with minimum variance
+            - float: Minimum variance value found
     """
     min_variance = float("inf")
     best_window_end = window_size - 1
@@ -193,17 +209,22 @@ def _select_point_from_window(
     method: Literal["innermost", "outmost", "mid"],
     low_region: bool = True,
 ) -> int:
-    """
-    Select a specific point from a window based on the selection method.
+    """Select specific point from window based on selection method.
 
     Args:
-        start_idx: Start index of the window
-        end_idx: End index of the window
-        method: Method for selecting the point
-        low_region: Whether this is the lower temperature region
+        start_idx: Start index of the window.
+        end_idx: End index of the window.
+        method: Method for selecting point. Options:
+            - "innermost": Point closest to exclusion window
+            - "outmost": Point farthest from exclusion window
+            - "mid": Point in middle of window
+        low_region: Whether this is the lower temperature region. Defaults to True.
 
     Returns:
-        Index of the selected point
+        int: Index of selected point.
+
+    Raises:
+        ValueError: If method is not one of the supported options.
     """
     if method == "innermost":
         # Select point closest to center of data
