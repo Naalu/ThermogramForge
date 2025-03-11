@@ -289,29 +289,29 @@ def _save_results(
     # Create DataFrame from results
     if path.endswith(".csv"):
         # Wide format: each sample is a column
-        data: Dict[str, Union[np.ndarray, List[float]]] = {"Temperature": grid_temp}
+        csv_data: Dict[str, Union[np.ndarray, List[float]]] = {"Temperature": grid_temp}
 
         for sample_id, result in results.items():
-            data[sample_id] = result.data.dcp
+            csv_data[sample_id] = result.data.dcp
 
-        df = pl.DataFrame(data)
+        df = pl.DataFrame(csv_data)
         df.write_csv(path)
 
     elif path.endswith(".parquet"):
         # Save as parquet with more information
-        data: List[Dict[str, Union[str, float]]] = []
+        parquet_rows: List[Dict[str, Union[str, float]]] = []
 
         for sample_id, result in results.items():
             for i, temp in enumerate(grid_temp):
-                data.append(
+                parquet_rows.append(
                     {
                         "SampleID": sample_id,
-                        "Temperature": temp,
-                        "dCp": result.data.dcp[i],
+                        "Temperature": float(temp),
+                        "dCp": float(result.data.dcp[i]),
                     }
                 )
 
-        df = pl.DataFrame(data)
+        df = pl.DataFrame(parquet_rows)
         df.write_parquet(path)
 
     else:
