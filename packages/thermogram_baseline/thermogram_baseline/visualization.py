@@ -129,7 +129,7 @@ def plot_baseline_result(
         ... )
     """
     # Create figure
-    fig = {
+    fig: Dict[str, Union[List[dict], dict]] = {
         "data": [],
         "layout": {
             "title": {"text": title},
@@ -245,7 +245,7 @@ def plot_interpolated_result(
         ... )
     """
     # Create figure
-    fig = {
+    fig: Dict[str, Union[List[dict], dict]] = {
         "data": [],
         "layout": {
             "title": {"text": title},
@@ -374,7 +374,7 @@ def plot_multiple_thermograms(
         samples = dict(list(samples.items())[:max_samples])
 
     # Create figure
-    fig = {
+    fig: Dict[str, Union[List[dict], dict]] = {
         "data": [],
         "layout": {
             "title": {"text": title},
@@ -545,7 +545,7 @@ def create_heatmap(
         sample_ids = [sid for sid in sample_order if sid in batch_result.results]
 
     # Create data matrix
-    data_matrix = np.zeros((len(sample_ids), np.sum(temp_mask)))
+    data_matrix = np.zeros((int(len(sample_ids)), int(np.sum(temp_mask))))
 
     for i, sample_id in enumerate(sample_ids):
         result = batch_result.results[sample_id]
