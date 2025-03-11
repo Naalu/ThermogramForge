@@ -2,7 +2,7 @@
 
 import concurrent.futures
 from pathlib import Path
-from typing import Dict, Literal, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 
 import numpy as np
 import polars as pl
@@ -82,8 +82,8 @@ def process_multiple(
         grid_temp = _create_default_grid()
 
     # Process thermograms in parallel or sequentially
-    results = {}
-    processing_stats = {
+    results: Dict[str, InterpolatedResult] = {}
+    processing_stats: Dict[str, Any] = {
         "total_samples": num_samples,
         "successful": 0,
         "failed": 0,
@@ -94,7 +94,7 @@ def process_multiple(
         # Sequential processing
         for i, sample_id in enumerate(sample_ids):
             if verbose:
-                print(f"Processing sample {int(i) + 1}/{num_samples}: {sample_id}")
+                print(f"Processing sample {i + 1}/{num_samples}: {sample_id}")
 
             try:
                 result = auto_baseline(
@@ -143,7 +143,7 @@ def process_multiple(
             for i, future in enumerate(concurrent.futures.as_completed(futures)):
                 sample_id = futures[future]
                 if verbose:
-                    print(f"Completed {int(i) + 1}/{num_samples}: {sample_id}")
+                    print(f"Completed {i + 1}/{num_samples}: {sample_id}")
 
                 try:
                     result = future.result()
@@ -289,7 +289,7 @@ def _save_results(
     # Create DataFrame from results
     if path.endswith(".csv"):
         # Wide format: each sample is a column
-        data = {"Temperature": grid_temp}
+        data: Dict[str, Union[np.ndarray, List[float]]] = {"Temperature": grid_temp}
 
         for sample_id, result in results.items():
             data[sample_id] = result.data.dcp
@@ -299,7 +299,7 @@ def _save_results(
 
     elif path.endswith(".parquet"):
         # Save as parquet with more information
-        data = []
+        data: List[Dict[str, Union[str, float]]] = []
 
         for sample_id, result in results.items():
             for i, temp in enumerate(grid_temp):

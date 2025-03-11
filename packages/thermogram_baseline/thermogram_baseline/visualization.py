@@ -1,6 +1,6 @@
 """Visualization utilities for thermogram data."""
 
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 import polars as pl
@@ -128,8 +128,7 @@ def plot_baseline_result(
         ...     show_endpoints=False
         ... )
     """
-    # Create figure
-    fig: Dict[str, Union[List[dict], dict]] = {
+    fig: Dict[str, Any] = {
         "data": [],
         "layout": {
             "title": {"text": title},
@@ -245,7 +244,7 @@ def plot_interpolated_result(
         ... )
     """
     # Create figure
-    fig: Dict[str, Union[List[dict], dict]] = {
+    fig: Dict[str, Any] = {
         "data": [],
         "layout": {
             "title": {"text": title},
@@ -374,7 +373,7 @@ def plot_multiple_thermograms(
         samples = dict(list(samples.items())[:max_samples])
 
     # Create figure
-    fig: Dict[str, Union[List[dict], dict]] = {
+    fig: Dict[str, Any] = {
         "data": [],
         "layout": {
             "title": {"text": title},
@@ -545,7 +544,7 @@ def create_heatmap(
         sample_ids = [sid for sid in sample_order if sid in batch_result.results]
 
     # Create data matrix
-    data_matrix = np.zeros((int(len(sample_ids)), int(np.sum(temp_mask))))
+    data_matrix = np.zeros((len(sample_ids), np.sum(temp_mask)))
 
     for i, sample_id in enumerate(sample_ids):
         result = batch_result.results[sample_id]
