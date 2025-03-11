@@ -32,11 +32,6 @@ jobs:
       run: |
         uv venv
 
-    # Ensure local package path is correctly referenced in pyproject.toml
-    - name: Fix local package path for Hatch
-      run: |
-        sed -i "s|file:///absolute/path/will/be/injected|file://$(pwd)/packages/thermogram_baseline|g" pyproject.toml
-
     # Install dependencies using UV
     - name: Install dependencies
       run: |
