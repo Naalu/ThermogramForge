@@ -50,7 +50,7 @@ jobs:
     # Run Mypy for type checking
     - name: Type check with Mypy
       run: |
-        uv run mypy --install-types --non-interactive .
+        uv run mypy --install-types --non-interactive packages/
 
     # Run tests with pytest
     - name: Test with pytest
