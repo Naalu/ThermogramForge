@@ -50,12 +50,12 @@ jobs:
     # Run Mypy for type checking
     - name: Type check with Mypy
       run: |
-        uv pip mypy --install-types --non-interactive .
+        uv run mypy --install-types --non-interactive .
 
     # Run tests with pytest
     - name: Test with pytest
       run: |
-        uv pip pytest --cov=thermogram_baseline --cov-report=xml
+        uv run pytest --cov=thermogram_baseline --cov-report=xml
 
     # Upload test coverage report
     - name: Upload coverage report
