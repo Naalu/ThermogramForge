@@ -2,7 +2,7 @@
 
 import concurrent.futures
 from pathlib import Path
-from typing import Dict, Literal, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 
 import numpy as np
 import polars as pl
@@ -82,8 +82,8 @@ def process_multiple(
         grid_temp = _create_default_grid()
 
     # Process thermograms in parallel or sequentially
-    results = {}
-    processing_stats = {
+    results: Dict[str, InterpolatedResult] = {}
+    processing_stats: Dict[str, Any] = {
         "total_samples": num_samples,
         "successful": 0,
         "failed": 0,
@@ -289,29 +289,29 @@ def _save_results(
     # Create DataFrame from results
     if path.endswith(".csv"):
         # Wide format: each sample is a column
-        data = {"Temperature": grid_temp}
+        csv_data: Dict[str, Union[np.ndarray, List[float]]] = {"Temperature": grid_temp}
 
         for sample_id, result in results.items():
-            data[sample_id] = result.data.dcp
+            csv_data[sample_id] = result.data.dcp
 
-        df = pl.DataFrame(data)
+        df = pl.DataFrame(csv_data)
         df.write_csv(path)
 
     elif path.endswith(".parquet"):
         # Save as parquet with more information
-        data = []
+        parquet_rows: List[Dict[str, Union[str, float]]] = []
 
         for sample_id, result in results.items():
             for i, temp in enumerate(grid_temp):
-                data.append(
+                parquet_rows.append(
                     {
                         "SampleID": sample_id,
-                        "Temperature": temp,
-                        "dCp": result.data.dcp[i],
+                        "Temperature": float(temp),
+                        "dCp": float(result.data.dcp[i]),
                     }
                 )
 
-        df = pl.DataFrame(data)
+        df = pl.DataFrame(parquet_rows)
         df.write_parquet(path)
 
     else:

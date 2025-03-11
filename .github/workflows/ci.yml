@@ -32,11 +32,6 @@ jobs:
       run: |
         uv venv
 
-    # Ensure local package path is correctly referenced in pyproject.toml
-    - name: Fix local package path for Hatch
-      run: |
-        sed -i "s|file:///absolute/path/will/be/injected|file://$(pwd)/packages/thermogram_baseline|g" pyproject.toml
-
     # Install dependencies using UV
     - name: Install dependencies
       run: |
@@ -50,17 +45,17 @@ jobs:
     # Run Ruff for linting
     - name: Lint with Ruff
       run: |
-        uv pip ruff check .
+        uv run ruff check .
 
     # Run Mypy for type checking
     - name: Type check with Mypy
       run: |
-        uv pip mypy --install-types --non-interactive .
+        uv run mypy --install-types --non-interactive packages/
 
     # Run tests with pytest
     - name: Test with pytest
       run: |
-        uv pip pytest --cov=thermogram_baseline --cov-report=xml
+        uv run pytest --cov=thermogram_baseline --cov-report=xml
 
     # Upload test coverage report
     - name: Upload coverage report
