@@ -94,7 +94,7 @@ def process_multiple(
         # Sequential processing
         for i, sample_id in enumerate(sample_ids):
             if verbose:
-                print(f"Processing sample {i + 1}/{num_samples}: {sample_id}")
+                print(f"Processing sample {int(i) + 1}/{num_samples}: {sample_id}")
 
             try:
                 result = auto_baseline(
@@ -143,7 +143,7 @@ def process_multiple(
             for i, future in enumerate(concurrent.futures.as_completed(futures)):
                 sample_id = futures[future]
                 if verbose:
-                    print(f"Completed {i + 1}/{num_samples}: {sample_id}")
+                    print(f"Completed {int(i) + 1}/{num_samples}: {sample_id}")
 
                 try:
                     result = future.result()

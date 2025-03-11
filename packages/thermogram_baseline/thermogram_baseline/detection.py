@@ -75,8 +75,8 @@ def detect_endpoints(
         )
 
     # Find indices corresponding to exclusion boundaries
-    exclusion_lower_idx = np.searchsorted(temperatures, exclusion_lower)
-    exclusion_upper_idx = np.searchsorted(temperatures, exclusion_upper)
+    exclusion_lower_idx = int(np.searchsorted(temperatures, exclusion_lower))
+    exclusion_upper_idx = int(np.searchsorted(temperatures, exclusion_upper))
 
     # Check if we have enough points outside the exclusion zone
     if exclusion_lower_idx < window_size:
