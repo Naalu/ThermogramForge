@@ -183,3 +183,5 @@ data/raw/
 data/processed/
 data/interim/
 data/external/
+data/reference/
+verification_results/

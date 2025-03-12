@@ -54,6 +54,41 @@ For detailed documentation, please refer to:
 - [API Reference](../../docs/api/thermogram_basline_api.md)
 - [Developer Guide](../../docs/developer/thermogram_baseline_dev_guide.md)
 
+## Verification
+
+The project includes a verification tool to compare the Python implementation with the original R implementation.
+
+### Setup
+
+1. Create necessary data directories:
+
+```bash
+mkdir -p data/raw data/reference data/processed verification_results
+```
+
+1. Place your data files:
+
+- Raw thermogram data: `data/raw/example_thermogram.csv`
+- R implementation output: `data/reference/r_processed.csv`
+- (Optional) Python pre-processed data: `data/processed/python_processed.csv`
+
+### Running Verification
+
+Run the verification script:
+
+```bash
+# Basic usage with default file locations
+python scripts/verify_thermogram_baseline.py
+
+# Run with verbose output
+python scripts/verify_thermogram_baseline.py --verbose
+
+# Specify custom file paths
+python scripts/verify_thermogram_baseline.py --raw-data path/to/raw.csv --r-data path/to/r_output.csv --output custom_report.html
+```
+
+The script generates an HTML report comparing the results and visualizing the differences.
+
 ## License
 
 MIT
