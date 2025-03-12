@@ -21,12 +21,22 @@ import numpy as np
 import plotly.graph_objects as go  # type: ignore
 import polars as pl
 from plotly.subplots import make_subplots  # type: ignore
+from rich.console import Console  # type: ignore
+from rich.progress import (  # type: ignore
+    BarColumn,
+    Progress,
+    TextColumn,
+    TimeRemainingColumn,
+)
 from thermogram_baseline import (
     ThermogramData,
     detect_endpoints,
     interpolate_sample,
     subtract_baseline,
 )
+
+# Initialize Rich console
+console = Console()
 
 # Default file paths
 TEMPLATE_DIR = PROJECT_ROOT / "scripts" / "templates"
@@ -36,6 +46,7 @@ R_DATA_DEFAULT = DATA_DIR / "reference" / "r_processed.csv"
 PYTHON_DATA_DEFAULT = DATA_DIR / "processed" / "python_processed.csv"
 OUTPUT_DIR = PROJECT_ROOT / "verification_results"
 OUTPUT_DEFAULT = OUTPUT_DIR / "verification_report.html"
+TEMP_DIR = DATA_DIR / "temp"
 
 
 def parse_args():
@@ -67,14 +78,26 @@ def parse_args():
         default=str(OUTPUT_DEFAULT),
         help=f"Output HTML report path, default: {OUTPUT_DEFAULT}",
     )
+    parser.add_argument(
+        "--temp-dir",
+        type=str,
+        default=str(TEMP_DIR),
+        help=f"Directory for temporary files, default: {TEMP_DIR}",
+    )
     parser.add_argument("--verbose", action="store_true", help="Print verbose output")
     return parser.parse_args()
 
 
 def detect_data_format(df):
     """Detect the format of the data (ThermogramBaseline or tlbparam format)."""
-    if "Temperature" in df.columns and "dCp" in df.columns:
-        return "thermogram_baseline"
+    if "Temperature" in df.columns:
+        # Could be thermogram_baseline format
+        if "dCp" in df.columns:
+            return "thermogram_baseline"
+        # If we have multiple columns besides Temperature, it might be R-processed format
+        # where each column is a sample (like in r_processed.csv)
+        if len(df.columns) > 1:
+            return "r_processed"
 
     # Check for temperature columns like "T45", "T45.1", etc.
     temp_cols = [
@@ -86,7 +109,7 @@ def detect_data_format(df):
         return "tlbparam"
 
     raise ValueError(
-        "Unknown data format. Expected 'Temperature'/'dCp' columns or 'T{number}' columns"
+        "Unknown data format. Expected 'Temperature'/'dCp' columns, temperature columns as data, or R-processed format"
     )
 
 
@@ -120,6 +143,28 @@ def convert_tlbparam_format(df):
     return new_df
 
 
+def convert_r_processed_format(df):
+    """Convert R processed format to thermogram_baseline format."""
+    # Assume first column is Temperature and others are samples
+    if "Temperature" not in df.columns:
+        raise ValueError("Expected 'Temperature' column in R-processed data")
+
+    # Get sample columns (everything except Temperature)
+    sample_cols = [col for col in df.columns if col != "Temperature"]
+
+    if not sample_cols:
+        raise ValueError("No sample columns found in R-processed data")
+
+    # Use the first sample for comparison
+    sample_id = sample_cols[0]
+    console.print(f"Using sample [cyan]{sample_id}[/] from R-processed data")
+
+    # Create a new DataFrame with Temperature and dCp
+    new_df = pl.DataFrame({"Temperature": df["Temperature"], "dCp": df[sample_id]})
+
+    return new_df, sample_id
+
+
 def load_data(python_path, r_path, raw_path, verbose=False):
     """Load data from Python, R implementations and raw data."""
     data = {}
@@ -133,28 +178,38 @@ def load_data(python_path, r_path, raw_path, verbose=False):
                 # Detect format and convert if needed
                 format_type = detect_data_format(df)
                 if verbose:
-                    print(f"Detected {name} data format: {format_type}")
+                    console.print(
+                        f"Detected {name} data format: [green]{format_type}[/]"
+                    )
 
                 if format_type == "tlbparam":
                     df = convert_tlbparam_format(df)
                     if verbose:
-                        print(f"Converted {name} data from tlbparam format")
+                        console.print(f"Converted {name} data from tlbparam format")
+                elif format_type == "r_processed":
+                    df, sample_id = convert_r_processed_format(df)
+                    if verbose:
+                        console.print(
+                            f"Converted {name} data from R-processed format (sample: {sample_id})"
+                        )
 
                 data[name] = df
                 if verbose:
-                    print(f"Successfully loaded {name} data from {path}")
+                    console.print(f"Successfully loaded {name} data from {path}")
             except Exception as e:
-                print(f"Error loading {name} data from {path}: {e}")
+                console.print(
+                    f"[bold red]Error loading {name} data from {path}:[/] {e}"
+                )
                 data[name] = None
         else:
             if verbose and path:
-                print(f"File not found: {path}")
+                console.print(f"[yellow]File not found:[/] {path}")
             data[name] = None
 
     return data.get("python"), data.get("r"), data.get("raw")
 
 
-def process_sample(raw_data, sample_id=None, verbose=False):
+def process_sample(raw_data, sample_id=None, verbose=False, progress_callback=None):
     """Process a sample using the Python implementation."""
     # Convert to ThermogramData if needed
     if isinstance(raw_data, pl.DataFrame):
@@ -163,7 +218,7 @@ def process_sample(raw_data, sample_id=None, verbose=False):
         data = raw_data
 
     if verbose:
-        print("Detecting endpoints...")
+        console.print("Detecting endpoints...")
 
     # 1. Detect endpoints
     endpoints = detect_endpoints(
@@ -175,9 +230,14 @@ def process_sample(raw_data, sample_id=None, verbose=False):
         verbose=verbose,
     )
 
+    if progress_callback:
+        progress_callback(25)  # 25% complete after endpoints detection
+
     if verbose:
-        print(f"Endpoints detected: lower={endpoints.lower}, upper={endpoints.upper}")
-        print("Subtracting baseline...")
+        console.print(
+            f"Endpoints detected: lower={endpoints.lower}, upper={endpoints.upper}"
+        )
+        console.print("Subtracting baseline...")
 
     # 2. Subtract baseline
     baseline_result = subtract_baseline(
@@ -188,9 +248,12 @@ def process_sample(raw_data, sample_id=None, verbose=False):
         plot=False,
     )
 
+    if progress_callback:
+        progress_callback(50)  # 50% complete after baseline subtraction
+
     if verbose:
-        print("Baseline subtracted successfully")
-        print("Interpolating to uniform grid...")
+        console.print("Baseline subtracted successfully")
+        console.print("Interpolating to uniform grid...")
 
     # 3. Interpolate to uniform grid
     interpolated_result = interpolate_sample(
@@ -199,14 +262,51 @@ def process_sample(raw_data, sample_id=None, verbose=False):
         plot=False,
     )
 
+    if progress_callback:
+        progress_callback(75)  # 75% complete after interpolation
+
     if verbose:
-        print("Processing complete")
+        console.print("Processing complete")
 
     return {
         "endpoints": endpoints,
         "baseline_result": baseline_result,
         "interpolated_result": interpolated_result,
     }
+
+
+def save_intermediate_results(results, temp_dir, sample_id=None):
+    """Save intermediate processing results to disk."""
+    os.makedirs(temp_dir, exist_ok=True)
+
+    # Use default sample_id if none provided
+    if sample_id is None:
+        sample_id = "sample"
+
+    # Save interpolated data
+    if "interpolated_result" in results:
+        data = results["interpolated_result"].data
+        df = pl.DataFrame({"Temperature": data.temperature, "dCp": data.dcp})
+        output_path = os.path.join(temp_dir, f"{sample_id}_processed.csv")
+        df.write_csv(output_path)
+        return output_path
+
+    return None
+
+
+def load_intermediate_results(path):
+    """Load intermediate results from disk."""
+    if os.path.exists(path):
+        try:
+            df = pl.read_csv(path)
+            if "Temperature" in df.columns and "dCp" in df.columns:
+                return ThermogramData(
+                    temperature=df["Temperature"].to_numpy(), dcp=df["dCp"].to_numpy()
+                )
+        except Exception as e:
+            console.print(f"[bold red]Error loading intermediate results:[/] {e}")
+
+    return None
 
 
 def compare_results(python_results, r_results):
@@ -245,7 +345,7 @@ def create_visualizations(python_data, r_data, raw_data, python_results, verbose
     figures = {}
 
     if verbose:
-        print("Creating visualization: Raw vs Python processed")
+        console.print("Creating visualization: Raw vs Python processed")
 
     # 1. Raw data vs Python processed data
     if raw_data is not None and python_results.get("interpolated_result") is not None:
@@ -275,7 +375,7 @@ def create_visualizations(python_data, r_data, raw_data, python_results, verbose
         figures["raw_vs_python"] = fig1.to_json()
 
     if verbose and r_data is not None:
-        print("Creating visualization: Python vs R processed")
+        console.print("Creating visualization: Python vs R processed")
 
     # 2. Python vs R processed data
     if r_data is not None and python_results.get("interpolated_result") is not None:
@@ -305,7 +405,7 @@ def create_visualizations(python_data, r_data, raw_data, python_results, verbose
         figures["python_vs_r"] = fig2.to_json()
 
     if verbose and "baseline_result" in python_results:
-        print("Creating visualization: Baseline detection")
+        console.print("Creating visualization: Baseline detection")
 
     # 3. Baseline visualization
     if "baseline_result" in python_results and "endpoints" in python_results:
@@ -358,6 +458,59 @@ def create_visualizations(python_data, r_data, raw_data, python_results, verbose
         )
         figures["baseline"] = fig3.to_json()
 
+    # 4. Difference plot for Python vs R
+    if r_data is not None and python_results.get("interpolated_result") is not None:
+        # Calculate difference
+        python_temps = python_results["interpolated_result"].data.temperature
+        python_dcp = python_results["interpolated_result"].data.dcp
+
+        # Interpolate R data to Python temperature grid
+        r_temps = r_data["Temperature"].to_numpy()
+        r_dcp = r_data["dCp"].to_numpy()
+
+        # Filter to common range
+        min_temp = max(python_temps.min(), r_temps.min())
+        max_temp = min(python_temps.max(), r_temps.max())
+
+        mask = (python_temps >= min_temp) & (python_temps <= max_temp)
+        python_temps_filtered = python_temps[mask]
+        python_dcp_filtered = python_dcp[mask]
+
+        # Interpolate R data to Python grid
+        from scipy.interpolate import interp1d
+
+        r_interp_func = interp1d(r_temps, r_dcp, bounds_error=False, fill_value=np.nan)
+        r_dcp_interp = r_interp_func(python_temps_filtered)
+
+        # Calculate difference
+        diff = python_dcp_filtered - r_dcp_interp
+
+        # Create difference plot
+        fig4 = make_subplots(rows=1, cols=1)
+        fig4.add_trace(
+            go.Scatter(
+                x=python_temps_filtered,
+                y=diff,
+                mode="lines",
+                name="Python - R",
+                line=dict(color="red"),
+            )
+        )
+        fig4.add_shape(
+            type="line",
+            x0=min_temp,
+            x1=max_temp,
+            y0=0,
+            y1=0,
+            line=dict(color="black", dash="dash"),
+        )
+        fig4.update_layout(
+            title="Difference between Python and R (Python - R)",
+            xaxis_title="Temperature (°C)",
+            yaxis_title="Difference in dCp",
+        )
+        figures["difference"] = fig4.to_json()
+
     return figures
 
 
@@ -370,14 +523,16 @@ def generate_report(
     os.makedirs(output_dir, exist_ok=True)
 
     if verbose:
-        print(f"Generating HTML report to {output_path}")
-        print(f"Using template directory: {TEMPLATE_DIR}")
+        console.print(f"Generating HTML report to {output_path}")
+        console.print(f"Using template directory: {TEMPLATE_DIR}")
 
     # Create template loader
-    if not os.path.exists(TEMPLATE_DIR):
-        os.makedirs(TEMPLATE_DIR, exist_ok=True)
-        # Create default template if it doesn't exist
-        with open(TEMPLATE_DIR / "verification_report.html", "w") as f:
+    os.makedirs(TEMPLATE_DIR, exist_ok=True)
+
+    # Create default template if it doesn't exist
+    template_path = TEMPLATE_DIR / "verification_report.html"
+    if not os.path.exists(template_path):
+        with open(template_path, "w") as f:
             f.write(DEFAULT_TEMPLATE)
 
     # Load template
@@ -422,7 +577,7 @@ def generate_report(
         f.write(html_content)
 
     if verbose:
-        print(f"Report generated successfully at {output_path}")
+        console.print(f"Report generated successfully at {output_path}")
 
     return output_path
 
@@ -433,11 +588,12 @@ def main():
     verbose = args.verbose
 
     if verbose:
-        print("Running verification with following parameters:")
-        print(f"  Python data: {args.python_data}")
-        print(f"  R data: {args.r_data}")
-        print(f"  Raw data: {args.raw_data}")
-        print(f"  Output path: {args.output}")
+        console.print("[bold green]Running verification with following parameters:[/]")
+        console.print(f"  Python data: {args.python_data}")
+        console.print(f"  R data: {args.r_data}")
+        console.print(f"  Raw data: {args.raw_data}")
+        console.print(f"  Output path: {args.output}")
+        console.print(f"  Temp directory: {args.temp_dir}")
 
     # Create directories if they don't exist
     for directory in [
@@ -447,48 +603,124 @@ def main():
         DATA_DIR / "processed",
         OUTPUT_DIR,
         TEMPLATE_DIR,
+        Path(args.temp_dir),
     ]:
         os.makedirs(directory, exist_ok=True)
 
     # Load data
-    python_data, r_data, raw_data = load_data(
-        args.python_data, args.r_data, args.raw_data, verbose=verbose
-    )
+    with Progress(
+        TextColumn("[bold blue]{task.description}"),
+        BarColumn(),
+        TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
+        TimeRemainingColumn(),
+    ) as progress:
+        load_task = progress.add_task("[cyan]Loading data files...", total=100)
+
+        python_data, r_data, raw_data = load_data(
+            args.python_data, args.r_data, args.raw_data, verbose=verbose
+        )
+
+        progress.update(load_task, completed=100)
 
     # Initialize results
     python_results = {}
 
-    # If raw data is provided, process it
-    if raw_data is not None:
+    # Check if we have intermediate results
+    intermediate_path = None
+    if args.temp_dir:
+        intermediate_path = os.path.join(args.temp_dir, "sample_processed.csv")
+        if os.path.exists(intermediate_path) and not raw_data:
+            if verbose:
+                console.print(f"Loading intermediate results from {intermediate_path}")
+            interpolated_data = load_intermediate_results(intermediate_path)
+            if interpolated_data:
+                python_results["interpolated_result"] = interpolated_data
+                if verbose:
+                    console.print("Loaded intermediate results successfully")
+
+    # If raw data is provided and we don't have intermediate results, process it
+    if raw_data is not None and not python_results.get("interpolated_result"):
         if verbose:
-            print("Processing raw data with Python implementation")
-        python_results = process_sample(raw_data, verbose=verbose)
-    elif python_data is not None:
+            console.print(
+                "[bold green]Processing raw data with Python implementation[/]"
+            )
+
+        # Setup progress tracking
+        with Progress(
+            TextColumn("[bold blue]{task.description}"),
+            BarColumn(),
+            TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
+            TimeRemainingColumn(),
+        ) as progress:
+            process_task = progress.add_task(
+                "[cyan]Processing thermogram...", total=100
+            )
+
+            def update_progress(percentage):
+                progress.update(process_task, completed=percentage)
+
+            python_results = process_sample(
+                raw_data, verbose=verbose, progress_callback=update_progress
+            )
+
+            progress.update(process_task, completed=100)
+
+        # Save intermediate results
+        if args.temp_dir:
+            intermediate_path = save_intermediate_results(
+                python_results, args.temp_dir, "sample"
+            )
+            if verbose and intermediate_path:
+                console.print(f"Saved intermediate results to {intermediate_path}")
+
+    elif python_data is not None and not python_results.get("interpolated_result"):
         # If only processed data is available, we can still compare
         if verbose:
-            print("Using pre-processed Python data (no raw data processing)")
-        python_results["interpolated_result"] = ThermogramData(
+            console.print(
+                "[yellow]Using pre-processed Python data (no raw data processing)[/]"
+            )
+
+        interpolated_data = ThermogramData(
             temperature=python_data["Temperature"].to_numpy(),
             dcp=python_data["dCp"].to_numpy(),
         )
+        python_results["interpolated_result"] = interpolated_data
 
     # Create visualizations
-    figures = create_visualizations(
-        python_data, r_data, raw_data, python_results, verbose=verbose
-    )
+    with Progress(
+        TextColumn("[bold blue]{task.description}"),
+        BarColumn(),
+        TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
+    ) as progress:
+        viz_task = progress.add_task("[cyan]Creating visualizations...", total=100)
+
+        figures = create_visualizations(
+            python_data, r_data, raw_data, python_results, verbose=verbose
+        )
+
+        progress.update(viz_task, completed=100)
 
     # Generate report
-    report_path = generate_report(
-        python_data,
-        r_data,
-        raw_data,
-        python_results,
-        figures,
-        args.output,
-        verbose=verbose,
-    )
+    with Progress(
+        TextColumn("[bold blue]{task.description}"),
+        BarColumn(),
+        TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
+    ) as progress:
+        report_task = progress.add_task("[cyan]Generating report...", total=100)
 
-    print(f"Verification report generated at: {report_path}")
+        report_path = generate_report(
+            python_data,
+            r_data,
+            raw_data,
+            python_results,
+            figures,
+            args.output,
+            verbose=verbose,
+        )
+
+        progress.update(report_task, completed=100)
+
+    console.print(f"[bold green]Verification report generated at:[/] {report_path}")
 
 
 # Default HTML template
@@ -627,55 +859,64 @@ DEFAULT_TEMPLATE = """<!DOCTYPE html>
             </tr>
             <tr>
                 <td>Mean Value (R)</td>
-                <td class="metric-value">{{ comparison.mean_r|round(6) }}</td>
-            </tr>
-            <tr>
-                <td>Standard Deviation (Python)</td>
-                <td class="metric-value">{{ comparison.std_python|round(6) }}</td>
-            </tr>
-            <tr>
-                <td>Standard Deviation (R)</td>
-                <td class="metric-value">{{ comparison.std_r|round(6) }}</td>
-            </tr>
-        </table>
-        
-        {% if figures.python_vs_r is defined %}
-        <div id="comparison-plot" class="plot"></div>
-        {% endif %}
-    </section>
-    {% endif %}
+<td class="metric-value">{{ comparison.mean_r|round(6) }}</td>
+           </tr>
+           <tr>
+               <td>Standard Deviation (Python)</td>
+               <td class="metric-value">{{ comparison.std_python|round(6) }}</td>
+           </tr>
+           <tr>
+               <td>Standard Deviation (R)</td>
+               <td class="metric-value">{{ comparison.std_r|round(6) }}</td>
+           </tr>
+       </table>
+       
+       {% if figures.python_vs_r is defined %}
+       <div id="comparison-plot" class="plot"></div>
+       {% endif %}
+       
+       {% if figures.difference is defined %}
+       <div id="difference-plot" class="plot"></div>
+       {% endif %}
+   </section>
+   {% endif %}
 
-    {% if figures.raw_vs_python is defined %}
-    <section>
-        <h2>Raw vs. Processed Data</h2>
-        <p>Comparison between the raw thermogram data and the output of the Python implementation:</p>
-        <div id="raw-vs-python-plot" class="plot"></div>
-    </section>
-    {% endif %}
+   {% if figures.raw_vs_python is defined %}
+   <section>
+       <h2>Raw vs. Processed Data</h2>
+       <p>Comparison between the raw thermogram data and the output of the Python implementation:</p>
+       <div id="raw-vs-python-plot" class="plot"></div>
+   </section>
+   {% endif %}
 
-    <script>
-        {% if figures.baseline is defined %}
-        // Load the baseline plot
-        var baselinePlot = JSON.parse('{{ figures.baseline|safe }}');
-        Plotly.newPlot('baseline-plot', baselinePlot.data, baselinePlot.layout);
-        {% endif %}
-        
-        {% if figures.raw_vs_python is defined %}
-        // Load the raw vs python plot
-        var rawVsPythonPlot = JSON.parse('{{ figures.raw_vs_python|safe }}');
-        Plotly.newPlot('raw-vs-python-plot', rawVsPythonPlot.data, rawVsPythonPlot.layout);
-        {% endif %}
-        
-        {% if figures.python_vs_r is defined %}
-        // Load the comparison plot
-        var comparisonPlot = JSON.parse('{{ figures.python_vs_r|safe }}');
-        Plotly.newPlot('comparison-plot', comparisonPlot.data, comparisonPlot.layout);
-        {% endif %}
-    </script>
+   <script>
+       {% if figures.baseline is defined %}
+       // Load the baseline plot
+       var baselinePlot = JSON.parse('{{ figures.baseline|safe }}');
+       Plotly.newPlot('baseline-plot', baselinePlot.data, baselinePlot.layout);
+       {% endif %}
+       
+       {% if figures.raw_vs_python is defined %}
+       // Load the raw vs python plot
+       var rawVsPythonPlot = JSON.parse('{{ figures.raw_vs_python|safe }}');
+       Plotly.newPlot('raw-vs-python-plot', rawVsPythonPlot.data, rawVsPythonPlot.layout);
+       {% endif %}
+       
+       {% if figures.python_vs_r is defined %}
+       // Load the comparison plot
+       var comparisonPlot = JSON.parse('{{ figures.python_vs_r|safe }}');
+       Plotly.newPlot('comparison-plot', comparisonPlot.data, comparisonPlot.layout);
+       {% endif %}
+       
+       {% if figures.difference is defined %}
+       // Load the difference plot
+       var differencePlot = JSON.parse('{{ figures.difference|safe }}');
+       Plotly.newPlot('difference-plot', differencePlot.data, differencePlot.layout);
+       {% endif %}
+   </script>
 </body>
 </html>
 """
-
 
 if __name__ == "__main__":
     main()
