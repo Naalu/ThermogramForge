@@ -4,6 +4,7 @@ from typing import Literal, Optional, Union
 
 import numpy as np
 import polars as pl
+import rich.console as console  # type: ignore
 from scipy import interpolate  # type: ignore
 
 from .types import BaselineResult, Endpoints, ThermogramData
@@ -96,12 +97,32 @@ def subtract_baseline(
     mid_region_temps = temperatures[mid_mask]
 
     # Fit splines to lower and upper regions
-    lower_spline = _fit_spline_to_region(
-        lower_region_temps, lower_region_values, smoothing_factor
-    )
-    upper_spline = _fit_spline_to_region(
-        upper_region_temps, upper_region_values, smoothing_factor
-    )
+    try:
+        # Try with default smoothing factor first
+        lower_spline = _fit_spline_to_region(
+            lower_region_temps, lower_region_values, smoothing_factor
+        )
+        upper_spline = _fit_spline_to_region(
+            upper_region_temps, upper_region_values, smoothing_factor
+        )
+    except Exception:
+        # If fitting fails, try with a more lenient smoothing factor
+        console.print(
+            "[yellow]Warning: Initial spline fitting failed, trying with adjusted parameters[/]"
+        )
+        # A larger smoothing factor allows more flexibility in the spline
+        adjusted_smoothing = (
+            len(lower_region_temps) * 10
+            if smoothing_factor is None
+            else smoothing_factor * 10
+        )
+
+        lower_spline = _fit_spline_to_region(
+            lower_region_temps, lower_region_values, adjusted_smoothing
+        )
+        upper_spline = _fit_spline_to_region(
+            upper_region_temps, upper_region_values, adjusted_smoothing
+        )
 
     # Get spline values at endpoints
     lower_endpoint_value = lower_spline(lower_temp)

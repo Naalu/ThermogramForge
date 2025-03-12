@@ -179,9 +179,5 @@ Thumbs.db
 
 # Project Specific
 # Ignore the following files in the project root
-data/raw/
-data/processed/
-data/interim/
-data/external/
-data/reference/
+data/
 verification_results/
