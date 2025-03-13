@@ -27,12 +27,12 @@ class TestSplineFitter:
         temp_range = np.linspace(45, 90, 450)
         self.x_thermo = temp_range
         # Create a curve with multiple peaks
-        peak1 = 0.3 * np.exp(-0.5 * ((temp_range - 63) / 2) ** 2)  # Peak around 63°C
-        peak2 = 0.2 * np.exp(-0.5 * ((temp_range - 70) / 2) ** 2)  # Peak around 70°C
-        peak3 = 0.15 * np.exp(-0.5 * ((temp_range - 77) / 2.5) ** 2)  # Peak around 77°C
+        peak1 = 0.3 * np.exp(-0.5 * ((temp_range - 63) / 2) ** 2)  # Peak ~ 63°C
+        peak2 = 0.2 * np.exp(-0.5 * ((temp_range - 70) / 2) ** 2)  # Peak ~ 70°C
+        peak3 = 0.15 * np.exp(-0.5 * ((temp_range - 77) / 2.5) ** 2)  # Peak ~ 77°C
         baseline = 0.02 * (temp_range - 65)  # Slight linear baseline
-        self.y_thermo = (
-            peak1 + peak2 + peak3 + baseline + 0.02 * np.random.randn(len(temp_range))
+        self.y_thermo = (peak1 + peak2 + peak3 + baseline) + 0.02 * np.random.randn(
+            len(temp_range)
         )
 
     def test_splinefitter_initialization(self) -> None:
