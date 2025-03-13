@@ -128,19 +128,13 @@ class TestSplineFitter:
         s = getattr(spline, "s_opt", None)
         assert s is not None
         assert s > 0, "Smoothing parameter should be positive"
-        assert s < len(self.x_thermo) * 100, (
-            "Smoothing parameter shouldn't be unreasonably large"
-        )
+        assert s < len(self.x_thermo) * 100, "Smoothing parameter shouldn't be too big"
 
         # For UnivariateSpline, we can also check the number of knots
         # More knots = less smoothing
         n_knots = len(spline.get_knots())
-        assert n_knots < len(self.x_thermo), (
-            "Number of knots should be less than number of data points"
-        )
-        assert n_knots > 5, (
-            "Number of knots should be reasonable for capturing main features"
-        )
+        assert n_knots < len(self.x_thermo), "There are more knots than data points"
+        assert n_knots > 5, "Number of knots should be reasonable to capturing features"
 
 
 # Add mock R comparison tests that will be updated once we have real R output
