@@ -55,3 +55,7 @@ Thumbs.db
 *.csv
 *.XLSX
 data/
+
+# uv
+uv.lock
+.python-version

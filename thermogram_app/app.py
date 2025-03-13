@@ -1,5 +1,5 @@
 """
-Main entry point for the Thermogram Analysis application.
+Main entry point for the ThermogramForge application.
 """
 
 import dash  # type: ignore
@@ -11,7 +11,7 @@ import tlbparam
 # Create the Dash app
 app = dash.Dash(
     __name__,
-    title="Thermogram Analysis",
+    title="ThermogramForge",
     update_title=None,
     suppress_callback_exceptions=True,
     meta_tags=[
@@ -27,7 +27,7 @@ app.layout = html.Div(
         html.Div(
             className="header",
             children=[
-                html.H1("Thermogram Analysis", className="app-title"),
+                html.H1("ThermogramForge", className="app-title"),
                 html.Div(
                     className="header-info",
                     children=[
@@ -47,7 +47,7 @@ app.layout = html.Div(
                 html.Div(
                     className="welcome-message",
                     children=[
-                        html.H2("Welcome to Thermogram Analysis"),
+                        html.H2("Welcome to ThermogramForge"),
                         html.P(
                             "This application provides tools for analyzing "
                             "thermogram data from thermal liquid biopsy (TLB)."
@@ -79,7 +79,7 @@ app.layout = html.Div(
         html.Div(
             className="footer",
             children=[
-                html.P("© 2025 NAU Thermogram Analysis Project"),
+                html.P("© 2025 NAU ThermogramForge Project"),
             ],
         ),
     ],

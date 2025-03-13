@@ -6,7 +6,7 @@ import sys
 sys.path.insert(0, os.path.abspath("../.."))
 
 # Project information
-project = "Thermogram Analysis"
+project = "ThermogramForge"
 copyright = "2025, Karl Reger"
 author = "Karl Reger"
 version = "0.1.0"

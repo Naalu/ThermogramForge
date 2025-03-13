@@ -1,5 +1,5 @@
-Thermogram Analysis Documentation
-================================
+ThermogramForge Documentation
+=============================
 
 A Python implementation of thermogram analysis tools for thermal liquid biopsy (TLB) data.
 

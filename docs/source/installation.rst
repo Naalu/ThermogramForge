@@ -13,8 +13,8 @@ Setup
 .. code-block:: bash
 
     # Clone the repository
-    git clone https://github.com/yourusername/thermogram-analysis.git
-    cd thermogram-analysis
+    git clone https://github.com/Naalu/ThermogramForge.git
+    cd ThermogramForge
 
     # Create a virtual environment with uv
     uv venv
