@@ -72,7 +72,7 @@ def generate_summary(
 class ThermogramMetrics:
     """Class for calculating thermogram metrics."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize ThermogramMetrics."""
         pass
 

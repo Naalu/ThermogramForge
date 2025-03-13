@@ -46,7 +46,7 @@ def detect_endpoints(
 class EndpointDetector:
     """Class for endpoint detection in thermogram data."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize EndpointDetector."""
         pass
 

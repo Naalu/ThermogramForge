@@ -44,7 +44,7 @@ def interpolate_thermogram(
 class ThermogramInterpolator:
     """Class for interpolating thermogram data."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize ThermogramInterpolator."""
         pass
 

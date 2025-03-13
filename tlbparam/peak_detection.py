@@ -59,7 +59,7 @@ def gen_fwhm(x: np.ndarray, temperatures: np.ndarray) -> float:
 class PeakDetector:
     """Class for detecting and characterizing peaks in thermogram data."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize PeakDetector."""
         pass
 

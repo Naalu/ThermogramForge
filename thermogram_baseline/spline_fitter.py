@@ -2,13 +2,14 @@
 SplineFitter module for fitting splines to thermogram data.
 
 This module implements custom spline fitting to match R's smooth.spline functionality,
-with a focus on generalized cross-validation (GCV) for automatic smoothing parameter selection.
+with a focus on generalized cross-validation (GCV) for automatic smoothing
+parameter selection.
 """
 
 from typing import Dict
 
 import numpy as np
-from scipy import interpolate
+from scipy import interpolate  # type: ignore
 
 
 class SplineFitter:
@@ -19,7 +20,7 @@ class SplineFitter:
     R's generalized cross-validation for smoothing parameter selection.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize SplineFitter."""
         pass
 
@@ -27,7 +28,8 @@ class SplineFitter:
         self, x: np.ndarray, y: np.ndarray
     ) -> interpolate.UnivariateSpline:
         """
-        Fit a spline with generalized cross-validation to mimic R's smooth.spline(cv=TRUE).
+        Fit a spline with generalized cross-validation to mimic
+        R's smooth.spline(cv=TRUE).
 
         Args:
             x: Array of x coordinates.

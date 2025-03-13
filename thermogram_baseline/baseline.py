@@ -32,7 +32,7 @@ def subtract_baseline(
 class BaselineSubtractor:
     """Class for baseline subtraction in thermogram data."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize BaselineSubtractor."""
         pass
 
