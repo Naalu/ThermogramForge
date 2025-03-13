@@ -1,7 +1,7 @@
 Contributing
 ===========
 
-We welcome contributions to the Thermogram Analysis project!
+We welcome contributions to the ThermogramForge project!
 
 Development Setup
 ---------------
