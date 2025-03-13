@@ -1,33 +1,30 @@
-# ThermogramForge
+# Thermogram Analysis
 
-A Python toolkit for thermal biopsy data analysis, including baseline subtraction, parameter calculation, and interactive visualization.
+A Python implementation of thermogram analysis tools for thermal liquid biopsy (TLB) data.
 
 ## Overview
 
-ThermogramForge is a modern Python implementation of thermogram analysis tools, designed to replace legacy R-based tools with improved performance, usability, and cross-platform compatibility.
+This project provides two main packages:
 
-## Components
+1. **thermogram_baseline**: For baseline subtraction in thermogram data
+2. **tlbparam**: For calculating metrics from thermogram data
 
-- **thermogram_baseline**: Package for baseline detection, subtraction, and signal processing
-- **tlbparam**: Package for parameter calculation and statistical analysis
-- **Web Application**: Interactive Dash-based interface for data visualization and processing
+It also includes a web-based user interface for interactive analysis.
+
+## Requirements
+
+- Python 3.10+
+- [uv](https://github.com/astral-sh/uv) package manager
 
 ## Installation
 
-*Coming soon*
-
-## Development
-
-### Setup Development Environment
-
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/ThermogramForge.git
-cd ThermogramForge
+git clone https://github.com/yourusername/thermogram-analysis.git
+cd thermogram-analysis
 
-# Set up virtual environment
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+# Create a virtual environment with uv
+uv venv
 
-# Install development dependencies
-pip install -e ".[dev]"
+# Install the package and its dependencies
+uv sync
