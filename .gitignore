@@ -20,6 +20,17 @@ wheels/
 .installed.cfg
 *.egg
 
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+.RDataTmp
+.RDataTmpDir
+.Rapp.history
+.Renviron
+.lintr
+
 # Environments
 .env
 .venv
