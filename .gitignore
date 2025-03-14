@@ -51,6 +51,7 @@ docs/build/
 .coverage
 htmlcov/
 .pytest_cache/
+tests/plots/
 
 # IDE
 .idea/

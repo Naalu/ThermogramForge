@@ -7,7 +7,7 @@ parameter selection.
 """
 
 import warnings
-from typing import Dict
+from typing import Dict, Optional, Tuple
 
 import numpy as np  # type: ignore
 from scipy import interpolate  # type: ignore
@@ -27,7 +27,7 @@ class SplineFitter:
         pass
 
     def fit_with_gcv(
-        self, x: np.ndarray, y: np.ndarray
+        self, x: np.ndarray, y: np.ndarray, spar: Optional[float] = None
     ) -> interpolate.UnivariateSpline:
         """
         Fit a spline with generalized cross-validation to mimic
@@ -36,6 +36,8 @@ class SplineFitter:
         Args:
             x: Array of x coordinates.
             y: Array of y coordinates.
+            spar: Optional smoothing parameter (0-1) similar to R's spar.
+                If None, determined automatically via GCV.
 
         Returns:
             A UnivariateSpline object with optimal smoothing parameter.
@@ -68,6 +70,7 @@ class SplineFitter:
             s = max(0.001, len(x_sorted) * 0.05)
             spline = interpolate.UnivariateSpline(x_sorted, y_sorted, s=s)
             spline.s_opt = s  # Store the optimal smoothing parameter
+            spline.cv_score = None  # No CV score available
             return spline
 
         # Sort data (required for spline fitting)
@@ -94,7 +97,68 @@ class SplineFitter:
             s = len(x_sorted) * 10
             spline = interpolate.UnivariateSpline(x_sorted, y_sorted, s=s)
             spline.s_opt = s  # Store the optimal smoothing parameter
+            spline.cv_score = None  # No CV score available
             return spline
+
+        # If spar is provided directly, convert to scipy's s parameter
+        if spar is not None:
+            # Convert spar (0-1) to scipy's s parameter
+            # R's spar=0 corresponds to interpolation (s ~ 0)
+            # R's spar=1 corresponds to high smoothing (s ~ n)
+            n = len(x_sorted)
+            if spar <= 0:
+                s = 0.0001  # Almost interpolation
+            elif spar >= 1:
+                s = n * 10  # Very smooth
+            else:
+                # Exponential mapping seems to work better than linear
+                # s = n * (1 - spar)  # Linear mapping
+                s = 0.0001 * np.exp((1 - spar) * np.log(n * 100 / 0.0001))
+
+            # Fit with the derived smoothing parameter
+            spline = interpolate.UnivariateSpline(x_sorted, y_sorted, s=s)
+            spline.s_opt = s
+            spline.cv_score = None  # No CV score since we didn't use GCV
+            return spline
+
+        # Use GCV to find optimal smoothing parameter
+        best_s, best_score = self._find_optimal_smoothing(x_sorted, y_sorted)
+
+        # Fit final spline with optimal smoothing parameter
+        spline = interpolate.UnivariateSpline(x_sorted, y_sorted, s=best_s)
+
+        # Store the optimal smoothing parameter for reference
+        spline.s_opt = best_s
+        spline.cv_score = best_score
+
+        # Try to convert scipy s to R spar (very approximate)
+        n = len(x_sorted)
+        if best_s <= 0.0001:
+            spar_approx = 0
+        elif best_s >= n * 10:
+            spar_approx = 1
+        else:
+            # Log-based inverse mapping
+            spar_approx = 1 - (np.log(best_s / 0.0001) / np.log(n * 100 / 0.0001))
+            spar_approx = max(0, min(1, spar_approx))  # Clamp to [0, 1]
+
+        spline.spar_approx = spar_approx
+
+        return spline
+
+    def _find_optimal_smoothing(
+        self, x: np.ndarray, y: np.ndarray
+    ) -> Tuple[float, float]:
+        """
+        Find optimal smoothing parameter using GCV.
+
+        Args:
+            x: x coordinates (sorted)
+            y: y coordinates
+
+        Returns:
+            Tuple of (optimal_s, best_gcv_score)
+        """
 
         # Define function to calculate GCV score for a given smoothing parameter
         def gcv_score(s_param: np.ndarray) -> float:
@@ -107,13 +171,13 @@ class SplineFitter:
                     return np.inf
 
                 # Fit spline with current smoothing parameter
-                spline = interpolate.UnivariateSpline(x_sorted, y_sorted, s=s)
+                spline = interpolate.UnivariateSpline(x, y, s=s)
 
                 # Calculate fitted values
-                y_fitted = spline(x_sorted)
+                y_fitted = spline(x)
 
                 # Calculate residuals
-                residuals = y_sorted - y_fitted
+                residuals = y - y_fitted
 
                 # Calculate RSS (residual sum of squares)
                 rss = np.sum(residuals**2)
@@ -121,7 +185,7 @@ class SplineFitter:
                 # Calculate effective degrees of freedom
                 # In UnivariateSpline, degrees of freedom is related
                 # to number of coefficients
-                n = len(x_sorted)
+                n = len(x)
                 df = n - spline.get_coeffs().size
 
                 # Calculate GCV score: n*RSS/(n-df)^2
@@ -136,12 +200,21 @@ class SplineFitter:
                 return np.inf
 
         # Find optimal smoothing parameter using optimization
-        # Try a range of initial values to avoid local minima
+        # Use a range of s values scaled to dataset size
+        n = len(x)
+
+        # Try a range of initial values based on dataset size
+        # These values are chosen to cover a wide range of smoothing levels
+        initial_s_values = [
+            0.001,  # Almost interpolation
+            0.01 * n,  # Low smoothing
+            0.1 * n,  # Medium smoothing
+            1.0 * n,  # High smoothing
+            10.0 * n,  # Very high smoothing
+        ]
+
         best_s = None
         best_score = np.inf
-
-        # Initial smoothing values to try (exponential range)
-        initial_s_values = [0.1, 1.0, 10.0, 100.0, len(x_sorted)]
 
         for s_init in initial_s_values:
             try:
@@ -164,18 +237,17 @@ class SplineFitter:
         if best_s is None or not np.isfinite(best_s):
             # Use a default smoothing parameter based on data size
             # The formula is a common heuristic: roughly n/10
-            best_s = max(0.1, len(x_sorted) * 0.1)
+            best_s = max(0.1, len(x) * 0.1)
+            best_score = np.inf
 
-        # Fit final spline with optimal smoothing parameter
-        spline = interpolate.UnivariateSpline(x_sorted, y_sorted, s=best_s)
-
-        # Store the optimal smoothing parameter for reference
-        spline.s_opt = best_s
-
-        return spline
+        return best_s, best_score
 
     def compare_with_r_output(
-        self, x: np.ndarray, y: np.ndarray, r_fitted: np.ndarray
+        self,
+        x: np.ndarray,
+        y: np.ndarray,
+        r_fitted: np.ndarray,
+        r_spar: Optional[float] = None,
     ) -> Dict[str, float]:
         """
         Compare Python spline fit with R output.
@@ -187,12 +259,19 @@ class SplineFitter:
             x: x coordinates
             y: y coordinates
             r_fitted: fitted values from R's smooth.spline
+            r_spar: Optional R smoothing parameter (spar) if available
 
         Returns:
             Dictionary with comparison metrics
         """
         # Fit using our implementation
-        spline = self.fit_with_gcv(x, y)
+        if r_spar is not None:
+            # If we know R's spar, use that directly
+            spline = self.fit_with_gcv(x, y, spar=r_spar)
+        else:
+            # Otherwise, use GCV
+            spline = self.fit_with_gcv(x, y)
+
         py_fitted = spline(x)
 
         # Calculate various comparison metrics
@@ -217,7 +296,9 @@ class SplineFitter:
             "max_absolute_difference": max_diff,
             "mean_relative_difference_percent": mean_rel_diff,
             "max_relative_difference_percent": max_rel_diff,
-            "optimal_smoothing_parameter": spline.s_opt,
+            "optimal_smoothing_parameter": float(getattr(spline, "s_opt", 0.0)),
+            "r_spar": float(r_spar if r_spar is not None else 0.0),
+            "python_spar_approx": float(getattr(spline, "spar_approx", 0.0)),
         }
 
     def _calculate_gcv_score(self, x: np.ndarray, y: np.ndarray, s: float) -> float:
