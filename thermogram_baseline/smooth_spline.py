@@ -355,9 +355,9 @@ class SmoothSpline:
                 except Exception:
                     # Approximate if that fails
                     residuals = unique_y - fitted_values
-                    self.cv_criterion = np.sum(unique_weights * residuals**2) / np.sum(
-                        unique_weights
-                    )
+                    self.cv_criterion = np.sum(
+                        unique_weights * residuals**2
+                    ) / np.sum(unique_weights)
             else:
                 # For GCV - with error handling
                 try:
@@ -373,9 +373,9 @@ class SmoothSpline:
                 except Exception:
                     # If GCV fails, use simple residual sum of squares
                     residuals = unique_y - fitted_values
-                    self.cv_criterion = np.sum(unique_weights * residuals**2) / np.sum(
-                        unique_weights
-                    )
+                    self.cv_criterion = np.sum(
+                        unique_weights * residuals**2
+                    ) / np.sum(unique_weights)
 
             # Compute penalized criterion
             self.pen_criterion = np.sum(
