@@ -355,9 +355,9 @@ class SmoothSpline:
                 except Exception:
                     # Approximate if that fails
                     residuals = unique_y - fitted_values
-                    self.cv_criterion = np.sum(
-                        unique_weights * residuals**2
-                    ) / np.sum(unique_weights)
+                    self.cv_criterion = np.sum(unique_weights * residuals**2) / np.sum(
+                        unique_weights
+                    )
             else:
                 # For GCV - with error handling
                 try:
@@ -373,9 +373,9 @@ class SmoothSpline:
                 except Exception:
                     # If GCV fails, use simple residual sum of squares
                     residuals = unique_y - fitted_values
-                    self.cv_criterion = np.sum(
-                        unique_weights * residuals**2
-                    ) / np.sum(unique_weights)
+                    self.cv_criterion = np.sum(unique_weights * residuals**2) / np.sum(
+                        unique_weights
+                    )
 
             # Compute penalized criterion
             self.pen_criterion = np.sum(
@@ -1829,9 +1829,9 @@ class SmoothSpline:
         - lambda_diff: Absolute difference in lambda parameter
         """
         try:
-            import rpy2.robjects as ro  # type: ignore[import-untyped]
-            import rpy2.robjects.numpy2ri  # type: ignore[import-untyped]
-            from rpy2.robjects.packages import importr  # type: ignore[import-untyped]
+            import rpy2.robjects as ro  # type: ignore
+            import rpy2.robjects.numpy2ri  # type: ignore
+            from rpy2.robjects.packages import importr  # type: ignore
         except ImportError:
             raise ImportError(
                 "rpy2 is required for comparing with R. Install with 'pip install rpy2'"
@@ -1910,9 +1910,9 @@ class SmoothSpline:
 if __name__ == "__main__":
     import time
 
-    import plotly.graph_objects as go
+    import plotly.graph_objects as go  # type: ignore
     import polars as pl
-    from plotly.subplots import make_subplots
+    from plotly.subplots import make_subplots  # type: ignore
 
     print("Testing SmoothSpline Implementation vs R's smooth.spline...")
 
