@@ -206,8 +206,8 @@ def test_complete_workflow(visualize: bool = False) -> None:
         out_dir.mkdir(exist_ok=True, parents=True)
 
         # Save as HTML (interactive) and PNG (static)
-        fig.write_html(out_dir / "integration_test_result.html")
-        fig.write_image(out_dir / "integration_test_result.png")
+        fig.write_html(str(out_dir / "integration_test_result.html"))
+        fig.write_image(str(out_dir / "integration_test_result.png"))
 
         print(f"Visualizations saved to {out_dir}")
 
@@ -324,8 +324,8 @@ def test_splinefitter_with_workflow(visualize: bool = False) -> None:
         out_dir.mkdir(exist_ok=True, parents=True)
 
         # Save visualizations
-        fig.write_html(out_dir / "spline_fit_result.html")
-        fig.write_image(out_dir / "spline_fit_result.png")
+        fig.write_html(str(out_dir / "spline_fit_result.html"))
+        fig.write_image(str(out_dir / "spline_fit_result.png"))
 
         print(f"Spline fit visualizations saved to {out_dir}")
 

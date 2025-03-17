@@ -71,3 +71,8 @@ data/
 # uv
 uv.lock
 .python-version
+
+# smooth_spline html
+smooth_spline_detail_comparison.html
+smooth_spline_grid_comparison.html
+smooth_spline_table_summary.html

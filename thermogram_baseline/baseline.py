@@ -3,8 +3,6 @@ Baseline subtraction module for thermogram analysis.
 
 This module provides functionality for subtracting baselines from thermogram data,
 replicating the functionality of the R ThermogramBaseline package.
-
-This is a minimal implementation for Sprint 1 that will be enhanced in Sprint 2.
 """
 
 from pathlib import Path
@@ -18,6 +16,9 @@ from scipy import stats  # type: ignore
 
 from .spline_fitter import SplineFitter
 
+# Create a singleton instance for performance
+_spline_fitter = SplineFitter()
+
 
 def subtract_baseline(
     data: pl.DataFrame,
@@ -26,6 +27,8 @@ def subtract_baseline(
     plot: bool = False,
     save_path: Optional[Path] = None,
     show_plot: bool = True,
+    use_r: Optional[bool] = None,
+    verbose: bool = False,
 ) -> Union[pl.DataFrame, Tuple[pl.DataFrame, go.Figure]]:
     """
     Subtract baseline from thermogram data.
@@ -40,6 +43,9 @@ def subtract_baseline(
         plot: Whether to generate plots showing the baseline subtraction
         save_path: Path to save the plot HTML file (if None, will not save)
         show_plot: Whether to display the plot in the notebook/browser
+        use_r: Whether to use R for spline fitting if available.
+               If None, uses the THERMOGRAM_FORGE_USE_R environment variable.
+        verbose: Whether to print verbose output
 
     Returns:
         If plot=False: DataFrame with Temperature and baseline-subtracted dCp columns
@@ -88,8 +94,12 @@ def subtract_baseline(
             f"must be less than max temperature ({max_temp})"
         )
 
-    # Create SplineFitter
-    fitter = SplineFitter()
+    # Use the global SplineFitter instance
+    fitter = _spline_fitter
+
+    # If verbose is True for this call, create a verbose fitter
+    if verbose:
+        fitter = SplineFitter(verbose=True)
 
     # Extract baseline regions
     lower_region = data.filter(pl.col("Temperature") < lwr_temp)
@@ -104,9 +114,9 @@ def subtract_baseline(
     upper_temp = upper_region.select("Temperature").to_numpy().flatten()
     upper_dcp = upper_region.select("dCp").to_numpy().flatten()
 
-    # Fit splines to lower and upper regions
+    # Fit splines to lower and upper regions using SplineFitter
     if len(lower_temp) > 3:  # Need at least 4 points for cubic spline
-        spline_lower = fitter.fit_with_gcv(lower_temp, lower_dcp)
+        spline_lower = fitter.fit_with_gcv(lower_temp, lower_dcp, use_r=use_r)
         lower_fitted = spline_lower(lower_temp)
         lower_region = lower_region.with_columns(pl.Series("baseline", lower_fitted))
     else:
@@ -125,7 +135,7 @@ def subtract_baseline(
             )
 
     if len(upper_temp) > 3:  # Need at least 4 points for cubic spline
-        spline_upper = fitter.fit_with_gcv(upper_temp, upper_dcp)
+        spline_upper = fitter.fit_with_gcv(upper_temp, upper_dcp, use_r=use_r)
         upper_fitted = spline_upper(upper_temp)
         upper_region = upper_region.with_columns(pl.Series("baseline", upper_fitted))
     else:

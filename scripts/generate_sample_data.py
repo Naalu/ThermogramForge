@@ -187,10 +187,10 @@ def main() -> None:
     fig.update_yaxes(title_text="dCp (kJ/mol·K)")
 
     # Save as HTML for interactive viewing
-    fig.write_html(data_dir / "thermogram_samples.html")
+    fig.write_html(str(data_dir / "thermogram_samples.html"))
 
     # Save as PNG for static viewing
-    fig.write_image(data_dir / "thermogram_samples.png")
+    fig.write_image(str(data_dir / "thermogram_samples.png"))
 
     print(f"Saved interactive plot to {data_dir}/thermogram_samples.html")
     print(f"Saved static plot to {data_dir}/thermogram_samples.png")
