@@ -48,9 +48,11 @@ def subtract_baseline(
         verbose: Whether to print verbose output
 
     Returns:
-        If plot=False: DataFrame with Temperature and baseline-subtracted
-                dCp columns
-        If plot=True: Tuple of (DataFrame, Figure object)
+        Union[pl.DataFrame, Tuple[pl.DataFrame, go.Figure]]:
+            If plot=False:
+                DataFrame with Temperature and baseline-subtracted dCp columns
+            If plot=True:
+                Tuple containing (DataFrame with baseline-subtracted data, Plot figure)
 
     Raises:
         ValueError: If inputs don't meet requirements:

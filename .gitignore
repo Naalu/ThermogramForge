@@ -52,6 +52,7 @@ docs/build/
 htmlcov/
 .pytest_cache/
 tests/plots/
+tests/output/
 
 # IDE
 .idea/
@@ -72,7 +73,7 @@ data/
 uv.lock
 .python-version
 
-# smooth_spline html
+# smooth_spline html - this should get fixed
 smooth_spline_detail_comparison.html
 smooth_spline_grid_comparison.html
 smooth_spline_table_summary.html
