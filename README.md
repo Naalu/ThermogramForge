@@ -30,22 +30,8 @@ cd ThermogramForge
 uv venv
 
 # Install the package and its dependencies
-uv sync
-
-# Alternatively with pip
-pip install -e .
+uv pip install -e .
 ```
-
-## Project Configuration
-
-This project uses:
-
-- `pyproject.toml` as the primary configuration file for Python tools and dependencies
-- `.editorconfig` for editor-specific settings
-- `.lintr` for R-specific linting configurations (used with R integration code)
-
-Requirements files (`requirements.txt` and `requirements-dev.txt`) are generated from `pyproject.toml`
-using the script at `scripts/generate_requirements.py`.
 
 ### Installation with R Integration (Recommended)
 
@@ -53,7 +39,7 @@ For optimal baseline subtraction that precisely matches the original R implement
 
 ```bash
 # Install with R integration support
-pip install -e ".[r-integration]"
+uv pip install -e ".[r-integration]"
 ```
 
 This requires:
@@ -122,26 +108,7 @@ baseline_subtracted = subtract_baseline_with_custom_spline(
 )
 ```
 
-### Visualizing Results
-
-```python
-from thermogram_baseline.visualization import plot_baseline_subtraction
-
-# Create an interactive plot with before/after
-fig = plot_baseline_subtraction(
-    data, 
-    baseline_subtracted, 
-    endpoints.lower, 
-    endpoints.upper,
-    show_original=True,
-    show_baseline=True
-)
-
-# Save the figure
-fig.write_html("baseline_subtraction.html")
-```
-
-## Web Application
+### Web Application
 
 ThermogramForge includes a web application for interactive data analysis:
 
@@ -157,8 +124,39 @@ Then navigate to <http://127.0.0.1:8050/> in your browser.
 For more detailed documentation:
 
 - [API Reference](docs/source/api.rst)
-- [Contributing Guidelines](docs/source/contributing.rst)
-- [Development Notes](docs/source/development.rst)
+- [User Guide](docs/source/usage.rst)
+- [Installation](docs/source/installation.rst)
+
+## Development
+
+To set up a development environment:
+
+```bash
+# Create a virtual environment with uv
+uv venv
+
+# Install development dependencies
+uv pip install -e ".[dev]"
+
+# Run tests
+pytest
+
+# Check code formatting and linting
+ruff check .
+black --check .
+mypy .
+```
+
+## Project Configuration
+
+This project uses:
+
+- `pyproject.toml` as the primary configuration file for Python tools and dependencies
+- `.editorconfig` for editor-specific settings
+- `.lintr` for R-specific linting configurations (used with R integration code)
+
+Requirements files (`requirements.txt` and `requirements-dev.txt`) are generated from `pyproject.toml`
+using the script at `scripts/generate_requirements.py`.
 
 ## License
 

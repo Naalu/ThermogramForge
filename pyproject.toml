@@ -95,6 +95,22 @@ warn_unused_configs = true
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
 
+# Ignore errors in third-party libraries
+[[tool.mypy.overrides]]
+module = ["numpy.*", "scipy.*", "plotly.*", "rpy2.*"]
+ignore_missing_imports = true
+
+# Be less strict with scripts and tests
+[[tool.mypy.overrides]]
+module = "scripts.*"
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = "test_*.py"
