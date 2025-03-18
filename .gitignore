@@ -1,21 +1,21 @@
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# IDE and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.bak
+
 # Python
 __pycache__/
 *.py[cod]
 *.class
 *.so
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
@@ -31,7 +31,10 @@ wheels/
 .Renviron
 .lintr
 
-# Environments
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# Virtual environments
 .env
 .venv
 env/
@@ -39,12 +42,23 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.python-version
 
-# PyInstaller
-dist/
+# Build and distribution
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
 
-# Sphinx documentation
+# Documentation
 docs/build/
 
 # Testing
@@ -54,26 +68,14 @@ htmlcov/
 tests/plots/
 tests/output/
 
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# OS specific
-.DS_Store
-Thumbs.db
-
-# Data
+# Data files
 *.csv
 *.XLSX
 data/
 
-# uv
+# Project specific ( Possible candidates for future alterations )
 uv.lock
-.python-version
-
-# smooth_spline html - this should get fixed
 smooth_spline_detail_comparison.html
 smooth_spline_grid_comparison.html
 smooth_spline_table_summary.html
+interpolation_plot.png
