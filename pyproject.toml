@@ -22,6 +22,7 @@ dependencies = [
     "plotly>=5.14.0",
     "statsmodels>=0.14.0",
     "rich>=13.0.0",
+    "dash-bootstrap-components>=1.4.0",
 ]
 
 [project.optional-dependencies]
@@ -37,9 +38,13 @@ dev = [
     "mypy>=1.0.0",
     "ruff>=0.0.1",
     "black>=23.0.0",
-    "sphinx>=7.0.0",
-    "sphinx_rtd_theme>=1.2.0",
     "pyinstaller>=5.13.0",
+    "black>=25.1.0",
+    "mypy>=1.15.0",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.9.10",
+    "pre-commit>=2.15.0",
 ]
 full = [
     "rpy2>=3.5.0",
@@ -53,6 +58,16 @@ full = [
     "sphinx_rtd_theme>=1.2.0",
     "pyinstaller>=5.13.0",
 ]
+test = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]
+doc = [
+    "sphinx>=7.0.0",
+    "sphinx_rtd_theme>=1.2.0",
+]
+
+
 
 [build-system]
 requires = ["hatchling"]
@@ -107,3 +122,4 @@ export = [
 
 [project.scripts]
 ThermogramForge = "thermogram_app.app:app.run_server"
+thermogram-app = "thermogram_app.app:main"
