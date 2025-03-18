@@ -36,6 +36,17 @@ uv sync
 pip install -e .
 ```
 
+## Project Configuration
+
+This project uses:
+
+- `pyproject.toml` as the primary configuration file for Python tools and dependencies
+- `.editorconfig` for editor-specific settings
+- `.lintr` for R-specific linting configurations (used with R integration code)
+
+Requirements files (`requirements.txt` and `requirements-dev.txt`) are generated from `pyproject.toml`
+using the script at `scripts/generate_requirements.py`.
+
 ### Installation with R Integration (Recommended)
 
 For optimal baseline subtraction that precisely matches the original R implementation's behavior:
