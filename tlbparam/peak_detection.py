@@ -163,9 +163,9 @@ class PeakDetector:
         # Calculate FWHM for the maximum peak
         try:
             fwhm = gen_fwhm(values, temperatures)
-            peaks["FWHM"] = {"peak_height": fwhm, "peak_temp": 0.0}
+            peaks["FWHM"] = {"fwhm": fwhm}
         except ValueError:
             # Handle the case where FWHM cannot be calculated
-            peaks["FWHM"] = {"peak_height": 0.0, "peak_temp": 0.0}
+            peaks["FWHM"] = {"fwhm": 0.0}
 
         return peaks

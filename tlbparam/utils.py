@@ -16,7 +16,7 @@ import polars as pl
 def load_thermograms(
     file: Union[str, Path],
     sheet: str = "Sheet1",
-    blank_row: int = 1,
+    blank_row: int = 0,
     temps: Optional[List[str]] = None,
     use_lazy: bool = True,
 ) -> pl.DataFrame:
@@ -90,52 +90,30 @@ def load_thermograms(
                 empty_df = empty_df.with_columns(pl.lit(None).alias(temp))
             return empty_df
 
-        # Manual transpose operation (without using pandas)
-        # First get column names (except first column if it exists)
-        if raw_data.width > 1:
-            # First column might be row labels
-            sample_names = raw_data.columns[1:]
-            # Get values from the first column as temperature indices
-            temp_indices = (
-                raw_data.select(pl.col(raw_data.columns[0])).to_series().to_list()
-            )
+        # Check if we need to transpose the data
+        # Look for temperature columns in the first row
+        if any(temp in raw_data.columns for temp in temps):
+            # No need to transpose, just select the required columns
+            # Skip blank rows if needed
+            if blank_row > 0:
+                raw_data = raw_data.slice(blank_row, raw_data.height)
+            # Keep first column (Sample Codes) and matching temperature columns
+            result = raw_data.select(["SampleCode"] + temps)
         else:
-            # No sample labels, use generic names
-            sample_names = [f"Sample{i + 1}" for i in range(raw_data.width)]
-            # Generate temperature indices
-            temp_indices = [f"Row{i + 1}" for i in range(raw_data.height)]
+            # Transpose the data to have samples as rows and temperatures as columns
+            # Skip blank rows if needed
+            if blank_row > 0:
+                raw_data = raw_data.slice(blank_row, raw_data.height)
 
-        # Skip blank rows if specified
-        if blank_row > 0:
-            if blank_row < len(temp_indices):
-                temp_indices = temp_indices[blank_row:]
-                # Get data rows after blank rows
-                raw_data = raw_data.slice(blank_row)
-            else:
-                # Not enough rows
-                empty_df = pl.DataFrame({"SampleCode": []})
-                for temp in temps:
-                    empty_df = empty_df.with_columns(pl.lit(None).alias(temp))
-                return empty_df
+            # Transpose the data using melt operation
+            result = raw_data.melt(id_vars=["SampleCode"], variable_name="Temperature")
+            # Rename value column to dCp
+            result = result.rename({"value": "dCp"})
+            # Convert temperature column to float
+            result = result.with_columns(pl.col("Temperature").cast(pl.Float64))
 
-        # Create result dictionary with SampleCode column
-        result_dict = {"SampleCode": sample_names}
-
-        # Process all temperature values at once using expression-based operations
-        for i, _ in enumerate(temp_indices):
-            if i < len(temps):
-                temp_col = temps[i]
-                # Skip if we don't have enough rows
-                if i < raw_data.height:
-                    # Convert row to a Series of values for all samples
-                    if raw_data.width > 1:
-                        # Skip first column (used for temp indices)
-                        result_dict[temp_col] = raw_data.row(i)[1:]  # type: ignore
-                    else:
-                        result_dict[temp_col] = raw_data.row(i)  # type: ignore
-
-        # Create result DataFrame
-        result = pl.DataFrame(result_dict)
+            # Select only required temperature columns
+            result = result.filter(pl.col("Temperature").is_in(temps))
 
         # Ensure all expected temperature columns exist (more efficiently)
         missing_temps = [temp for temp in temps if temp not in result.columns]
@@ -417,7 +395,9 @@ def convert_long_to_wide(
         if temp_grid is None:
             # Create temporary column with temperature labels for pivoting
             temp_labels = data.with_columns(
-                pl.col(temp_col).map_elements(lambda t: f"T{t:.1f}").alias("temp_label")
+                pl.col(temp_col)
+                .map_elements(lambda t: f"T{t:.1f}", return_dtype=pl.Utf8)
+                .alias("temp_label")
             )
 
             # Use Polars pivot operation

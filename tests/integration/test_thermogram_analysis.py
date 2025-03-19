@@ -149,14 +149,14 @@ def test_full_workflow_integration():
         assert 50 <= peaks["Peak F"]["peak_temp"] <= 54
 
         # FWHM should be positive
-        assert peaks["FWHM"]["value"] > 0
+        assert peaks["FWHM"]["fwhm"] > 0.0
 
         print("\nIntegration test results:")
         print(
             f"Detected endpoints: Lower={endpoints.lower:.2f}, "
             f"Upper={endpoints.upper:.2f}"
         )
-        print(f"FWHM: {peaks['FWHM']['value']:.2f}")
+        print(f"FWHM: {peaks['FWHM']['fwhm']:.2f}")
         for peak_name in ["Peak 1", "Peak 2", "Peak 3", "Peak F"]:
             print(
                 f"{peak_name}: Height={peaks[peak_name]['peak_height']:.4f}, "

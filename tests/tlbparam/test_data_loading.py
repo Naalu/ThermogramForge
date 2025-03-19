@@ -84,11 +84,16 @@ def test_load_thermograms_csv(temp_csv_file):
     for temp in temps:
         assert temp in result.columns, f"Result should have column {temp}"
 
-    # In future: Check that we have the right number of rows (samples)
+    # Check that we have the right number of rows (samples)
+    assert (
+        result.height == 3
+    ), f"Result should have 3 rows (samples), got {result.height}"
 
     # Check that the data values are numeric
     for temp in temps:
-        assert result[temp].dtype == pl.Float64, f"Column {temp} should be Float64"
+        assert (
+            result[temp].dtype == pl.Float64
+        ), f"Column {temp} should be Float64, but is {result[temp].dtype}"
 
 
 def test_load_thermograms_excel():
@@ -99,7 +104,6 @@ def test_load_thermograms_excel():
 
     # Skip if openpyxl is not available
     if importlib.util.find_spec("openpyxl") is None:
-        pytest.skip("openpyxl package not available")
         pytest.skip("openpyxl package not available")
 
     # Create test data
@@ -112,7 +116,7 @@ def test_load_thermograms_excel():
     try:
         # Test loading the Excel file
         temps = [f"T{temp:.1f}" for temp in np.arange(45.0, 47.1, 0.5)]
-        result = load_thermograms(temp_file.name, temps=temps)
+        result = load_thermograms(temp_file.name, temps=temps, blank_row=0)
 
         # Check the result
         assert isinstance(result, pl.DataFrame), "Result should be a polars DataFrame"
@@ -401,3 +405,127 @@ def test_error_handling():
 
     with pytest.raises(ValueError):
         convert_wide_to_long(pl.DataFrame({"WrongColumn": [1, 2, 3]}))
+
+
+def main():
+    """Run all tests with proper setup and detailed output for debugging."""
+    import traceback
+    from contextlib import contextmanager
+
+    @contextmanager
+    def test_case(name):
+        """Context manager to handle test case execution with better error reporting."""
+        print(f"\n{'=' * 80}\nRunning test: {name}\n{'-' * 80}")
+        try:
+            yield
+            print(f"\n✅ {name} PASSED")
+        except Exception as e:
+            print(f"\n❌ {name} FAILED: {type(e).__name__}: {e}")
+            print("\nTraceback:")
+            traceback.print_exc()
+            print("\n")
+
+    def setup_csv_fixture():
+        """Create and return a temporary CSV fixture."""
+        data = create_test_wide_data()
+        with tempfile.NamedTemporaryFile(suffix=".csv", delete=False) as temp_file:
+            data.write_csv(temp_file.name)
+        print(f"Created temporary CSV file: {temp_file.name}")
+        print(f"Data preview:\n{data.head(3)}")
+        return temp_file.name, data
+
+    # Track files to clean up
+    temp_files = []
+
+    try:
+        # Run tests with CSV fixture
+        with test_case("test_load_thermograms_csv"):
+            csv_path, csv_data = setup_csv_fixture()
+            temp_files.append(csv_path)
+            test_load_thermograms_csv((csv_path, csv_data))
+
+        # Run test with Excel fixture if possible
+        with test_case("test_load_thermograms_excel"):
+            if importlib.util.find_spec("openpyxl") is not None:
+                data = create_test_wide_data()
+                with tempfile.NamedTemporaryFile(
+                    suffix=".xlsx", delete=False
+                ) as temp_file:
+                    data.write_excel(temp_file.name)
+                    temp_files.append(temp_file.name)
+                    print(f"Created temporary Excel file: {temp_file.name}")
+                test_load_thermograms_excel()
+            else:
+                print("Skipping test_load_thermograms_excel: openpyxl not available")
+
+        # Run raw thermogram test
+        with test_case("test_load_raw_thermograms"):
+            csv_content = create_test_raw_data()
+            with tempfile.NamedTemporaryFile(suffix=".csv", delete=False) as temp_file:
+                temp_file.write(csv_content.encode("utf-8"))
+                temp_files.append(temp_file.name)
+                print(f"Created temporary raw thermogram file: {temp_file.name}")
+            test_load_raw_thermograms()
+
+        # Run large raw thermogram test with more verbose output
+        with test_case("test_load_raw_thermograms_large"):
+            print("Creating large test dataset (this might take a moment)...")
+            csv_content = "T41a,41a,T41b,41b,T41c,41c,T41d,41d\n"
+            # Add sample rows to the content
+            for i in range(5):  # Just add 5 rows for the preview
+                line_parts = []
+                for j in range(4):
+                    temp = 20 + i * 0.1 + j * 0.01
+                    value = np.sin(i / (5 + j)) * 10
+                    line_parts.extend([f"{temp:.5f}", f"{value:.5f}"])
+                csv_content += ",".join(line_parts) + "\n"
+            print(f"Sample content:\n{csv_content}")
+
+            # Now create the actual test file
+            print("Writing full test file with 1000 data points per sample...")
+            csv_content = "T41a,41a,T41b,41b,T41c,41c,T41d,41d\n"
+            for i in range(1000):
+                line_parts = []
+                for j in range(4):
+                    temp = 20 + i * 0.1 + j * 0.01
+                    value = np.sin(i / (5 + j)) * 10
+                    line_parts.extend([f"{temp:.5f}", f"{value:.5f}"])
+                csv_content += ",".join(line_parts) + "\n"
+
+            with tempfile.NamedTemporaryFile(suffix=".csv", delete=False) as temp_file:
+                temp_file.write(csv_content.encode("utf-8"))
+                temp_files.append(temp_file.name)
+                print(f"Created temporary large raw thermogram file: {temp_file.name}")
+            test_load_raw_thermograms_large()
+
+        # Run conversion tests
+        with test_case("test_convert_long_to_wide"):
+            test_convert_long_to_wide()
+
+        with test_case("test_convert_long_to_wide_with_grid"):
+            test_convert_long_to_wide_with_grid()
+
+        with test_case("test_convert_wide_to_long"):
+            test_convert_wide_to_long()
+
+        # Run error handling tests
+        with test_case("test_error_handling"):
+            test_error_handling()
+
+        print("\n" + "=" * 80)
+        print("All tests completed!")
+
+    finally:
+        # Clean up temporary files
+        print("\nCleaning up temporary files...")
+        for file_path in temp_files:
+            if os.path.exists(file_path):
+                try:
+                    os.remove(file_path)
+                    print(f"Removed: {file_path}")
+                except Exception as e:
+                    print(f"Failed to remove {file_path}: {e}")
+
+
+if __name__ == "__main__":
+    main()

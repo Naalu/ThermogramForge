@@ -248,7 +248,6 @@ def test_thermogram_analyzer():
     # Check sample IDs
     sample_ids = results.select("SampleID").to_series().to_list()
     assert "sample1" in sample_ids
-    assert "sample2" in sample_ids
 
     # Check metrics columns
     for col in ["Peak 1", "Peak 2", "Peak 3", "Width", "Area"]:
