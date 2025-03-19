@@ -8,7 +8,7 @@ and visualizing thermogram data.
 import base64
 import io
 import tempfile
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union, cast
 
 import dash  # type: ignore
 import dash_bootstrap_components as dbc  # type: ignore
@@ -31,8 +31,8 @@ app = dash.Dash(
     suppress_callback_exceptions=True,
 )
 
-# App layout
-app.layout = dbc.Container(
+# Create layout separately and then assign to avoid the "read-only" mypy error
+layout = dbc.Container(
     [
         # Header
         dbc.Row(
@@ -229,6 +229,9 @@ app.layout = dbc.Container(
     fluid=True,
 )
 
+# Assign layout to app
+app.layout = layout  # type: ignore
+
 
 # Callbacks
 
@@ -245,11 +248,14 @@ def update_upload_status(
     if not contents or not filenames:
         return html.Div("No files uploaded yet.")
 
-    return html.Div(
-        [
-            html.P(f"Uploaded {len(contents)} file(s):"),
-            html.Ul([html.Li(filename) for filename in filenames]),
-        ]
+    return cast(
+        Component,
+        html.Div(
+            [
+                html.P(f"Uploaded {len(contents)} file(s):"),
+                html.Ul([html.Li(filename) for filename in filenames]),
+            ]
+        ),
     )
 
 
@@ -285,9 +291,9 @@ def process_thermograms(
     if not contents or not filenames:
         return (
             go.Figure(),
-            "No data to process.",
-            "No metrics available.",
-            "No data available.",
+            html.Div("No data to process."),
+            html.Div("No metrics available."),
+            html.Div("No data available."),
         )
 
     # Process the first file for now
@@ -308,9 +314,9 @@ def process_thermograms(
         else:
             return (
                 go.Figure(),
-                f"Unsupported file type: {filenames[0]}",
-                "No metrics available.",
-                "No data available.",
+                html.Div(f"Unsupported file type: {filenames[0]}"),
+                html.Div("No metrics available."),
+                html.Div("No data available."),
             )
 
         # Check if the data has the right columns
@@ -321,9 +327,9 @@ def process_thermograms(
             else:
                 return (
                     go.Figure(),
-                    "Data must have Temperature and dCp columns.",
-                    "No metrics available.",
-                    "No data available.",
+                    html.Div("Data must have Temperature and dCp columns."),
+                    html.Div("No metrics available."),
+                    html.Div("No data available."),
                 )
 
         # Create a figure for visualization
@@ -450,10 +456,12 @@ def process_thermograms(
             peak_info_children = ["No peak information available."]
 
         # Create metrics info
-        metrics_info_children = ["Advanced metrics calculation not implemented yet."]
+        metrics_info_children: Union[Component, str] = html.Div(
+            "Advanced metrics calculation not implemented yet."
+        )
 
         # Create data preview
-        data_preview_children = [
+        data_preview_children: Union[Component, List[Component]] = [
             html.P(
                 f"Data shape: {processed_df.shape[0]} rows × "
                 f"{processed_df.shape[1]} columns"
@@ -480,9 +488,9 @@ def process_thermograms(
     except Exception as e:
         return (
             go.Figure(),
-            f"Error processing file: {str(e)}",
-            "No metrics available.",
-            "No data available.",
+            html.Div(f"Error processing file: {str(e)}"),
+            html.Div("No metrics available."),
+            html.Div("No data available."),
         )
 
 
