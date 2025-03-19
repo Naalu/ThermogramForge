@@ -5,17 +5,21 @@ This module implements the calculation of various metrics from thermogram data,
 including peak metrics, ratio metrics, valley metrics, and global metrics.
 """
 
-from typing import Dict, List, Optional
+from typing import Dict, List, Mapping, Optional, Union, cast
 
 import numpy as np
 import polars as pl
 
 from tlbparam.peak_detection import gen_fwhm, gen_peak
 
+# Type aliases for clarity
+MetricsDict = Dict[str, float]
+ExtendedMetricsDict = Dict[str, Union[str, float]]
+
 
 def calculate_peak_metrics(
     data: pl.DataFrame, temp_col: str = "Temperature", value_col: str = "dCp"
-) -> Dict[str, float]:
+) -> MetricsDict:
     """
     Calculate peak-related metrics for thermogram data.
 
@@ -40,7 +44,7 @@ def calculate_peak_metrics(
     }
 
     # Calculate peak metrics
-    metrics = {}
+    metrics: MetricsDict = {}
     for peak_name, peak_range in peak_ranges.items():
         peak_info = gen_peak(values, temperatures, peak_range)
         metrics[peak_name] = peak_info["peak_height"]
@@ -49,7 +53,7 @@ def calculate_peak_metrics(
     return metrics
 
 
-def calculate_ratio_metrics(peak_metrics: Dict[str, float]) -> Dict[str, float]:
+def calculate_ratio_metrics(peak_metrics: MetricsDict) -> MetricsDict:
     """
     Calculate ratio metrics between peaks.
 
@@ -59,7 +63,7 @@ def calculate_ratio_metrics(peak_metrics: Dict[str, float]) -> Dict[str, float]:
     Returns:
         Dictionary with ratio metrics
     """
-    metrics = {}
+    metrics: MetricsDict = {}
 
     # Avoid division by zero
     if peak_metrics.get("Peak 2", 0) != 0:
@@ -85,10 +89,10 @@ def calculate_ratio_metrics(peak_metrics: Dict[str, float]) -> Dict[str, float]:
 
 def calculate_valley_metrics(
     data: pl.DataFrame,
-    peak_metrics: Dict[str, float],
+    peak_metrics: MetricsDict,
     temp_col: str = "Temperature",
     value_col: str = "dCp",
-) -> Dict[str, float]:
+) -> MetricsDict:
     """
     Calculate valley-related metrics for thermogram data.
 
@@ -101,7 +105,7 @@ def calculate_valley_metrics(
     Returns:
         Dictionary with valley metrics
     """
-    metrics = {}
+    metrics: MetricsDict = {}
 
     # Extract data
     temperatures = data.select(pl.col(temp_col)).to_numpy().flatten()
@@ -150,7 +154,7 @@ def calculate_valley_metrics(
 
 def calculate_global_metrics(
     data: pl.DataFrame, temp_col: str = "Temperature", value_col: str = "dCp"
-) -> Dict[str, float]:
+) -> MetricsDict:
     """
     Calculate global metrics for thermogram data.
 
@@ -162,7 +166,7 @@ def calculate_global_metrics(
     Returns:
         Dictionary with global metrics
     """
-    metrics = {}
+    metrics: MetricsDict = {}
 
     # Extract data
     temperatures = data.select(pl.col(temp_col)).to_numpy().flatten()
@@ -215,7 +219,7 @@ def generate_summary(
     temp_col: str = "Temperature",
     value_col: str = "dCp",
     sample_id_col: Optional[str] = None,
-) -> Dict[str, float]:
+) -> ExtendedMetricsDict:
     """
     Generate a summary of thermogram metrics.
 
@@ -232,7 +236,7 @@ def generate_summary(
         Dictionary with all metrics
     """
     # Initialize metrics dictionary
-    metrics = {}
+    metrics: ExtendedMetricsDict = {}
 
     # Add sample ID if present
     if sample_id_col and sample_id_col in data.columns:
@@ -242,19 +246,19 @@ def generate_summary(
 
     # Calculate peak metrics
     peak_metrics = calculate_peak_metrics(data, temp_col, value_col)
-    metrics.update(peak_metrics)
+    metrics.update(cast(Mapping[str, Union[str, float]], peak_metrics))
 
     # Calculate ratio metrics
     ratio_metrics = calculate_ratio_metrics(peak_metrics)
-    metrics.update(ratio_metrics)
+    metrics.update(cast(Mapping[str, Union[str, float]], ratio_metrics))
 
     # Calculate valley metrics
     valley_metrics = calculate_valley_metrics(data, peak_metrics, temp_col, value_col)
-    metrics.update(valley_metrics)
+    metrics.update(cast(Mapping[str, Union[str, float]], valley_metrics))
 
     # Calculate global metrics
     global_metrics = calculate_global_metrics(data, temp_col, value_col)
-    metrics.update(global_metrics)
+    metrics.update(cast(Mapping[str, Union[str, float]], global_metrics))
 
     return metrics
 
@@ -272,7 +276,7 @@ class ThermogramAnalyzer:
         temp_col: str = "Temperature",
         value_col: str = "dCp",
         sample_id_col: Optional[str] = None,
-    ) -> Dict[str, float]:
+    ) -> ExtendedMetricsDict:
         """
         Calculate all thermogram metrics.
 

@@ -301,7 +301,7 @@ def load_raw_thermograms(
 
 def _process_sample_pair(
     raw_data: pl.DataFrame, temp_col: str, value_col: str
-) -> pl.DataFrame | None:
+) -> Optional[pl.DataFrame]:
     """
     Process a single sample pair (temperature and value columns) from raw data.
 
@@ -417,7 +417,7 @@ def convert_long_to_wide(
         if temp_grid is None:
             # Create temporary column with temperature labels for pivoting
             temp_labels = data.with_columns(
-                pl.col(temp_col).map(lambda t: f"T{t:.1f}").alias("temp_label")
+                pl.col(temp_col).map_elements(lambda t: f"T{t:.1f}").alias("temp_label")
             )
 
             # Use Polars pivot operation
@@ -450,17 +450,20 @@ def convert_long_to_wide(
                 {temp_col: [None] * len(sample_ids) for temp_col in temp_cols}
             )
 
-            # Create mapping of sample ID to index
+            # Create mapping of sample ID to idx
             sample_id_to_idx = {sample_id: i for i, sample_id in enumerate(sample_ids)}
 
             # Process each group efficiently with apply
-            for sample_id, group in zip(
-                sample_groups.groups[sample_id_col], sample_groups.groups.data
-            ):
+            for group_tuple in sample_groups:
+                # Properly unpack the tuple: (key, dataframe)
+                group_key, group_df = group_tuple
+
+                # The group key is the sample ID
+                sample_id = group_key
                 sample_idx = sample_id_to_idx[sample_id]
 
                 # For each temperature/value pair, find closest grid point
-                for temp, value in zip(group[temp_col], group[value_col]):
+                for temp, value in zip(group_df[temp_col], group_df[value_col]):
                     # Find closest grid temp
                     grid_idx = np.abs(temps - temp).argmin()
                     grid_temp = temps[grid_idx]
@@ -520,11 +523,10 @@ def convert_long_to_wide(
                         result_dict[temp_col_name][sample_idx] = value
         else:
             # When using actual temperatures, we can directly map
-            for _, row in enumerate(data.iter_rows(named=True)):
-                sample = row[sample_id_col]
-                temp = row[temp_col]
-                value = row[value_col]
-
+            # Process rows using Polars expressions
+            for sample, temp, value in data.select(
+                [pl.col(sample_id_col), pl.col(temp_col), pl.col(value_col)]
+            ).iter_rows():
                 # Format temperature column name
                 temp_col_name = f"T{temp:.1f}"
 

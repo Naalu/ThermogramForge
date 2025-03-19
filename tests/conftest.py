@@ -2,10 +2,11 @@
 Global pytest configuration and fixtures.
 """
 
-import os
-import pytest
+from importlib.util import find_spec
+
 import numpy as np
 import polars as pl
+import pytest
 
 # Set random seed for reproducibility
 np.random.seed(42)
@@ -36,9 +37,4 @@ def sample_thermogram_data():
 @pytest.fixture
 def has_r():
     """Check if R is available for testing."""
-    try:
-        import rpy2
-
-        return True
-    except ImportError:
-        return False
+    return find_spec("rpy2") is not None

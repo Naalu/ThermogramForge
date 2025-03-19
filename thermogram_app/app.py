@@ -10,12 +10,12 @@ import io
 import tempfile
 from typing import Dict, List, Optional, Tuple, Union
 
-import dash
-import dash_bootstrap_components as dbc
+import dash  # type: ignore
+import dash_bootstrap_components as dbc  # type: ignore
 import plotly.graph_objects as go
 import polars as pl
-from dash import Input, Output, State, callback, dcc, html
-from dash.development.base_component import Component
+from dash import Input, Output, State, callback, dcc, html  # type: ignore
+from dash.development.base_component import Component  # type: ignore
 
 import thermogram_baseline
 from thermogram_baseline.baseline import subtract_baseline
@@ -242,7 +242,7 @@ def update_upload_status(
     contents: Optional[List[str]], filenames: Optional[List[str]]
 ) -> Component:
     """Update upload status after files are uploaded."""
-    if not contents:
+    if not contents or not filenames:
         return html.Div("No files uploaded yet.")
 
     return html.Div(
@@ -282,7 +282,7 @@ def process_thermograms(
     Union[Component, List[Component]],
 ]:
     """Process uploaded thermograms and update results."""
-    if not contents:
+    if not contents or not filenames:
         return (
             go.Figure(),
             "No data to process.",
@@ -354,7 +354,14 @@ def process_thermograms(
             lower_temp, upper_temp = baseline_range
 
         # Perform baseline subtraction
-        baseline_subtracted = subtract_baseline(df, lower_temp, upper_temp)
+        baseline_result = subtract_baseline(df, lower_temp, upper_temp)
+
+        # Handle the case where subtract_baseline returns either DataFrame or tuple
+        if isinstance(baseline_result, tuple):
+            baseline_subtracted = baseline_result[0]
+        else:
+            baseline_subtracted = baseline_result
+
         processed_df = baseline_subtracted
 
         # Add baseline-subtracted data

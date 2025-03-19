@@ -69,21 +69,23 @@ def test_direct_comparison(pattern: str = "sine") -> None:
     # Skip if rpy2 not available
     try:
         import rpy2.robjects as ro  # type: ignore
+        from rpy2.robjects.vectors import ListVector  # type: ignore
 
         # Safely get R version in a more robust way
         try:
             # Get R version string - properly access the R object
-            r_version_info = ro.r("R.version")
+            r_version_info = ro.r("R.version")  # type: ignore
             # Access the version.string element correctly
             if (
-                hasattr(r_version_info, "names")
+                isinstance(r_version_info, ListVector)
+                and hasattr(r_version_info, "names")
                 and "version.string" in r_version_info.names
             ):
-                r_version = r_version_info.rx2("version.string")[0]
+                r_version = r_version_info.rx2("version.string")[0]  # type: ignore
             else:
                 # Fallback to a simpler approach
                 r_version = str(
-                    ro.r('paste0("R version ", R.version$major, ".", R.version$minor)')[
+                    ro.r('paste0("R version ", R.version$major, ".", R.version$minor)')[  # type: ignore
                         0
                     ]
                 )
