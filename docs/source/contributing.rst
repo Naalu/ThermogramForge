@@ -57,10 +57,10 @@ Development Workflow
 3. Run tests
 
    .. code-block:: bash
-       
+
        # Run all tests
        pytest
-       
+
        # Run tests with coverage
        pytest --cov=thermogram_baseline --cov=tlbparam --cov-report=term-missing
 
@@ -72,7 +72,7 @@ Development Workflow
        python -m ruff check .
        python -m black --check .
        python -m mypy .
-       
+
        # Fix formatting issues automatically
        python -m black .
 

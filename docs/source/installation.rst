@@ -48,7 +48,7 @@ Setup
 
        # Using uv
        uv pip install -e ".[r-integration]"
-       
+
        # Or using pip
        pip install -e ".[r-integration]"
 
@@ -69,7 +69,7 @@ For development, install additional dependencies:
 
     # Using uv
     uv pip install -e ".[dev]"
-    
+
     # Or using pip
     pip install -e ".[dev]"
 
@@ -84,7 +84,7 @@ To run the web application:
 
     # Using Python module
     python -m thermogram_app.app
-    
+
     # Navigate to http://127.0.0.1:8050/ in your browser
 
 Standalone Executables
@@ -96,10 +96,10 @@ Standalone executables can be built for Windows and macOS:
 
     # Build for Windows
     python scripts/build_windows.py
-    
+
     # Build for macOS
     python scripts/build_macos.py
-    
+
 The executables will be available in the `dist` directory.
 
 Troubleshooting
@@ -118,6 +118,6 @@ For detailed logs and help with troubleshooting, run:
 
     # Enable verbose output
     export THERMOGRAM_FORGE_VERBOSE=1
-    
+
     # Run the installation
     pip install -e . -v

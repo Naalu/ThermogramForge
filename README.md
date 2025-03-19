@@ -100,8 +100,8 @@ fitter = SplineFitter(use_r=True)  # Use R for exact compatibility
 
 # Customize baseline subtraction
 baseline_subtracted = subtract_baseline_with_custom_spline(
-    data, 
-    lower_temp=55.0, 
+    data,
+    lower_temp=55.0,
     upper_temp=85.0,
     spline_fitter=fitter,
     spar=0.5  # Control smoothing parameter

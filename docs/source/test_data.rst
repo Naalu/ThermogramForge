@@ -11,7 +11,7 @@ These files are generated using the scripts in the ``tests`` directory:
 **Basic Thermogram Data**
 
 - **basic_thermogram.csv**: Standard thermogram with multiple peaks and moderate noise
-  
+
   - Contains three peaks at approximately 63°C, 70°C, and 77°C
   - Has a linear baseline
   - Includes moderate Gaussian noise (0.01 standard deviation)
@@ -19,22 +19,22 @@ These files are generated using the scripts in the ``tests`` directory:
 **Edge Case Thermograms**
 
 - **sparse_thermogram.csv**: Thermogram with sparse data points
-  
+
   - Contains only 20% of the normal number of points
   - Still maintains a recognizable peak shape
 
 - **noisy_thermogram.csv**: Thermogram with high noise levels
-  
+
   - Contains standard peaks but with high noise (0.2 standard deviation)
   - Tests the robustness of peak detection algorithms
 
 - **flat_thermogram.csv**: Nearly flat thermogram (baseline only)
-  
+
   - Contains only a linear baseline and minimal noise
   - Used to test behavior when no significant peaks are present
 
 - **single_peak_thermogram.csv**: Thermogram with a single sharp peak
-  
+
   - Contains one narrow peak at 65°C
   - Used to test simple peak detection
 
@@ -64,51 +64,51 @@ This real-world data is particularly valuable for validating the software agains
 Thermogram Reference Data
 -----------------------
 
-The ``tests/data/thermogram_reference/`` directory contains more sophisticated thermogram 
+The ``tests/data/thermogram_reference/`` directory contains more sophisticated thermogram
 data designed for comprehensive testing and validation:
 
 - **standard_thermogram.csv**: Reference thermogram with well-defined peaks
-  
+
   - Contains peaks at 55°C, 63°C, 70°C, and 77°C
   - Used as the primary reference for validation
 
 - **shifted_peaks_thermogram.csv**: Same peaks shifted to different temperatures
-  
+
   - Tests algorithm robustness to peak position changes
 
 - **varied_heights_thermogram.csv**: Same peaks with different heights
-  
+
   - Tests sensitivity to variations in peak amplitude
 
 - **steep_baseline_thermogram.csv**: Thermogram with a steeper baseline
-  
+
   - Tests baseline subtraction with more significant slopes
 
 - **nonlinear_baseline_thermogram.csv**: Thermogram with quadratic baseline
-  
+
   - Tests baseline subtraction with nonlinear baselines
 
 - **noise_*_thermogram.csv**: Thermograms with different noise levels
-  
+
   - Tests algorithm performance under various noise conditions
 
 R Reference Data
 --------------
 
-For validating the spline fitting implementation against R, reference data in 
-``tests/data/r_reference/`` provides direct comparisons between R's ``smooth.spline`` 
+For validating the spline fitting implementation against R, reference data in
+``tests/data/r_reference/`` provides direct comparisons between R's ``smooth.spline``
 and Python implementations:
 
 - **sine_input.csv**, **sine_fitted.csv**, **sine_params.csv**: Sine wave test pattern
-  
+
   - Tests spline fitting with oscillatory data
 
 - **exp_input.csv**, **exp_fitted.csv**, **exp_params.csv**: Exponential test pattern
-  
+
   - Tests spline fitting with monotonic, nonlinear data
 
 - **peaks_input.csv**, **peaks_fitted.csv**, **peaks_params.csv**: Multi-peak pattern
-  
+
   - Tests spline fitting with thermogram-like data
 
 Each input file contains the x and y values, while fitted files contain the spline fit
@@ -124,10 +124,10 @@ To regenerate test data, run:
 
     # Basic test data
     python tests/generate_test_data.py
-    
+
     # R reference data (requires R and rpy2)
     python tests/generate_r_reference.py
-    
+
     # Thermogram reference data
     python tests/generate_thermogram_reference.py
 
@@ -139,16 +139,16 @@ These scripts use utility functions that can also be imported directly for custo
 .. code-block:: python
 
     from tests.data_generators import create_basic_thermogram, create_edge_case_thermogram
-    
+
     # Create custom thermogram data
     my_data = create_basic_thermogram(n_points=200, noise_level=0.05)
-    
+
     # Create specific edge case data
     noisy_data = create_edge_case_thermogram('noisy', n_points=150)
-    
+
     # Create realistic thermogram with custom parameters
     from tests.generate_thermogram_reference import generate_realistic_thermogram
-    
+
     custom_thermogram = generate_realistic_thermogram(
         peak_centers=[58, 65, 72, 80],
         peak_heights=[0.15, 0.25, 0.3, 0.1],
