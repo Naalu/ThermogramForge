@@ -44,12 +44,15 @@ def subtract_baseline(
         save_path: Path to save the plot HTML file (if None, will not save)
         show_plot: Whether to display the plot in the notebook/browser
         use_r: Whether to use R for spline fitting if available.
-               If None, uses the THERMOGRAM_FORGE_USE_R environment variable.
+                If None, uses the THERMOGRAM_FORGE_USE_R environment variable.
         verbose: Whether to print verbose output
 
     Returns:
-        If plot=False: DataFrame with Temperature and baseline-subtracted dCp columns
-        If plot=True: Tuple of (DataFrame, Figure object)
+        Union[pl.DataFrame, Tuple[pl.DataFrame, go.Figure]]:
+            If plot=False:
+                DataFrame with Temperature and baseline-subtracted dCp columns
+            If plot=True:
+                Tuple containing (DataFrame with baseline-subtracted data, Plot figure)
 
     Raises:
         ValueError: If inputs don't meet requirements:
