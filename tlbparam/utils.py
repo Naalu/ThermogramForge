@@ -122,7 +122,7 @@ def load_thermograms(
         result_dict = {"SampleCode": sample_names}
 
         # Process all temperature values at once using expression-based operations
-        for i, temp_idx in enumerate(temp_indices):
+        for i, _ in enumerate(temp_indices):
             if i < len(temps):
                 temp_col = temps[i]
                 # Skip if we don't have enough rows
@@ -130,9 +130,9 @@ def load_thermograms(
                     # Convert row to a Series of values for all samples
                     if raw_data.width > 1:
                         # Skip first column (used for temp indices)
-                        result_dict[temp_col] = raw_data.row(i)[1:]
+                        result_dict[temp_col] = raw_data.row(i)[1:]  # type: ignore
                     else:
-                        result_dict[temp_col] = raw_data.row(i)
+                        result_dict[temp_col] = raw_data.row(i)  # type: ignore
 
         # Create result DataFrame
         result = pl.DataFrame(result_dict)
@@ -301,7 +301,7 @@ def load_raw_thermograms(
 
 def _process_sample_pair(
     raw_data: pl.DataFrame, temp_col: str, value_col: str
-) -> pl.DataFrame:
+) -> pl.DataFrame | None:
     """
     Process a single sample pair (temperature and value columns) from raw data.
 

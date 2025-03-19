@@ -113,7 +113,9 @@ disallow_incomplete_defs = false
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-python_files = "test_*.py"
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
 markers = [
     "unit: Unit tests",
     "integration: Integration tests",
@@ -126,6 +128,23 @@ filterwarnings = [
     "ignore::DeprecationWarning:rpy2.*"
 ]
 addopts = "--cov=thermogram_baseline --cov=tlbparam --cov-report=term-missing"
+
+[tool.coverage.run]
+source = ["thermogram_baseline", "tlbparam"]
+omit = ["tests/*", "setup.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "pass",
+    "raise ImportError"
+]
+
+[tool.coverage.html]
+directory = "htmlcov"
 
 [tool.hatch.build.targets.wheel]
 packages = [

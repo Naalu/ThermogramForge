@@ -12,6 +12,7 @@ A Python implementation of thermogram analysis tools for thermal liquid biopsy (
    api
    r_integration
    contributing
+   test_data
 
 Indices and tables
 ==================

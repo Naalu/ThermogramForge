@@ -8,12 +8,14 @@ and visualizing thermogram data.
 import base64
 import io
 import tempfile
+from typing import Dict, List, Optional, Tuple, Union
 
 import dash
 import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 import polars as pl
 from dash import Input, Output, State, callback, dcc, html
+from dash.development.base_component import Component
 
 import thermogram_baseline
 from thermogram_baseline.baseline import subtract_baseline
@@ -236,7 +238,9 @@ app.layout = dbc.Container(
     Input("upload-data", "contents"),
     State("upload-data", "filename"),
 )
-def update_upload_status(contents, filenames):
+def update_upload_status(
+    contents: Optional[List[str]], filenames: Optional[List[str]]
+) -> Component:
     """Update upload status after files are uploaded."""
     if not contents:
         return html.Div("No files uploaded yet.")
@@ -266,8 +270,17 @@ def update_upload_status(contents, filenames):
     prevent_initial_call=True,
 )
 def process_thermograms(
-    n_clicks, contents, filenames, baseline_range, processing_options
-):
+    n_clicks: int,
+    contents: Optional[List[str]],
+    filenames: Optional[List[str]],
+    baseline_range: List[float],
+    processing_options: List[str],
+) -> Tuple[
+    go.Figure,
+    Union[Component, str],
+    Union[Component, str],
+    Union[Component, List[Component]],
+]:
     """Process uploaded thermograms and update results."""
     if not contents:
         return (
@@ -471,7 +484,7 @@ def process_thermograms(
     Input("btn-download", "n_clicks"),
     prevent_initial_call=True,
 )
-def download_processed_data(n_clicks):
+def download_processed_data(n_clicks: int) -> Dict[str, str]:
     """Download processed data."""
     # In a real application, we would need to store the processed data in a dcc.Store
     # For this example, we'll just return a placeholder

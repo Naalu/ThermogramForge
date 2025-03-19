@@ -4,7 +4,7 @@
 import tomli
 
 
-def main():
+def main() -> None:
     """Generate requirements files from pyproject.toml."""
     # Read pyproject.toml
     with open("pyproject.toml", "rb") as f:
