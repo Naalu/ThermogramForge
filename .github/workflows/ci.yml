@@ -50,9 +50,9 @@ jobs:
         if: ${{ matrix.r }}
         run: |
           if [ -e ".Rprofile" ]; then
-            sudo Rscript -e "source('.Rprofile'); install.packages('stats')"
+            sudo Rscript -e "source('.Rprofile'); install.packages('stats', repos='https://cloud.r-project.org/')"
           else
-            sudo Rscript -e "install.packages('stats')"
+            sudo Rscript -e "install.packages('stats', repos='https://cloud.r-project.org/')"
           fi
 
       - name: Install dependencies
