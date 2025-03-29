@@ -247,9 +247,9 @@ def update_upload_status(
 ) -> Component:
     """Update upload status after files are uploaded."""
     if not contents or not filenames:
-        return html.Div("No files uploaded yet.")
+        return html.Div("No files uploaded yet.")  # type: ignore
 
-    return html.Div(
+    return html.Div(  # type: ignore
         [
             html.P(f"Uploaded {len(contents)} file(s):"),
             html.Ul([html.Li(filename) for filename in filenames]),
