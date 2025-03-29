@@ -12,6 +12,7 @@ from typing import Dict, List, Optional, Tuple, Union, cast
 
 import dash  # type: ignore
 import dash_bootstrap_components as dbc  # type: ignore
+import numpy as np
 import plotly.graph_objects as go
 import polars as pl
 from dash import Input, Output, State, callback, dcc, html  # type: ignore
@@ -300,8 +301,18 @@ def process_thermograms(
     content_type, content_string = contents[0].split(",")
     decoded = base64.b64decode(content_string)
 
-    # Determine file type and read data
+    # Create empty figure with proper layout
+    fig = go.Figure()
+    fig.update_layout(
+        title="Thermogram Analysis",
+        xaxis_title="Temperature (°C)",
+        yaxis_title="dCp (kJ/mol·K)",
+        template="plotly_white",
+        height=600,
+    )
+
     try:
+        # Determine file type and read data
         if filenames[0].endswith(".csv"):
             # Read CSV
             df = pl.read_csv(io.StringIO(decoded.decode("utf-8")))
@@ -313,7 +324,7 @@ def process_thermograms(
                 df = pl.read_excel(tmp.name)
         else:
             return (
-                go.Figure(),
+                fig,
                 html.Div(f"Unsupported file type: {filenames[0]}"),
                 html.Div("No metrics available."),
                 html.Div("No data available."),
@@ -326,23 +337,21 @@ def process_thermograms(
                 df = df.rename({df.columns[0]: "Temperature", df.columns[1]: "dCp"})
             else:
                 return (
-                    go.Figure(),
+                    fig,
                     html.Div("Data must have Temperature and dCp columns."),
                     html.Div("No metrics available."),
                     html.Div("No data available."),
                 )
 
-        # Create a figure for visualization
-        fig = go.Figure()
-
-        # Add original data
+        # Add original data to figure
         fig.add_trace(
             go.Scatter(
                 x=df.select("Temperature").to_numpy().flatten(),
                 y=df.select("dCp").to_numpy().flatten(),
-                mode="lines",
+                mode="lines+markers",
                 name="Original Data",
-                line=dict(color="blue"),
+                line=dict(color="blue", width=1),
+                marker=dict(size=3),
             )
         )
 
@@ -358,6 +367,20 @@ def process_thermograms(
         else:
             # Use manual endpoints
             lower_temp, upper_temp = baseline_range
+
+        # Add endpoint markers to the figure
+        fig.add_vline(
+            x=lower_temp,
+            line=dict(color="red", width=1, dash="dash"),
+            annotation_text="Lower Endpoint",
+            annotation_position="top right",
+        )
+        fig.add_vline(
+            x=upper_temp,
+            line=dict(color="red", width=1, dash="dash"),
+            annotation_text="Upper Endpoint",
+            annotation_position="top left",
+        )
 
         # Perform baseline subtraction
         baseline_result = subtract_baseline(df, lower_temp, upper_temp)
@@ -375,15 +398,17 @@ def process_thermograms(
             go.Scatter(
                 x=baseline_subtracted.select("Temperature").to_numpy().flatten(),
                 y=baseline_subtracted.select("dCp").to_numpy().flatten(),
-                mode="lines",
+                mode="lines+markers",
                 name="Baseline Subtracted",
-                line=dict(color="green"),
+                line=dict(color="green", width=1),
+                marker=dict(size=3),
             )
         )
 
         # Interpolation
         if "interpolate" in processing_options:
-            interpolated = interpolate_thermogram(baseline_subtracted)
+            grid_temp = np.arange(45, 90.1, 0.1)
+            interpolated = interpolate_thermogram(baseline_subtracted, grid_temp)
             processed_df = interpolated
 
             # Add interpolated data
@@ -393,7 +418,7 @@ def process_thermograms(
                     y=interpolated.select("dCp").to_numpy().flatten(),
                     mode="lines",
                     name="Interpolated",
-                    line=dict(color="red"),
+                    line=dict(color="red", width=1.5),
                 )
             )
 
@@ -411,25 +436,17 @@ def process_thermograms(
                             y=[peak_info["peak_height"]],
                             mode="markers",
                             name=f"{peak_name} ({peak_info['peak_temp']:.1f}°C)",
-                            marker=dict(size=10, color="red"),
+                            marker=dict(size=10, color="red", symbol="star"),
                         )
                     )
-
-        # Update plot layout
-        fig.update_layout(
-            title="Thermogram Analysis",
-            xaxis_title="Temperature (°C)",
-            yaxis_title="dCp (kJ/mol·K)",
-            legend_title="Data",
-            template="plotly_white",
-        )
 
         # Create peak info display
         peak_info_children = []
         if peaks:
             peak_info_table = html.Table(
                 # Header
-                [html.Tr([html.Th(col) for col in ["Peak", "Height", "Temperature"]])] +
+                [html.Tr([html.Th(col) for col in ["Peak", "Height", "Temperature"]])]
+                +
                 # Rows
                 [
                     html.Tr(
@@ -443,7 +460,7 @@ def process_thermograms(
                             html.Td(
                                 f"{peak_info['peak_temp']:.2f}°C"
                                 if peak_name != "FWHM"
-                                else f"{peak_info['value']:.2f}°C"
+                                else f"{peak_info['fwhm']:.2f}°C"
                             ),
                         ]
                     )
@@ -453,15 +470,15 @@ def process_thermograms(
             )
             peak_info_children = [peak_info_table]
         else:
-            peak_info_children = ["No peak information available."]
+            peak_info_children = html.Div("No peak information available.")
 
         # Create metrics info
-        metrics_info_children: Union[Component, str] = html.Div(
+        metrics_info_children = html.Div(
             "Advanced metrics calculation not implemented yet."
         )
 
-        # Create data preview
-        data_preview_children: Union[Component, List[Component]] = [
+        # Create data preview with better formatting
+        data_preview_children = [
             html.P(
                 f"Data shape: {processed_df.shape[0]} rows × "
                 f"{processed_df.shape[1]} columns"
@@ -487,11 +504,137 @@ def process_thermograms(
 
     except Exception as e:
         return (
-            go.Figure(),
+            fig,
             html.Div(f"Error processing file: {str(e)}"),
             html.Div("No metrics available."),
             html.Div("No data available."),
         )
+
+
+@callback(
+    Output("thermogram-plot", "figure", allow_duplicate=True),
+    [Input("baseline-range", "value")],
+    [
+        State("upload-data", "contents"),
+        State("upload-data", "filename"),
+        State("processing-options", "value"),
+    ],
+    prevent_initial_call=True,
+)
+def update_endpoints(
+    baseline_range: List[float],
+    contents: Optional[List[str]],
+    filenames: Optional[List[str]],
+    processing_options: List[str],
+) -> go.Figure:
+    """Update visualization when endpoints are manually changed."""
+    if not contents or not filenames:
+        # Nothing to update
+        return go.Figure()
+
+    # Create figure
+    fig = go.Figure()
+    fig.update_layout(
+        title="Thermogram Analysis (Manual Endpoints)",
+        xaxis_title="Temperature (°C)",
+        yaxis_title="dCp (kJ/mol·K)",
+        template="plotly_white",
+        height=600,
+    )
+
+    try:
+        # Process the first file for now
+        content_type, content_string = contents[0].split(",")
+        decoded = base64.b64decode(content_string)
+
+        # Read data
+        if filenames[0].endswith(".csv"):
+            df = pl.read_csv(io.StringIO(decoded.decode("utf-8")))
+        elif filenames[0].endswith((".xls", ".xlsx")):
+            with tempfile.NamedTemporaryFile(suffix=filenames[0].split(".")[-1]) as tmp:
+                tmp.write(decoded)
+                tmp.flush()
+                df = pl.read_excel(tmp.name)
+        else:
+            return fig
+
+        # Check and fix columns if needed
+        if "Temperature" not in df.columns or "dCp" not in df.columns:
+            if len(df.columns) >= 2:
+                df = df.rename({df.columns[0]: "Temperature", df.columns[1]: "dCp"})
+            else:
+                return fig
+
+        # Add original data to figure
+        fig.add_trace(
+            go.Scatter(
+                x=df.select("Temperature").to_numpy().flatten(),
+                y=df.select("dCp").to_numpy().flatten(),
+                mode="lines+markers",
+                name="Original Data",
+                line=dict(color="blue", width=1),
+                marker=dict(size=3),
+            )
+        )
+
+        # Use manual endpoints
+        lower_temp, upper_temp = baseline_range
+
+        # Add endpoint markers
+        fig.add_vline(
+            x=lower_temp,
+            line=dict(color="red", width=1, dash="dash"),
+            annotation_text="Lower Endpoint",
+            annotation_position="top right",
+        )
+        fig.add_vline(
+            x=upper_temp,
+            line=dict(color="red", width=1, dash="dash"),
+            annotation_text="Upper Endpoint",
+            annotation_position="top left",
+        )
+
+        # Perform baseline subtraction with manual endpoints
+        baseline_result = subtract_baseline(df, lower_temp, upper_temp)
+
+        # Extract the result
+        if isinstance(baseline_result, tuple):
+            baseline_subtracted = baseline_result[0]
+        else:
+            baseline_subtracted = baseline_result
+
+        # Add baseline-subtracted data
+        fig.add_trace(
+            go.Scatter(
+                x=baseline_subtracted.select("Temperature").to_numpy().flatten(),
+                y=baseline_subtracted.select("dCp").to_numpy().flatten(),
+                mode="lines+markers",
+                name="Baseline Subtracted",
+                line=dict(color="green", width=1),
+                marker=dict(size=3),
+            )
+        )
+
+        # Add interpolation if selected
+        if "interpolate" in processing_options:
+            grid_temp = np.arange(45, 90.1, 0.1)
+            interpolated = interpolate_thermogram(baseline_subtracted, grid_temp)
+
+            fig.add_trace(
+                go.Scatter(
+                    x=interpolated.select("Temperature").to_numpy().flatten(),
+                    y=interpolated.select("dCp").to_numpy().flatten(),
+                    mode="lines",
+                    name="Interpolated",
+                    line=dict(color="red", width=1.5),
+                )
+            )
+
+        return fig
+
+    except Exception as e:
+        print(f"Error updating endpoints: {str(e)}")
+        return fig
 
 
 @callback(
