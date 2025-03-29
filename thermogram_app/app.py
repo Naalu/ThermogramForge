@@ -8,7 +8,7 @@ and visualizing thermogram data.
 import base64
 import io
 import tempfile
-from typing import Dict, List, Optional, Tuple, Union, cast
+from typing import Dict, List, Optional, Tuple, Union
 
 import dash  # type: ignore
 import dash_bootstrap_components as dbc  # type: ignore
@@ -249,14 +249,11 @@ def update_upload_status(
     if not contents or not filenames:
         return html.Div("No files uploaded yet.")
 
-    return cast(
-        Component,
-        html.Div(
-            [
-                html.P(f"Uploaded {len(contents)} file(s):"),
-                html.Ul([html.Li(filename) for filename in filenames]),
-            ]
-        ),
+    return html.Div(
+        [
+            html.P(f"Uploaded {len(contents)} file(s):"),
+            html.Ul([html.Li(filename) for filename in filenames]),
+        ]
     )
 
 
@@ -441,7 +438,9 @@ def process_thermograms(
                     )
 
         # Create peak info display
-        peak_info_children = []
+        peak_info_children: Union[Component, str] = html.Div(
+            "No peak information available."
+        )
         if peaks:
             peak_info_table = html.Table(
                 # Header
@@ -467,32 +466,32 @@ def process_thermograms(
                 ],
                 className="table table-striped table-sm",
             )
-            peak_info_children = [peak_info_table]
-        else:
-            peak_info_children = html.Div("No peak information available.")
+            peak_info_children = peak_info_table
 
         # Create metrics info
-        metrics_info_children = html.Div(
+        metrics_info_children: Union[Component, str] = html.Div(
             "Advanced metrics calculation not implemented yet."
         )
 
         # Create data preview with better formatting
-        data_preview_children = [
-            html.P(
-                f"Data shape: {processed_df.shape[0]} rows × "
-                f"{processed_df.shape[1]} columns"
-            ),
-            html.Div(
-                dbc.Table.from_dataframe(
-                    processed_df.head(10).to_pandas(),
-                    striped=True,
-                    bordered=True,
-                    hover=True,
-                    responsive=True,
-                    size="sm",
-                )
-            ),
-        ]
+        data_preview_children: Union[Component, List[Component]] = html.Div(
+            [
+                html.P(
+                    f"Data shape: {processed_df.shape[0]} rows × "
+                    f"{processed_df.shape[1]} columns"
+                ),
+                html.Div(
+                    dbc.Table.from_dataframe(
+                        processed_df.head(10).to_pandas(),
+                        striped=True,
+                        bordered=True,
+                        hover=True,
+                        responsive=True,
+                        size="sm",
+                    )
+                ),
+            ]
+        )
 
         return (
             fig,
