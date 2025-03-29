@@ -33,6 +33,8 @@ Spline Fitting
    :undoc-members:
    :show-inheritance:
 
+For a detailed analysis of the SplineFitter implementation compared to R's smooth.spline, see :doc:`design/spline_fitter_analysis`.
+
 Interpolation
 ~~~~~~~~~~~
 
