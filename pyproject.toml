@@ -1,9 +1,13 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "ThermogramForge"
 version = "0.1.0"
 description = "Python implementation of thermogram analysis tools"
 authors = [
-    {name = "Karl Reger", email = "karl.reger@example.com"}
+    {name = "Karl Reger", email = "k.c.reger@gmail.com"}
 ]
 readme = "README.md"
 requires-python = ">=3.10"
@@ -13,6 +17,14 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+keywords = [
+    "thermogram",
+    "analysis",
+    "science",
+    "research",
+    "data",
+    "visualization",
+    ]
 
 dependencies = [
     "polars>=0.18.0",
@@ -22,41 +34,52 @@ dependencies = [
     "plotly>=5.14.0",
     "statsmodels>=0.14.0",
     "rich>=13.0.0",
+    "dash-bootstrap-components>=1.4.0",
+    "openpyxl>=3.1.5",
+    "xlsxwriter>=3.2.2",
+    "fastexcel>=0.13.0",
 ]
 
 [project.optional-dependencies]
-r-integration = [
-    "rpy2>=3.5.0",
+# Core functionality extensions
+r-integration = ["rpy2>=3.5.0"]
+export = ["kaleido>=0.2.1"]  # For static image export in Plotly
+
+# Development dependencies
+test = [
+    "pytest>=8.3.5",
+    "pytest-cov>=6.0.0",
 ]
-export = [
-    "kaleido>=0.2.1",  # For static image export in Plotly
+doc = [
+    "sphinx>=8.1.3",
+    "sphinx_rtd_theme>=1.2.0",
 ]
 dev = [
-    "pytest>=7.0.0",
-    "pytest-cov>=4.0.0",
-    "mypy>=1.0.0",
-    "ruff>=0.0.1",
-    "black>=23.0.0",
-    "sphinx>=7.0.0",
-    "sphinx_rtd_theme>=1.2.0",
+    "black>=25.1.0",
+    "mypy>=1.15.0",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.9.10",
+    "pre-commit>=2.15.0",
     "pyinstaller>=5.13.0",
 ]
 full = [
     "rpy2>=3.5.0",
     "kaleido>=0.2.1",
-    "pytest>=7.0.0",
-    "pytest-cov>=4.0.0",
-    "mypy>=1.0.0",
-    "ruff>=0.0.1", 
-    "black>=23.0.0",
-    "sphinx>=7.0.0",
+    "black>=25.1.0",
+    "mypy>=1.15.0",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.9.10",
+    "sphinx>=8.1.3",
     "sphinx_rtd_theme>=1.2.0",
     "pyinstaller>=5.13.0",
+    "openpyxl>=3.1.0",
 ]
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+[project.scripts]
+ThermogramForge = "thermogram_app.app:app.run_server"
+thermogram-app = "thermogram_app.app:main"
 
 [tool.ruff]
 line-length = 88
@@ -76,34 +99,60 @@ warn_unused_configs = true
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
 
+# Ignore errors in third-party libraries
+[[tool.mypy.overrides]]
+module = ["numpy.*", "scipy.*", "plotly.*", "rpy2.*"]
+ignore_missing_imports = true
+
+# Be less strict with scripts and tests
+[[tool.mypy.overrides]]
+module = "scripts.*"
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+markers = [
+    "unit: Unit tests",
+    "integration: Integration tests",
+    "r_validation: Tests requiring R",
+    "performance: Performance tests"
+]
+filterwarnings = [
+    "ignore::DeprecationWarning:_plotly_utils.basevalidators",
+    "ignore::DeprecationWarning:kaleido.scopes.base",
+    "ignore::DeprecationWarning:rpy2.*"
+]
+addopts = "--cov=thermogram_baseline --cov=tlbparam --cov-report=term-missing"
+
+[tool.coverage.run]
+source = ["thermogram_baseline", "tlbparam"]
+omit = ["tests/*", "setup.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "pass",
+    "raise ImportError"
+]
+
+[tool.coverage.html]
+directory = "htmlcov"
+
 [tool.hatch.build.targets.wheel]
 packages = [
     "thermogram_baseline",
     "thermogram_app",
     "tlbparam"
 ]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = "test_*.py"
-
-[dependency-groups]
-dev = [
-    "black>=25.1.0",
-    "mypy>=1.15.0",
-    "pytest>=8.3.5",
-    "pytest-cov>=6.0.0",
-    "ruff>=0.9.10",
-    "sphinx>=8.1.3",
-    "sphinx_rtd_theme>=1.2.0",
-    "pyinstaller>=5.13.0",
-]
-r-integration = [
-    "rpy2>=3.5.0",
-]
-export = [
-    "kaleido>=0.2.1",
-]
-
-[project.scripts]
-ThermogramForge = "thermogram_app.app:app.run_server"

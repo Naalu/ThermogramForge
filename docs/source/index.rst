@@ -10,7 +10,15 @@ A Python implementation of thermogram analysis tools for thermal liquid biopsy (
    installation
    usage
    api
+   r_integration
    contributing
+   test_data
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Design Documents:
+
+   design/spline_fitter_analysis
 
 Indices and tables
 ==================

@@ -68,10 +68,32 @@ def test_direct_comparison(pattern: str = "sine") -> None:
     """
     # Skip if rpy2 not available
     try:
-        import rpy2.robjects  # type: ignore
+        import rpy2.robjects as ro  # type: ignore
+        from rpy2.robjects.vectors import ListVector  # type: ignore
 
-        r_version = rpy2.robjects.r["R.version"]["version.string"][0]  # type: ignore
-        print(f"R version: {r_version}")
+        # Safely get R version in a more robust way
+        try:
+            # Get R version string - properly access the R object
+            r_version_info = ro.r("R.version")  # type: ignore
+            # Access the version.string element correctly
+            if (
+                isinstance(r_version_info, ListVector)
+                and hasattr(r_version_info, "names")
+                and "version.string" in r_version_info.names
+            ):
+                r_version = r_version_info.rx2("version.string")[0]  # type: ignore
+            else:
+                # Fallback to a simpler approach
+                r_version = str(
+                    ro.r('paste0("R version ", R.version$major, ".", R.version$minor)')[  # type: ignore
+                        0
+                    ]
+                )
+
+            print(f"R version: {r_version}")
+        except Exception as e:
+            print(f"R is available but could not determine version: {e}")
+
     except ImportError:
         pytest.skip("rpy2 not available")
 
