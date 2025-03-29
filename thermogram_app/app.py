@@ -442,9 +442,10 @@ def process_thermograms(
             "No peak information available."
         )
         if peaks:
-            peak_info_table = html.Table(
+            peak_info_table: Component = html.Table(
                 # Header
-                [html.Tr([html.Th(col) for col in ["Peak", "Height", "Temperature"]])] +
+                [html.Tr([html.Th(col) for col in ["Peak", "Height", "Temperature"]])]
+                +
                 # Rows
                 [
                     html.Tr(
