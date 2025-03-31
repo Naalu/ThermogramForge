@@ -37,6 +37,25 @@ Metrics Calculation
     from tlbparam.metrics import generate_summary
     metrics = generate_summary(baseline_subtracted)
 
+Visualization
+-----------
+
+.. code-block:: python
+
+    from tlbparam.visualization import plot_thermogram, plot_with_peaks
+
+    # Visualize thermogram data
+    fig = plot_thermogram(baseline_subtracted)
+    fig.show()  # Display in browser or notebook
+
+    # Visualize with detected peaks
+    fig_peaks = plot_with_peaks(baseline_subtracted, peaks)
+    fig_peaks.show()
+
+    # Save visualization as HTML or image
+    fig_peaks.write_html("thermogram_with_peaks.html")
+    fig_peaks.write_image("thermogram_with_peaks.png")
+
 Interactive Web Application
 -------------------------
 
