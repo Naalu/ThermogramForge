@@ -67,3 +67,23 @@ ThermogramForge includes a web application for interactive analysis:
     python -m thermogram_app.app
 
     # Then open your browser to http://127.0.0.1:8050/
+
+Web Application Visualization
+---------------------------
+
+The web application provides several visualization options:
+
+* Basic thermogram visualization
+* Baseline subtraction visualization with endpoint markers
+* Peak detection visualization with labeled peaks
+* Comparison visualization for multiple thermograms
+
+To use the visualization features:
+
+1. Upload your thermogram data file(s)
+2. Select the desired processing options
+3. Click the "Process Thermograms" button
+4. Navigate through the tabs to view different visualizations
+
+The web application automatically selects the most appropriate visualization
+based on your selected processing options.

@@ -1,19 +1,13 @@
-"""
-Web application for thermogram analysis.
-
-This module provides a Dash-based web application for uploading, processing,
-and visualizing thermogram data.
-"""
-
 import base64
 import io
+import os
 import tempfile
 from typing import Dict, List, Optional, Tuple, Union
 
 import dash  # type: ignore
 import dash_bootstrap_components as dbc  # type: ignore
 import numpy as np
-import plotly.graph_objects as go
+import plotly.graph_objects as go  # type: ignore
 import polars as pl
 from dash import Input, Output, State, callback, dcc, html  # type: ignore
 from dash.development.base_component import Component  # type: ignore
@@ -22,7 +16,22 @@ import thermogram_baseline
 from thermogram_baseline.baseline import subtract_baseline
 from thermogram_baseline.endpoint_detection import detect_endpoints
 from thermogram_baseline.interpolation import interpolate_thermogram
+from tlbparam.metrics import ThermogramAnalyzer
 from tlbparam.peak_detection import PeakDetector
+from tlbparam.visualization import plot_thermogram, plot_with_baseline, plot_with_peaks
+
+
+def main() -> None:
+    """Run the application."""
+    app.run_server(debug=True)
+
+
+"""
+Web application for thermogram analysis.
+
+This module provides a Dash-based web application for uploading, processing,
+and visualizing thermogram data.
+"""
 
 # Initialize the Dash app
 app = dash.Dash(
@@ -31,6 +40,9 @@ app = dash.Dash(
     title="ThermogramForge",
     suppress_callback_exceptions=True,
 )
+
+# Disable R integration to avoid rpy2 issues
+os.environ["THERMOGRAM_FORGE_USE_R"] = "0"
 
 # Create layout separately and then assign to avoid the "read-only" mypy error
 layout = dbc.Container(
@@ -136,11 +148,19 @@ layout = dbc.Container(
                                             ],
                                             className="mb-4",
                                         ),
-                                        dbc.Button(
-                                            "Process Thermograms",
-                                            id="process-button",
-                                            color="primary",
-                                            className="mt-2",
+                                        html.Div(
+                                            [
+                                                dbc.Button(
+                                                    "Process Thermograms",
+                                                    id="process-button",
+                                                    color="primary",
+                                                    className="mt-2",
+                                                ),
+                                                html.Div(
+                                                    id="processing-status",
+                                                    className="mt-2",
+                                                ),
+                                            ]
                                         ),
                                     ]
                                 ),
@@ -156,9 +176,15 @@ layout = dbc.Container(
                             [
                                 dbc.Tab(
                                     [
-                                        dcc.Graph(
-                                            id="thermogram-plot",
-                                            style={"height": "600px"},
+                                        dcc.Loading(
+                                            id="loading-thermogram",
+                                            type="circle",
+                                            children=[
+                                                dcc.Graph(
+                                                    id="thermogram-plot",
+                                                    style={"height": "600px"},
+                                                ),
+                                            ],
                                         ),
                                     ],
                                     label="Visualization",
@@ -204,6 +230,54 @@ layout = dbc.Container(
                                     ],
                                     label="Data",
                                 ),
+                                # Comparison tab
+                                dbc.Tab(
+                                    [
+                                        dbc.Card(
+                                            [
+                                                dbc.CardHeader("Thermogram Comparison"),
+                                                dbc.CardBody(
+                                                    [
+                                                        html.P(
+                                                            "Compare multiple "
+                                                            "thermograms:"
+                                                        ),
+                                                        dbc.RadioItems(
+                                                            id="comparison-type",
+                                                            options=[
+                                                                {
+                                                                    "label": "Raw Data",
+                                                                    "value": "raw",
+                                                                },
+                                                                {
+                                                                    "label": (
+                                                                        "Baseline "
+                                                                        "Subtracted"
+                                                                    ),
+                                                                    "value": "baseline",
+                                                                },
+                                                                {
+                                                                    "label": (
+                                                                        "Peak Heights"
+                                                                    ),
+                                                                    "value": "peaks",
+                                                                },
+                                                            ],
+                                                            value="baseline",
+                                                            className="mb-3",
+                                                        ),
+                                                        dcc.Graph(
+                                                            id="comparison-plot",
+                                                            style={"height": "500px"},
+                                                        ),
+                                                    ]
+                                                ),
+                                            ],
+                                            className="mb-4",
+                                        ),
+                                    ],
+                                    label="Comparison",
+                                ),
                             ]
                         ),
                     ],
@@ -221,17 +295,41 @@ layout = dbc.Container(
                             "© 2024 ThermogramForge Project",
                             className="text-center text-muted",
                         ),
+                        html.Div(id="debug-info", style={"display": "none"}),
                     ],
                     width=12,
                 )
             ]
         ),
+        # Data stores
+        dcc.Store(id="thermogram-data"),
+        dcc.Store(id="processed-data"),
+        dcc.Store(id="peaks-data"),
+        dcc.Store(id="metrics-data"),
     ],
     fluid=True,
 )
 
 # Assign layout to app
-app.layout = layout  # type: ignore
+app.layout = layout
+
+# Add loading component to provide global loading feedback
+app.clientside_callback(
+    """
+    function(n_clicks) {
+        if (n_clicks) {
+            document.body.style.cursor = 'wait';
+            return "Processing...";
+        } else {
+            document.body.style.cursor = 'default';
+            return "";
+        }
+    }
+    """,
+    Output("processing-status", "children", allow_duplicate=True),
+    Input("process-button", "n_clicks"),
+    prevent_initial_call=True,
+)
 
 
 # Callbacks
@@ -247,9 +345,9 @@ def update_upload_status(
 ) -> Component:
     """Update upload status after files are uploaded."""
     if not contents or not filenames:
-        return html.Div("No files uploaded yet.")  # type: ignore
+        return html.Div("No files uploaded yet.")
 
-    return html.Div(  # type: ignore
+    return html.Div(
         [
             html.P(f"Uploaded {len(contents)} file(s):"),
             html.Ul([html.Li(filename) for filename in filenames]),
@@ -263,6 +361,11 @@ def update_upload_status(
         Output("peak-info", "children"),
         Output("metrics-info", "children"),
         Output("data-preview", "children"),
+        Output("thermogram-data", "data"),
+        Output("processed-data", "data"),
+        Output("peaks-data", "data"),
+        Output("metrics-data", "data"),
+        Output("processing-status", "children"),
     ],
     Input("process-button", "n_clicks"),
     [
@@ -284,6 +387,10 @@ def process_thermograms(
     Union[Component, str],
     Union[Component, str],
     Union[Component, List[Component]],
+    Optional[Dict],
+    Optional[Dict],
+    Optional[Dict],
+    Optional[Dict],
 ]:
     """Process uploaded thermograms and update results."""
     if not contents or not filenames:
@@ -292,6 +399,10 @@ def process_thermograms(
             html.Div("No data to process."),
             html.Div("No metrics available."),
             html.Div("No data available."),
+            None,
+            None,
+            None,
+            None,
         )
 
     # Process the first file for now
@@ -325,6 +436,10 @@ def process_thermograms(
                 html.Div(f"Unsupported file type: {filenames[0]}"),
                 html.Div("No metrics available."),
                 html.Div("No data available."),
+                None,
+                None,
+                None,
+                None,
             )
 
         # Check if the data has the right columns
@@ -338,23 +453,16 @@ def process_thermograms(
                     html.Div("Data must have Temperature and dCp columns."),
                     html.Div("No metrics available."),
                     html.Div("No data available."),
+                    None,
+                    None,
+                    None,
+                    None,
                 )
-
-        # Add original data to figure
-        fig.add_trace(
-            go.Scatter(
-                x=df.select("Temperature").to_numpy().flatten(),
-                y=df.select("dCp").to_numpy().flatten(),
-                mode="lines+markers",
-                name="Original Data",
-                line=dict(color="blue", width=1),
-                marker=dict(size=3),
-            )
-        )
 
         # Process data based on selected options
         processed_df = df
         peaks = {}
+        metrics = {}
 
         # Baseline subtraction
         if "auto-baseline" in processing_options:
@@ -365,22 +473,8 @@ def process_thermograms(
             # Use manual endpoints
             lower_temp, upper_temp = baseline_range
 
-        # Add endpoint markers to the figure
-        fig.add_vline(
-            x=lower_temp,
-            line=dict(color="red", width=1, dash="dash"),
-            annotation_text="Lower Endpoint",
-            annotation_position="top right",
-        )
-        fig.add_vline(
-            x=upper_temp,
-            line=dict(color="red", width=1, dash="dash"),
-            annotation_text="Upper Endpoint",
-            annotation_position="top left",
-        )
-
         # Perform baseline subtraction
-        baseline_result = subtract_baseline(df, lower_temp, upper_temp)
+        baseline_result = subtract_baseline(df, lower_temp, upper_temp, use_r=False)
 
         # Handle the case where subtract_baseline returns either DataFrame or tuple
         if isinstance(baseline_result, tuple):
@@ -390,52 +484,40 @@ def process_thermograms(
 
         processed_df = baseline_subtracted
 
-        # Add baseline-subtracted data
-        fig.add_trace(
-            go.Scatter(
-                x=baseline_subtracted.select("Temperature").to_numpy().flatten(),
-                y=baseline_subtracted.select("dCp").to_numpy().flatten(),
-                mode="lines+markers",
-                name="Baseline Subtracted",
-                line=dict(color="green", width=1),
-                marker=dict(size=3),
-            )
-        )
-
         # Interpolation
         if "interpolate" in processing_options:
             grid_temp = np.arange(45, 90.1, 0.1)
             interpolated = interpolate_thermogram(baseline_subtracted, grid_temp)
             processed_df = interpolated
 
-            # Add interpolated data
-            fig.add_trace(
-                go.Scatter(
-                    x=interpolated.select("Temperature").to_numpy().flatten(),
-                    y=interpolated.select("dCp").to_numpy().flatten(),
-                    mode="lines",
-                    name="Interpolated",
-                    line=dict(color="red", width=1.5),
-                )
-            )
-
         # Peak detection
         if "detect-peaks" in processing_options:
             detector = PeakDetector()
             peaks = detector.detect_peaks(processed_df)
 
-            # Add peak markers
-            for peak_name, peak_info in peaks.items():
-                if peak_name != "FWHM" and peak_info["peak_height"] > 0:
-                    fig.add_trace(
-                        go.Scatter(
-                            x=[peak_info["peak_temp"]],
-                            y=[peak_info["peak_height"]],
-                            mode="markers",
-                            name=f"{peak_name} ({peak_info['peak_temp']:.1f}°C)",
-                            marker=dict(size=10, color="red", symbol="star"),
-                        )
-                    )
+        # Metrics calculation
+        if "calculate-metrics" in processing_options:
+            analyzer = ThermogramAnalyzer()
+            metrics = analyzer.calculate_metrics(processed_df)
+
+        # Create appropriate visualization based on processing options
+        if "detect-peaks" in processing_options:
+            # Use plot_with_peaks if peaks were detected
+            fig = plot_with_peaks(
+                processed_df, peaks, title=f"Thermogram Analysis - {filenames[0]}"
+            )
+        elif baseline_subtracted is not None:
+            # Use plot_with_baseline if baseline subtraction was performed
+            fig = plot_with_baseline(
+                df,
+                baseline_subtracted,
+                lower_temp,
+                upper_temp,
+                title=f"Thermogram Analysis - {filenames[0]}",
+            )
+        else:
+            # Use basic plot for raw data
+            fig = plot_thermogram(df, title=f"Raw Thermogram - {filenames[0]}")
 
         # Create peak info display
         peak_info_children: Union[Component, str] = html.Div(
@@ -470,8 +552,27 @@ def process_thermograms(
 
         # Create metrics info
         metrics_info_children: Union[Component, str] = html.Div(
-            "Advanced metrics calculation not implemented yet."
+            "No metrics information available."
         )
+        if metrics:
+            # Create a more detailed metrics display
+            metrics_info_table = html.Table(
+                # Header
+                [html.Tr([html.Th("Metric"), html.Th("Value")])] +
+                # Rows - exclude SampleID if present
+                [
+                    html.Tr(
+                        [
+                            html.Td(k),
+                            html.Td(f"{v:.4f}" if isinstance(v, float) else str(v)),
+                        ]
+                    )
+                    for k, v in metrics.items()
+                    if k != "SampleID"
+                ],
+                className="table table-striped table-sm",
+            )
+            metrics_info_children = metrics_info_table
 
         # Create data preview with better formatting
         data_preview_children: Union[Component, List[Component]] = html.Div(
@@ -493,19 +594,52 @@ def process_thermograms(
             ]
         )
 
-        return (
+        # Prepare data for storage (convert to JSON-serializable format)
+        # For simplicity, we'll just store filenames and parameters here
+        thermogram_data = {
+            "filename": filenames[0],
+            "endpoints": {"lower": lower_temp, "upper": upper_temp},
+        }
+
+        processed_data = {
+            "filename": filenames[0],
+            "processed": True,
+            "operations": processing_options,
+        }
+
+        peaks_data = {
+            "filename": filenames[0],
+            "peaks": peaks,
+        }
+
+        metrics_data = {
+            "filename": filenames[0],
+            "metrics": metrics,
+        }
+
+        return (  # type: ignore
             fig,
             peak_info_children,
             metrics_info_children,
             data_preview_children,
+            thermogram_data,
+            processed_data,
+            peaks_data,
+            metrics_data,
+            html.Div("Processing complete!", className="text-success"),
         )
 
     except Exception as e:
-        return (
+        return (  # type: ignore
             fig,
             html.Div(f"Error processing file: {str(e)}"),
             html.Div("No metrics available."),
             html.Div("No data available."),
+            None,
+            None,
+            None,
+            None,
+            html.Div(f"Error: {str(e)}", className="text-danger"),
         )
 
 
@@ -530,16 +664,6 @@ def update_endpoints(
         # Nothing to update
         return go.Figure()
 
-    # Create figure
-    fig = go.Figure()
-    fig.update_layout(
-        title="Thermogram Analysis (Manual Endpoints)",
-        xaxis_title="Temperature (°C)",
-        yaxis_title="dCp (kJ/mol·K)",
-        template="plotly_white",
-        height=600,
-    )
-
     try:
         # Process the first file for now
         content_type, content_string = contents[0].split(",")
@@ -554,46 +678,21 @@ def update_endpoints(
                 tmp.flush()
                 df = pl.read_excel(tmp.name)
         else:
-            return fig
+            # Return empty figure for unsupported file types
+            return go.Figure()
 
         # Check and fix columns if needed
         if "Temperature" not in df.columns or "dCp" not in df.columns:
             if len(df.columns) >= 2:
                 df = df.rename({df.columns[0]: "Temperature", df.columns[1]: "dCp"})
             else:
-                return fig
-
-        # Add original data to figure
-        fig.add_trace(
-            go.Scatter(
-                x=df.select("Temperature").to_numpy().flatten(),
-                y=df.select("dCp").to_numpy().flatten(),
-                mode="lines+markers",
-                name="Original Data",
-                line=dict(color="blue", width=1),
-                marker=dict(size=3),
-            )
-        )
+                return go.Figure()
 
         # Use manual endpoints
         lower_temp, upper_temp = baseline_range
 
-        # Add endpoint markers
-        fig.add_vline(
-            x=lower_temp,
-            line=dict(color="red", width=1, dash="dash"),
-            annotation_text="Lower Endpoint",
-            annotation_position="top right",
-        )
-        fig.add_vline(
-            x=upper_temp,
-            line=dict(color="red", width=1, dash="dash"),
-            annotation_text="Upper Endpoint",
-            annotation_position="top left",
-        )
-
         # Perform baseline subtraction with manual endpoints
-        baseline_result = subtract_baseline(df, lower_temp, upper_temp)
+        baseline_result = subtract_baseline(df, lower_temp, upper_temp, use_r=False)
 
         # Extract the result
         if isinstance(baseline_result, tuple):
@@ -601,53 +700,166 @@ def update_endpoints(
         else:
             baseline_subtracted = baseline_result
 
-        # Add baseline-subtracted data
-        fig.add_trace(
-            go.Scatter(
-                x=baseline_subtracted.select("Temperature").to_numpy().flatten(),
-                y=baseline_subtracted.select("dCp").to_numpy().flatten(),
-                mode="lines+markers",
-                name="Baseline Subtracted",
-                line=dict(color="green", width=1),
-                marker=dict(size=3),
-            )
+        # Create visualization
+        fig = plot_with_baseline(
+            df,
+            baseline_subtracted,
+            lower_temp,
+            upper_temp,
+            title=f"Manual Endpoint Adjustment - {filenames[0]}",
         )
-
-        # Add interpolation if selected
-        if "interpolate" in processing_options:
-            grid_temp = np.arange(45, 90.1, 0.1)
-            interpolated = interpolate_thermogram(baseline_subtracted, grid_temp)
-
-            fig.add_trace(
-                go.Scatter(
-                    x=interpolated.select("Temperature").to_numpy().flatten(),
-                    y=interpolated.select("dCp").to_numpy().flatten(),
-                    mode="lines",
-                    name="Interpolated",
-                    line=dict(color="red", width=1.5),
-                )
-            )
 
         return fig
 
     except Exception as e:
         print(f"Error updating endpoints: {str(e)}")
+        return go.Figure()
+
+
+@callback(
+    Output("comparison-plot", "figure"),
+    [Input("comparison-type", "value")],
+    [
+        State("thermogram-data", "data"),
+        State("processed-data", "data"),
+        State("peaks-data", "data"),
+        State("metrics-data", "data"),
+    ],
+    prevent_initial_call=True,
+)
+def update_comparison_plot(
+    comparison_type: str,
+    thermogram_data: Optional[Dict],
+    processed_data: Optional[Dict],
+    peaks_data: Optional[Dict],
+    metrics_data: Optional[Dict],
+) -> go.Figure:
+    """Update the comparison plot based on selected comparison type."""
+    # Create a basic empty figure
+    fig = go.Figure()
+    fig.update_layout(
+        title="Thermogram Comparison",
+        xaxis_title="Temperature (°C)",
+        yaxis_title="dCp (kJ/mol·K)",
+        template="plotly_white",
+    )
+
+    # If no data available, return empty figure
+    if not thermogram_data or not processed_data:
+        fig.add_annotation(
+            text="No data available for comparison. Process thermograms first.",
+            showarrow=False,
+            font=dict(size=14),
+        )
         return fig
+
+    # For now, just return a placeholder visualization
+    # In a real implementation, we would load and display the actual data
+    if comparison_type == "raw":
+        fig.add_annotation(
+            text="Raw thermogram comparison would be displayed here.",
+            showarrow=False,
+            font=dict(size=14),
+        )
+    elif comparison_type == "baseline":
+        fig.add_annotation(
+            text="Baseline-subtracted comparison would be displayed here.",
+            showarrow=False,
+            font=dict(size=14),
+        )
+    elif comparison_type == "peaks":
+        if peaks_data and peaks_data.get("peaks"):
+            # Create a simple bar chart of peak heights
+            peaks = peaks_data.get("peaks", {})
+            peak_names = []
+            peak_heights = []
+
+            for name, info in peaks.items():
+                if name != "FWHM" and "peak_height" in info:
+                    peak_names.append(name)
+                    peak_heights.append(info["peak_height"])
+
+            fig = go.Figure(
+                data=[go.Bar(x=peak_names, y=peak_heights, marker_color="blue")]  # type: ignore
+            )
+
+            fig.update_layout(
+                title="Peak Heights Comparison",
+                xaxis_title="Peak",
+                yaxis_title="Height (dCp)",
+                template="plotly_white",
+            )
+        else:
+            fig.add_annotation(
+                text=(
+                    "No peak data available. \
+                        Process thermograms with peak detection first."
+                ),
+                showarrow=False,
+                font=dict(size=14),
+            )
+
+    return fig
 
 
 @callback(
     Output("download-data", "data"),
     Input("btn-download", "n_clicks"),
+    State("processed-data", "data"),
     prevent_initial_call=True,
 )
-def download_processed_data(n_clicks: int) -> Dict[str, str]:
+def download_processed_data(
+    n_clicks: int, processed_data: Optional[Dict]
+) -> Dict[str, str]:
     """Download processed data."""
-    # In a real application, we would need to store the processed data in a dcc.Store
-    # For this example, we'll just return a placeholder
-    return dict(
-        content="Temperature,dCp\n45.0,0.0\n...", filename="processed_thermogram.csv"
+    # In a real implementation, we would retrieve the actual processed data
+    # For now, just return a placeholder
+    if processed_data and processed_data.get("processed"):
+        filename = processed_data.get("filename", "thermogram_data")
+        if not filename.endswith(".csv"):
+            filename = f"{filename.split('.')[0]}_processed.csv"
+
+        return dict(
+            content="Temperature,dCp\n45.0,0.0\n45.1,0.01\n...", filename=filename
+        )
+
+    return dict(content="No processed data available", filename="no_data.txt")
+
+
+def preprocess_thermogram_data(df: pl.DataFrame) -> pl.DataFrame:
+    """
+    Preprocess thermogram data to ensure it's suitable for analysis.
+
+    Args:
+        df: DataFrame with thermogram data
+
+    Returns:
+        Preprocessed DataFrame
+    """
+    # Check required columns
+    if "Temperature" not in df.columns or "dCp" not in df.columns:
+        # Try to guess columns - first column might be temp, second might be dCp
+        if len(df.columns) >= 2:
+            df = df.rename({df.columns[0]: "Temperature", df.columns[1]: "dCp"})
+        else:
+            raise ValueError("Data must have Temperature and dCp columns")
+
+    # Ensure Temperature and dCp are numeric
+    df = df.with_columns(
+        [pl.col("Temperature").cast(pl.Float64), pl.col("dCp").cast(pl.Float64)]
     )
+
+    # Sort by temperature
+    df = df.sort("Temperature")
+
+    # Drop any duplicate temperature values (keep first occurrence)
+    df = df.unique(subset=["Temperature"], keep="first")
+
+    # Drop any NaN or infinite values
+    df = df.filter(pl.col("Temperature").is_finite() & pl.col("dCp").is_finite())
+
+    return df
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    main()
