@@ -85,7 +85,12 @@ for peak_name, peak_info in peaks.items():
     else:
         print(f"FWHM: {peak_info['value']:.4f}°C")
 
-# 6. Save results
+# 6. Visualize results
+from tlbparam.visualization import plot_with_peaks, plot_thermogram
+fig = plot_with_peaks(interpolated, peaks)
+fig.write_html("thermogram_visualization.html")
+
+# 7. Save results
 baseline_subtracted.write_csv("baseline_subtracted.csv")
 ```
 

@@ -66,3 +66,11 @@ Metrics
    :members:
    :undoc-members:
    :show-inheritance:
+
+Visualization
+~~~~~~~~~~~
+
+.. automodule:: tlbparam.visualization
+   :members:
+   :undoc-members:
+   :show-inheritance:

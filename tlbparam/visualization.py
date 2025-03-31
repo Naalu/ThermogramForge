@@ -10,7 +10,7 @@ from typing import Dict, List, Optional
 import plotly.graph_objects as go
 import plotly.subplots as sp
 import polars as pl
-from plotly.graph_objects import Bar, Heatmap
+from plotly.graph_objects import Bar, Heatmap  # type: ignore
 
 
 def plot_thermogram(
