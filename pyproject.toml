@@ -27,15 +27,24 @@ keywords = [
     ]
 
 dependencies = [
-    "polars>=0.18.0",
+    # Change from polars to pandas for initial development
+    "pandas>=1.5.0",
     "numpy>=1.24.0",
     "scipy>=1.10.0",
     "dash>=2.9.0",
     "plotly>=5.14.0",
+    # For a more responsive UI
+    "dash-bootstrap-components>=1.4.0",
+    # For hot reloading
+    "dash-extensions>=1.0.0",
+    # For reading various file formats
+    "openpyxl>=3.1.5",
+    # Nicer uploading experience
+    "dash-uploader>=0.6.1",
+    # Some other necessary dependencies
+    "polars>=0.18.0",
     "statsmodels>=0.14.0",
     "rich>=13.0.0",
-    "dash-bootstrap-components>=1.4.0",
-    "openpyxl>=3.1.5",
     "xlsxwriter>=3.2.2",
     "fastexcel>=0.13.0",
 ]
@@ -58,9 +67,14 @@ dev = [
     "black>=25.1.0",
     "mypy>=1.15.0",
     "pytest>=8.3.5",
+    "pytest-dash>=2.1.2",  # For testing Dash components
+    "jupyter>=1.0.0",      # For interactive development
+    "ipywidgets>=8.0.0",   # For interactive widgets in notebooks
+    "pre-commit>=2.15.0",
+    "ruff>=0.9.10",
+    # Keep other dev dependencies
     "pytest-cov>=6.0.0",
     "ruff>=0.9.10",
-    "pre-commit>=2.15.0",
     "pyinstaller>=5.13.0",
 ]
 full = [

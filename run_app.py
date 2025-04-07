@@ -1,10 +1,18 @@
 """
-Convenience script to run the Thermogram Analysis application.
+Run the ThermogramForge web application.
+
+This script starts the Dash web application in debug mode for development.
 """
 
-from thermogram_app.app import app
+# Import the app instance
+# Import callbacks to register them
+import app.callbacks
+
+# Import the main layout module to register the layout
+import app.main
+from app.app import app
 
 if __name__ == "__main__":
     print("Starting ThermogramForge application...")
     print("Visit http://127.0.0.1:8050/ in your browser")
-    app.run_server(debug=True)
+    app.run(debug=True)
