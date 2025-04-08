@@ -2,8 +2,6 @@
 Dash app instance defined separately to avoid circular imports.
 """
 
-import os
-
 import dash
 import dash_bootstrap_components as dbc
 
@@ -13,12 +11,10 @@ app = dash.Dash(
     external_stylesheets=[dbc.themes.BOOTSTRAP],
     title="ThermogramForge v1.0",
     suppress_callback_exceptions=True,
+    # Enable better error messages during development
+    assets_folder="assets",
+    include_assets_files=True,
 )
 
-# server variable for deployment
+# Create a server variable for deployment
 server = app.server
-
-# Configure upload folder for dash-uploader
-UPLOAD_FOLDER_ROOT = os.path.join(os.getcwd(), "uploads")
-if not os.path.exists(UPLOAD_FOLDER_ROOT):
-    os.makedirs(UPLOAD_FOLDER_ROOT, exist_ok=True)

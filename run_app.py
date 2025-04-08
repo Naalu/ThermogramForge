@@ -5,8 +5,10 @@ This script starts the Dash web application in debug mode for development.
 """
 
 # Import the app instance
+import app.callbacks.baseline_callbacks
+
 # Import callbacks to register them
-import app.callbacks
+import app.callbacks.upload_callbacks
 
 # Import the main layout module to register the layout
 import app.main

@@ -3,18 +3,17 @@ Enhanced thermogram visualization component.
 """
 
 import dash_bootstrap_components as dbc
-import pandas as pd
 import plotly.graph_objects as go
 import plotly.subplots as sp
 from dash import dcc, html
 
 
 def create_thermogram_figure(
-    df: pd.DataFrame,
-    title: str = "Thermogram Analysis",
-    show_baseline: bool = False,
-    baseline_df: pd.DataFrame = None,
-    endpoints: tuple = None,
+    df,
+    title="Thermogram Analysis",
+    show_baseline=False,
+    baseline_df=None,
+    endpoints=None,
 ):
     """
     Create an enhanced thermogram visualization.
@@ -29,6 +28,19 @@ def create_thermogram_figure(
     Returns:
         Plotly figure object
     """
+    if df is None or len(df) == 0:
+        # Return empty figure with instructions
+        fig = go.Figure()
+        fig.update_layout(
+            title="No Data Loaded", xaxis={"visible": False}, yaxis={"visible": False}
+        )
+        fig.add_annotation(
+            text="Upload a thermogram file to begin analysis",
+            showarrow=False,
+            font={"size": 16},
+        )
+        return fig
+
     if show_baseline and baseline_df is not None:
         # Create a subplot with two rows
         fig = sp.make_subplots(
@@ -155,8 +167,8 @@ def create_thermogram_figure(
         zeroline=True,
         zerolinewidth=1,
         zerolinecolor="gray",
-        row=1,
-        col=1,
+        row=1 if show_baseline else None,
+        col=1 if show_baseline else None,
     )
 
     # Update y-axis for bottom plot if using subplots
@@ -176,7 +188,7 @@ def create_thermogram_figure(
     return fig
 
 
-def create_data_preview(df: pd.DataFrame, max_rows: int = 10):
+def create_data_preview(df, max_rows=10):
     """
     Create a data preview component.
 
@@ -187,6 +199,9 @@ def create_data_preview(df: pd.DataFrame, max_rows: int = 10):
     Returns:
         Dash component with data preview
     """
+    if df is None or len(df) == 0:
+        return html.Div("No data available for preview")
+
     # Create a summary component
     summary = html.Div(
         [
@@ -233,6 +248,18 @@ def thermogram_card(id="thermogram-plot", figure=None):
     Returns:
         Card component with the thermogram plot
     """
+    # Create empty figure with instructions if none provided
+    if figure is None:
+        figure = go.Figure()
+        figure.update_layout(
+            title="No Data Loaded", xaxis={"visible": False}, yaxis={"visible": False}
+        )
+        figure.add_annotation(
+            text="Upload a thermogram file to begin analysis",
+            showarrow=False,
+            font={"size": 16},
+        )
+
     return dbc.Card(
         [
             dbc.CardHeader("Thermogram Visualization"),
@@ -240,7 +267,7 @@ def thermogram_card(id="thermogram-plot", figure=None):
                 [
                     dcc.Graph(
                         id=id,
-                        figure=figure or {},
+                        figure=figure,
                         config={
                             "displayModeBar": True,
                             "scrollZoom": True,
@@ -271,9 +298,12 @@ def data_preview_card(id="data-preview", children=None):
     Returns:
         Card component with the data preview
     """
+    if children is None:
+        children = html.Div("No data loaded yet.")
+
     return dbc.Card(
         [
             dbc.CardHeader("Data Preview"),
-            dbc.CardBody(id=id, children=children or html.Div("No data loaded yet.")),
+            dbc.CardBody(id=id, children=children),
         ]
     )

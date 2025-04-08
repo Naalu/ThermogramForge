@@ -1,4 +1,7 @@
-# Import components so they can be imported from the package
+"""
+Import components so they can be imported from the package.
+"""
+
 from .thermogram_plot import (
     create_data_preview,
     create_thermogram_figure,

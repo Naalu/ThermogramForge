@@ -3,7 +3,6 @@ Main layout definition for the ThermogramForge app.
 """
 
 import dash_bootstrap_components as dbc
-import dash_uploader as du
 from dash import dcc, html
 
 # Import the app instance
@@ -36,20 +35,20 @@ app.layout = dbc.Container(
                                 dbc.CardHeader("Data Input"),
                                 dbc.CardBody(
                                     [
-                                        # dash-uploader component
+                                        # Simple Upload component
                                         html.Div(
                                             [
                                                 html.H5("Upload Thermogram File"),
                                                 html.P("Supported formats: CSV, Excel"),
-                                                du.Upload(
-                                                    id="dash-uploader",
-                                                    text="Drag and Drop or Click to Upload",
-                                                    text_completed="Uploaded: ",
-                                                    cancel_button=True,
-                                                    max_file_size=1024 * 20,  # 20 MB
-                                                    filetypes=["csv", "xlsx", "xls"],
-                                                    upload_id=None,  # auto-generated
-                                                    default_style={
+                                                dcc.Upload(
+                                                    id="upload-data",
+                                                    children=html.Div(
+                                                        [
+                                                            "Drag and Drop or ",
+                                                            html.A("Click to Upload"),
+                                                        ]
+                                                    ),
+                                                    style={
                                                         "width": "100%",
                                                         "height": "60px",
                                                         "lineHeight": "60px",
@@ -59,6 +58,7 @@ app.layout = dbc.Container(
                                                         "textAlign": "center",
                                                         "margin": "10px 0",
                                                     },
+                                                    multiple=False,
                                                 ),
                                                 html.Div(
                                                     id="upload-status", className="mt-2"
@@ -110,17 +110,10 @@ app.layout = dbc.Container(
                 # Right column - Results and visualization
                 dbc.Col(
                     [
-                        # Loading component wrapping all visualization elements
-                        dcc.Loading(
-                            id="loading-output-id",
-                            type="circle",
-                            children=[
-                                # Thermogram plot
-                                thermogram_card(),
-                                # Data preview
-                                data_preview_card(),
-                            ],
-                        ),
+                        # Thermogram plot
+                        thermogram_card(),
+                        # Data preview
+                        data_preview_card(),
                     ],
                     width=8,
                 ),
