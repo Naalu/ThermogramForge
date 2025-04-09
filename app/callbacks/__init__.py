@@ -1,11 +1,18 @@
 """
-Initialize callbacks package and register all callbacks.
+Callbacks for ThermogramForge.
+
+This package contains callback definitions for the application.
 """
 
-# Import all callback modules to register them
-from . import baseline_callbacks, upload_callbacks
+# Import all callbacks to register them
+from . import (baseline_callbacks, control_panel_callbacks, upload_callbacks,
+               visualization_callbacks)
 
-__all__ = [
-    "upload_callbacks",
-    "baseline_callbacks",
-]
+
+# Function to initialize all callbacks
+def init_callbacks():
+    """
+    Initialize all callbacks.
+    """
+    # All callbacks are automatically registered when imported
+    print("All callbacks registered")
