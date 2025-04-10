@@ -12,7 +12,7 @@ source venv-v1/bin/activate
 # Install dependencies
 pip install -e ".[dev]"
 
-# Set up pre-commit
-pre-commit install
+# # Set up pre-commit
+# pre-commit install
 
-echo "Development environment ready! Run 'python run_app.py' to start the application."
+echo "Development environment ready! Run 'python main.py' to start the application."

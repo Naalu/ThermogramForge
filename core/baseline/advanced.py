@@ -292,13 +292,43 @@ def subtract_spline_baseline(
     # Get the spline values AT the endpoints
     try:
         dcp_at_lower_endpoint = spline_lower(lower_endpoint)
+    except ValueError as ve:
+        logger.warning(
+            f"Could not evaluate lower baseline spline directly at endpoint {lower_endpoint:.2f}: {ve}. "
+            f"Using nearest available point instead."
+        )
+        lower_temps = temp[lower_mask]
+        if len(lower_temps) > 0:
+            closest_lower_temp_idx = np.argmin(np.abs(lower_temps - lower_endpoint))
+            closest_lower_temp = lower_temps[closest_lower_temp_idx]
+            dcp_at_lower_endpoint = spline_lower(closest_lower_temp)
+            logger.debug(f"Using lower spline value at {closest_lower_temp:.2f}")
+        else:
+            logger.error("Cannot fallback for lower endpoint: No points in lower mask.")
+            return None  # Still fail if region was empty
+
+    try:
         dcp_at_upper_endpoint = spline_upper(upper_endpoint)
     except ValueError as ve:
-        logger.error(
-            f"Could not evaluate baseline spline at endpoint: {ve}. Check endpoint values vs data range."
+        logger.warning(
+            f"Could not evaluate upper baseline spline directly at endpoint {upper_endpoint:.2f}: {ve}. "
+            f"Using nearest available point instead."
         )
-        # Attempt recovery using nearest point?
-        # For now, fail.
+        upper_temps = temp[upper_mask]
+        if len(upper_temps) > 0:
+            closest_upper_temp_idx = np.argmin(np.abs(upper_temps - upper_endpoint))
+            closest_upper_temp = upper_temps[closest_upper_temp_idx]
+            dcp_at_upper_endpoint = spline_upper(closest_upper_temp)
+            logger.debug(f"Using upper spline value at {closest_upper_temp:.2f}")
+        else:
+            logger.error("Cannot fallback for upper endpoint: No points in upper mask.")
+            return None  # Still fail if region was empty
+
+    # Check if fallback evaluation yielded NaN (highly unlikely but possible)
+    if pd.isna(dcp_at_lower_endpoint) or pd.isna(dcp_at_upper_endpoint):
+        logger.error(
+            f"Failed to get valid baseline values at endpoints (Lower={dcp_at_lower_endpoint}, Upper={dcp_at_upper_endpoint}) even after fallback."
+        )
         return None
 
     # Apply linear interpolation only where middle_mask is True

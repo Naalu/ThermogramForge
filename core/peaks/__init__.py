@@ -1,0 +1,1 @@
+from .peak_detection import detect_thermogram_peaks

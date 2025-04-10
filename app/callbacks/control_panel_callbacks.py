@@ -22,9 +22,9 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import dash_bootstrap_components as dbc
 import numpy as np
 import pandas as pd
-from dash import (ALL, MATCH, Input, Output, State, callback, ctx, dcc, html,
-                  no_update)
+from dash import ALL, MATCH, Input, Output, State, callback, ctx, dcc, html, no_update
 from dash.exceptions import PreventUpdate
+from dateutil import parser
 
 # Need interpolation and baseline subtraction utils
 from app.utils.data_processing import interpolate_thermogram
@@ -903,6 +903,8 @@ def update_processed_data_overview(
 ) -> List[dbc.ListGroupItem]:
     """Updates the overview display for processed datasets.
 
+    Handles both datasets saved from the review process and those uploaded directly.
+
     Args:
         processed_datasets: The store containing metadata about processed datasets.
 
@@ -913,33 +915,89 @@ def update_processed_data_overview(
         return [dbc.ListGroupItem("No data processed yet.")]
 
     items = []
-    for dataset_name, metadata in sorted(processed_datasets.items()):
-        num_samples = metadata.get("num_samples", "N/A")
-        created_at = metadata.get("created_at", "N/A")
+    for dataset_id, metadata in sorted(processed_datasets.items()):
+        if not isinstance(metadata, dict):
+            logger.warning(f"Skipping invalid metadata entry for {dataset_id}")
+            continue
+
+        # Determine data type
+        data_type = metadata.get(
+            "data_type", "saved_from_review"
+        )  # Default to old type if flag missing
+
+        # Default values
+        display_name = dataset_id
+        details = []
+        report_disabled = False  # Default to enabled
+        download_disabled = False  # Default to enabled
+
+        # Format timestamp helper
+        def format_timestamp(ts_str):
+            try:
+                # Use dateutil.parser for flexible ISO parsing
+                dt_obj = parser.isoparse(ts_str)
+                return dt_obj.strftime("%Y-%m-%d %H:%M:%S")
+            except (ValueError, TypeError):
+                return ts_str  # Return original string if parsing fails
+
+        if data_type == "uploaded_wide":
+            original_filename = metadata.get("original_filename", "N/A")
+            upload_time_str = metadata.get("upload_time", "N/A")
+            details.append("Type: Uploaded (Wide)")
+            details.append(f"Original Name: {original_filename}")
+            details.append(f"Uploaded: {format_timestamp(upload_time_str)}")
+            report_disabled = False
+            download_disabled = False
+        elif data_type == "uploaded_long":
+            original_filename = metadata.get("original_filename", "N/A")
+            upload_time_str = metadata.get("upload_time", "N/A")
+            details.append("Type: Uploaded (Long)")
+            details.append(f"Original Name: {original_filename}")
+            details.append(f"Uploaded: {format_timestamp(upload_time_str)}")
+            report_disabled = False
+            download_disabled = False
+        elif data_type == "saved_from_review":
+            num_samples = metadata.get("num_samples", "N/A")
+            created_at_str = metadata.get("created_at", "N/A")
+            source_raw = metadata.get("source_raw_file", "Unknown")
+            details.append("Type: Processed Internally")
+            details.append(f"Samples: {num_samples}")
+            details.append(f"Created: {format_timestamp(created_at_str)}")
+            details.append(f"Source Raw File: {source_raw}")
+            # Implicitly keep report_disabled=False, download_disabled=False
+        else:
+            # Handle unexpected structure
+            logger.warning(
+                f"Unrecognized structure or data_type '{data_type}' for dataset {dataset_id}"
+            )
+            details.append(f"Unknown format (Type: {data_type})")
+            report_disabled = True  # Disable buttons for unknown format
+            download_disabled = True
 
         # Create buttons
         report_button = dbc.Button(
             "Generate Report",
-            id={"type": "generate-report-btn", "index": dataset_name},
+            id={"type": "go-to-report-builder-btn", "index": dataset_id},
             color="success",
             outline=False,
             size="sm",
             className="me-2",
+            disabled=report_disabled,
         )
         download_button = dbc.Button(
             "Download Data",
-            id={"type": "download-processed-btn", "index": dataset_name},
+            id={"type": "download-processed-btn", "index": dataset_id},
             color="secondary",
             outline=False,
             size="sm",
             className="me-2",
+            disabled=download_disabled,  # Use disabled flag
         )
 
         item_content = dbc.Row(
             [
-                dbc.Col(html.Strong(dataset_name), width=5),
-                dbc.Col(f"Samples: {num_samples}", width="auto"),
-                dbc.Col(f"Created: {created_at}", width="auto"),
+                dbc.Col(html.Strong(display_name), width=5),
+                dbc.Col(", ".join(details), width="auto"),  # Combine details
                 dbc.Col(
                     [report_button, download_button], width="auto", className="ms-auto"
                 ),
@@ -1176,206 +1234,345 @@ def download_processed_data_csv(
 
     logger.info(f"Download requested for processed dataset: {dataset_name}")
 
-    # --- Data Validation --- Start
+    # --- Data Validation and Type Check --- Start
     if not processed_datasets or dataset_name not in processed_datasets:
         logger.error(f"Processed dataset '{dataset_name}' not found in store.")
-        raise PreventUpdate  # Consider returning a user alert
+        raise PreventUpdate
 
     dataset_info = processed_datasets[dataset_name]
-    baseline_parameters = dataset_info.get("baseline_parameters")
-    source_raw_file = dataset_info.get("source_raw_file")
-
-    if not baseline_parameters or not source_raw_file:
-        logger.error(
-            f"Missing baseline parameters or source file info for '{dataset_name}'."
-        )
-        raise PreventUpdate
-
-    if not all_samples_data or source_raw_file not in all_samples_data:
-        logger.error(
-            f"Source raw data file '{source_raw_file}' not found for '{dataset_name}'."
-        )
-        raise PreventUpdate
-
-    raw_file_data = all_samples_data[source_raw_file]
-    raw_samples_dict = raw_file_data.get("samples")
-    if not raw_samples_dict:
-        logger.error(f"'samples' key missing in raw data for '{source_raw_file}'.")
-        raise PreventUpdate
-    # --- Data Validation --- End
-
-    # --- Data Processing for Download --- Start
-    all_processed_samples = {}
-    min_temp_overall = np.inf
-    max_temp_overall = -np.inf
-    valid_sample_count = 0
-
-    # First pass: Determine the overall temperature range
-    logger.debug("Download: First pass to determine overall temperature range.")
-    for sample_id, params in baseline_parameters.items():
-        raw_data_list = raw_samples_dict.get(sample_id)
-        if not raw_data_list:
-            continue  # Skip samples without raw data
-        try:
-            df_raw = pd.DataFrame(raw_data_list)
-            if df_raw.empty or "Temperature" not in df_raw or "dCp" not in df_raw:
-                continue  # Skip invalid/empty raw data
-
-            # Find min/max for this sample
-            current_min = df_raw["Temperature"].min()
-            current_max = df_raw["Temperature"].max()
-
-            if not pd.isna(current_min):
-                min_temp_overall = min(min_temp_overall, current_min)
-            if not pd.isna(current_max):
-                max_temp_overall = max(max_temp_overall, current_max)
-            valid_sample_count += 1  # Count samples with valid temp range
-        except Exception as e:
-            logger.warning(
-                f"Download Range Check: Error processing sample '{sample_id}': {e}"
-            )
-
-    if (
-        not np.isfinite(min_temp_overall)
-        or not np.isfinite(max_temp_overall)
-        or valid_sample_count == 0
-    ):
-        logger.error(
-            "Could not determine a valid overall temperature range for interpolation."
-        )
-        raise PreventUpdate
-
-    # Define the interpolation grid using np.arange for 0.1 steps
-    # Add a small epsilon to max_temp_overall to ensure inclusion if it's a multiple of step
-    step = 0.1
-    interpolated_temps_raw = np.arange(
-        min_temp_overall, max_temp_overall + step / 2, step
-    )
-    # Round the grid to 1 decimal place to fix floating point inaccuracies
-    interpolated_temps = np.round(interpolated_temps_raw, 1)
-    logger.info(
-        f"Generated download interpolation grid: {len(interpolated_temps)} points from {interpolated_temps[0]:.1f} to {interpolated_temps[-1]:.1f} with step {step}"
-    )
-
-    # Second pass: Process each sample and interpolate onto the common grid
-    logger.debug("Download: Second pass to process and interpolate samples.")
-    # Initialize dictionary to hold data for the final DataFrame
-    data_for_final_df = {"Temperature": interpolated_temps}
-
-    for sample_id, params in baseline_parameters.items():
-        logger.debug(
-            f"Processing sample '{sample_id}' for download (interpolation phase)."
-        )
-        raw_data_list = raw_samples_dict.get(sample_id)
-        if not raw_data_list:
-            logger.warning(
-                f"Raw data not found for sample '{sample_id}' in second pass. Skipping."
-            )
-            continue
-
-        try:
-            df_raw = pd.DataFrame(raw_data_list)
-            if df_raw.empty or "Temperature" not in df_raw or "dCp" not in df_raw:
-                logger.warning(
-                    f"Raw data for '{sample_id}' is invalid or empty in second pass. Skipping."
-                )
-                continue
-
-            # 1. Apply Baseline Subtraction
-            df_subtracted_with_baseline = subtract_spline_baseline(
-                df_raw,
-                lower_endpoint=params.get("lower"),
-                upper_endpoint=params.get("upper"),
-            )
-            if df_subtracted_with_baseline is None or df_subtracted_with_baseline.empty:
-                logger.warning(
-                    f"Spline baseline subtraction failed for '{sample_id}'. Skipping."
-                )
-                continue
-
-            # Prepare DataFrame for interpolation
-            df_for_interp = df_subtracted_with_baseline[
-                ["Temperature", "dCp_subtracted"]
-            ].rename(columns={"dCp_subtracted": "dCp"})
-
-            # 2. Interpolate onto the COMMON grid
-            df_interpolated = interpolate_thermogram(
-                df_for_interp,
-                temp_grid=interpolated_temps,  # Use the common grid
-            )
-
-            if df_interpolated is None or df_interpolated.empty:
-                logger.warning(f"Interpolation failed for '{sample_id}'. Skipping.")
-                continue
-
-            # Add the interpolated dCp numpy array to the dictionary
-            if "dCp" in df_interpolated.columns and len(df_interpolated["dCp"]) == len(
-                interpolated_temps
-            ):
-                data_for_final_df[sample_id] = df_interpolated["dCp"].to_numpy()
-                logger.debug(
-                    f"Successfully processed and interpolated '{sample_id}' for download."
-                )
-            else:
-                logger.warning(
-                    f"'dCp' column missing or length mismatch after interpolation for '{sample_id}'. Skipping."
-                )
-
-        except Exception as e:
-            logger.error(
-                f"Error processing sample '{sample_id}' for download (interpolation phase): {e}",
-                exc_info=True,
-            )
-
-    # Check if any samples were successfully processed
-    if (
-        len(data_for_final_df) <= 1
-    ):  # Only contains 'Temperature' if no samples processed
-        logger.error(
-            "No samples could be processed successfully for download after interpolation."
-        )
-        raise PreventUpdate  # Or return user alert
-
-    # 3. Combine into Wide DataFrame directly from the dictionary
-    logger.info("Combining processed samples into final DataFrame for download.")
-    try:
-        df_final = pd.DataFrame(data_for_final_df)
-        df_final = df_final.set_index("Temperature")
-        df_wide = df_final.transpose()
-        df_wide.index.name = "SampleID"
-    except Exception as e:
-        logger.error(f"Error creating final DataFrame for download: {e}", exc_info=True)
-        raise PreventUpdate
-
-    logger.info(f"Generated wide DataFrame for download with shape: {df_wide.shape}")
-    logger.debug(f"Final DataFrame head:\n{df_wide.head()}")
-
-    # --- Edge Column Adjustment --- Start
-    if df_wide.shape[1] >= 2:  # Ensure there are at least 2 columns (temps)
-        first_temp_col = df_wide.columns[0]
-        second_temp_col = df_wide.columns[1]
-        last_temp_col = df_wide.columns[-1]
-        second_last_temp_col = df_wide.columns[-2]
-
-        logger.info(f"Adjusting edge columns: {first_temp_col} and {last_temp_col}")
-        df_wide[first_temp_col] = 0.5 * df_wide[second_temp_col]
-        df_wide[last_temp_col] = 0.5 * df_wide[second_last_temp_col]
-        logger.debug(f"DataFrame head after edge adjustment:\n{df_wide.head()}")
-    else:
-        logger.warning(
-            "Skipping edge column adjustment: DataFrame has less than 2 temperature columns."
-        )
-    # --- Edge Column Adjustment --- End
-
-    # --- Prepare Download --- Start
-    # Use the dataset_name as the default filename
+    data_type = dataset_info.get("data_type", "saved_from_review")  # Check type
     download_filename = (
         dataset_name if dataset_name.lower().endswith(".csv") else f"{dataset_name}.csv"
     )
+    logger.info(f"Dataset '{dataset_name}' identified as type: '{data_type}'")
 
-    return dcc.send_data_frame(
-        df_wide.to_csv,
-        filename=download_filename,
-        index=True,  # Include SampleID index
-    )
-    # --- Prepare Download --- End
+    # --- Handle Uploaded Wide --- Start
+    if data_type == "uploaded_wide":  # Use correct flag
+        df_json = dataset_info.get("data_json")
+        original_filename = dataset_info.get("original_filename", dataset_name)
+        if not df_json:
+            logger.error(
+                f"Missing 'data_json' for wide uploaded dataset '{dataset_name}'. Cannot download."
+            )
+            raise PreventUpdate
+        try:
+            # Load the WIDE-format DataFrame
+            # orient='split' is suitable for DataFrames with index
+            df_wide = pd.read_json(df_json, orient="split")
+            logger.info(
+                f"Loaded uploaded WIDE DataFrame '{dataset_name}' with shape {df_wide.shape}"
+            )
+
+            # --- Apply Edge Column Adjustment --- Start
+            if df_wide.shape[1] >= 2:
+                first_temp_col = df_wide.columns[0]
+                second_temp_col = df_wide.columns[1]
+                last_temp_col = df_wide.columns[-1]
+                second_last_temp_col = df_wide.columns[-2]
+
+                logger.info(
+                    f"Adjusting edge columns for uploaded wide data: {first_temp_col} and {last_temp_col}"
+                )
+                df_wide[first_temp_col] = 0.5 * df_wide[second_temp_col]
+                df_wide[last_temp_col] = 0.5 * df_wide[second_last_temp_col]
+            else:
+                logger.warning(
+                    "Skipping edge column adjustment for uploaded wide data: < 2 temp columns."
+                )
+            # --- Edge Column Adjustment --- End
+
+            # Prepare Download filename
+            download_filename = (
+                original_filename
+                if original_filename.lower().endswith(".csv")
+                else f"{original_filename}.csv"
+            )
+            logger.info(
+                f"Preparing download for uploaded wide file '{original_filename}' as '{download_filename}'"
+            )
+            return dcc.send_data_frame(
+                df_wide.to_csv,
+                filename=download_filename,
+                index=True,  # SampleID is the index
+            )
+
+        except Exception as e:
+            logger.error(
+                f"Error processing uploaded wide dataset '{dataset_name}' for download: {e}",
+                exc_info=True,
+            )
+            raise PreventUpdate
+    # --- Handle Uploaded Wide --- End
+
+    # --- Handle Uploaded Long --- Start
+    elif data_type == "uploaded_long":  # Add handler for long format
+        df_json = dataset_info.get("data_json")
+        original_filename = dataset_info.get("original_filename", dataset_name)
+        if not df_json:
+            logger.error(
+                f"Missing 'data_json' for long uploaded dataset '{dataset_name}'. Cannot download."
+            )
+            raise PreventUpdate
+        try:
+            # Load the LONG-format DataFrame
+            df_long = pd.read_json(df_json, orient="split")
+            logger.info(
+                f"Loaded uploaded LONG DataFrame '{dataset_name}' with shape {df_long.shape}"
+            )
+
+            # Pivot to wide format
+            df_wide = df_long.pivot(
+                index="SampleID", columns="Temperature", values="dCp_subtracted"
+            )
+            logger.info(
+                f"Pivoted LONG DataFrame '{dataset_name}' to WIDE format shape: {df_wide.shape}"
+            )
+
+            # Apply Edge Column Adjustment
+            if df_wide.shape[1] >= 2:
+                first_temp_col = df_wide.columns[0]
+                second_temp_col = df_wide.columns[1]
+                last_temp_col = df_wide.columns[-1]
+                second_last_temp_col = df_wide.columns[-2]
+
+                logger.info(
+                    f"Adjusting edge columns for pivoted long data: {first_temp_col} and {last_temp_col}"
+                )
+                df_wide[first_temp_col] = 0.5 * df_wide[second_temp_col]
+                df_wide[last_temp_col] = 0.5 * df_wide[second_last_temp_col]
+            else:
+                logger.warning(
+                    "Skipping edge column adjustment for pivoted long data: < 2 temp columns."
+                )
+
+            # Prepare Download filename
+            download_filename = (
+                original_filename
+                if original_filename.lower().endswith(".csv")
+                else f"{original_filename}.csv"
+            )
+            logger.info(
+                f"Preparing download for pivoted long file '{original_filename}' as '{download_filename}'"
+            )
+            return dcc.send_data_frame(
+                df_wide.to_csv,
+                filename=download_filename,
+                index=True,
+            )
+
+        except Exception as e:
+            logger.error(
+                f"Error processing or pivoting uploaded long dataset '{dataset_name}' for download: {e}",
+                exc_info=True,
+            )
+            raise PreventUpdate
+    # --- Handle Uploaded Long --- End
+
+    # --- Process Internally Saved Data --- Start
+    elif data_type == "saved_from_review":
+        logger.info(
+            f"Processing internally saved dataset '{dataset_name}' for download."
+        )
+        baseline_parameters = dataset_info.get("baseline_parameters")
+        source_raw_file = dataset_info.get("source_raw_file")
+
+        if not baseline_parameters or not source_raw_file:
+            logger.error(
+                f"Missing baseline parameters or source file info for '{dataset_name}'. Cannot download."
+            )
+            raise PreventUpdate
+
+        if not all_samples_data or source_raw_file not in all_samples_data:
+            logger.error(
+                f"Source raw data file '{source_raw_file}' not found for '{dataset_name}'. Cannot download."
+            )
+            raise PreventUpdate
+
+        raw_file_data = all_samples_data[source_raw_file]
+        raw_samples_dict = raw_file_data.get("samples")
+        if not raw_samples_dict:
+            logger.error(
+                f"'samples' key missing in raw data for '{source_raw_file}'. Cannot download."
+            )
+            raise PreventUpdate
+        # --- Data Validation --- End (Moved validation inside the type check)
+
+        # --- Data Processing for Download --- Start (Existing logic)
+        # ... (Keep the existing multi-pass processing and interpolation logic here) ...
+        # First pass: Determine the overall temperature range
+        logger.debug("Download: First pass to determine overall temperature range.")
+        min_temp_overall = np.inf
+        max_temp_overall = -np.inf
+        valid_sample_count = 0
+        for sample_id, params in baseline_parameters.items():
+            raw_data_list = raw_samples_dict.get(sample_id)
+            if not raw_data_list:
+                continue  # Skip samples without raw data
+            try:
+                df_raw = pd.DataFrame(raw_data_list)
+                if df_raw.empty or "Temperature" not in df_raw or "dCp" not in df_raw:
+                    continue  # Skip invalid/empty raw data
+
+                # Find min/max for this sample
+                current_min = df_raw["Temperature"].min()
+                current_max = df_raw["Temperature"].max()
+
+                if not pd.isna(current_min):
+                    min_temp_overall = min(min_temp_overall, current_min)
+                if not pd.isna(current_max):
+                    max_temp_overall = max(max_temp_overall, current_max)
+                valid_sample_count += 1  # Count samples with valid temp range
+            except Exception as e:
+                logger.warning(
+                    f"Download Range Check: Error processing sample '{sample_id}': {e}"
+                )
+
+        if (
+            not np.isfinite(min_temp_overall)
+            or not np.isfinite(max_temp_overall)
+            or valid_sample_count == 0
+        ):
+            logger.error(
+                "Could not determine a valid overall temperature range for interpolation."
+            )
+            raise PreventUpdate
+
+        # Define the interpolation grid using np.arange for 0.1 steps
+        # Add a small epsilon to max_temp_overall to ensure inclusion if it's a multiple of step
+        step = 0.1
+        interpolated_temps_raw = np.arange(
+            min_temp_overall, max_temp_overall + step / 2, step
+        )
+        # Round the grid to 1 decimal place to fix floating point inaccuracies
+        interpolated_temps = np.round(interpolated_temps_raw, 1)
+        logger.info(
+            f"Generated download interpolation grid: {len(interpolated_temps)} points from {interpolated_temps[0]:.1f} to {interpolated_temps[-1]:.1f} with step {step}"
+        )
+
+        # Second pass: Process each sample and interpolate onto the common grid
+        logger.debug("Download: Second pass to process and interpolate samples.")
+        # Initialize dictionary to hold data for the final DataFrame
+        data_for_final_df = {"Temperature": interpolated_temps}
+
+        for sample_id, params in baseline_parameters.items():
+            logger.debug(
+                f"Processing sample '{sample_id}' for download (interpolation phase)."
+            )
+            raw_data_list = raw_samples_dict.get(sample_id)
+            if not raw_data_list:
+                logger.warning(
+                    f"Raw data not found for sample '{sample_id}' in second pass. Skipping."
+                )
+                continue
+
+            try:
+                df_raw = pd.DataFrame(raw_data_list)
+                if df_raw.empty or "Temperature" not in df_raw or "dCp" not in df_raw:
+                    logger.warning(
+                        f"Raw data for '{sample_id}' is invalid or empty in second pass. Skipping."
+                    )
+                    continue
+
+                # 1. Apply Baseline Subtraction
+                df_subtracted_with_baseline = subtract_spline_baseline(
+                    df_raw,
+                    lower_endpoint=params.get("lower"),
+                    upper_endpoint=params.get("upper"),
+                )
+                if (
+                    df_subtracted_with_baseline is None
+                    or df_subtracted_with_baseline.empty
+                ):
+                    logger.warning(
+                        f"Spline baseline subtraction failed for '{sample_id}'. Skipping."
+                    )
+                    continue
+
+                # Prepare DataFrame for interpolation
+                df_for_interp = df_subtracted_with_baseline[
+                    ["Temperature", "dCp_subtracted"]
+                ].rename(columns={"dCp_subtracted": "dCp"})
+
+                # 2. Interpolate onto the COMMON grid
+                df_interpolated = interpolate_thermogram(
+                    df_for_interp,
+                    temp_grid=interpolated_temps,  # Use the common grid
+                )
+
+                if df_interpolated is None or df_interpolated.empty:
+                    logger.warning(f"Interpolation failed for '{sample_id}'. Skipping.")
+                    continue
+
+                # Add the interpolated dCp numpy array to the dictionary
+                if "dCp" in df_interpolated.columns and len(
+                    df_interpolated["dCp"]
+                ) == len(interpolated_temps):
+                    data_for_final_df[sample_id] = df_interpolated["dCp"].to_numpy()
+                    logger.debug(
+                        f"Successfully processed and interpolated '{sample_id}' for download."
+                    )
+                else:
+                    logger.warning(
+                        f"'dCp' column missing or length mismatch after interpolation for '{sample_id}'. Skipping."
+                    )
+
+            except Exception as e:
+                logger.error(
+                    f"Error processing sample '{sample_id}' for download (interpolation phase): {e}",
+                    exc_info=True,
+                )
+
+        # Check if any samples were successfully processed
+        if len(data_for_final_df) <= 1:
+            logger.error(
+                "No samples could be processed successfully for download after interpolation."
+            )
+            raise PreventUpdate
+
+        # Combine into Wide DataFrame
+        logger.info("Combining processed samples into final DataFrame for download.")
+        try:
+            df_final = pd.DataFrame(data_for_final_df)
+            df_final = df_final.set_index("Temperature")
+            df_wide = df_final.transpose()
+            df_wide.index.name = "SampleID"
+        except Exception as e:
+            logger.error(
+                f"Error creating final DataFrame for download: {e}", exc_info=True
+            )
+            raise PreventUpdate
+
+        logger.info(
+            f"Generated wide DataFrame for download with shape: {df_wide.shape}"
+        )
+        # --- Edge Column Adjustment --- Start (Existing logic)
+        if df_wide.shape[1] >= 2:
+            first_temp_col = df_wide.columns[0]
+            second_temp_col = df_wide.columns[1]
+            last_temp_col = df_wide.columns[-1]
+            second_last_temp_col = df_wide.columns[-2]
+
+            logger.info(
+                f"Adjusting edge columns for saved data: {first_temp_col} and {last_temp_col}"
+            )
+            df_wide[first_temp_col] = 0.5 * df_wide[second_temp_col]
+            df_wide[last_temp_col] = 0.5 * df_wide[second_last_temp_col]
+        else:
+            logger.warning(
+                "Skipping edge column adjustment: DataFrame has less than 2 temperature columns."
+            )
+        # --- Edge Column Adjustment --- End
+
+        # --- Prepare Download --- Start (Existing logic)
+        return dcc.send_data_frame(
+            df_wide.to_csv,
+            filename=download_filename,
+            index=True,
+        )
+        # --- Prepare Download --- End
+
+    else:
+        logger.error(
+            f"Unknown data_type '{data_type}' for dataset '{dataset_name}'. Cannot download."
+        )
+        raise PreventUpdate

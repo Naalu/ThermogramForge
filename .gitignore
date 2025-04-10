@@ -76,7 +76,5 @@ data/
 
 # Project specific ( Possible candidates for future alterations )
 uv.lock
-smooth_spline_detail_comparison.html
-smooth_spline_grid_comparison.html
-smooth_spline_table_summary.html
-interpolation_plot.png
+.ruff_cache/
+

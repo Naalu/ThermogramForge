@@ -14,6 +14,9 @@ import dash_bootstrap_components as dbc
 import dash_uploader as du
 from dash import Dash, dcc, html  # Import Dash for type hinting
 
+# Import the new modal component
+from app.components.upload_processed_modal import create_upload_processed_modal
+
 logger = logging.getLogger(__name__)  # Add logger for consistency
 # --- Add logger --- End
 
@@ -134,11 +137,11 @@ def create_layout() -> dbc.Container:
                                                                     dbc.Col(
                                                                         dbc.Button(
                                                                             "Upload New Processed Thermogram Data",  # RENAMED Button Text
-                                                                            id="upload-processed-data-btn",
-                                                                            color="secondary",
-                                                                            outline=True,
+                                                                            id="open-upload-processed-modal-btn",
+                                                                            color="primary",
                                                                             size="sm",  # Smaller button
-                                                                            disabled=True,
+                                                                            # REMOVED outline=True
+                                                                            # REMOVED disabled=True
                                                                         ),
                                                                         width="auto",
                                                                     ),
@@ -595,20 +598,213 @@ def create_layout() -> dbc.Container:
                                         )  # End Review Tab Container
                                     ],  # End Review Tab children
                                 ),  # End Review Tab
-                                # 3. Report Builder Tab (Placeholder)
+                                # 3. Report Builder Tab --- NEW ---
                                 dbc.Tab(
                                     label="Report Builder",
-                                    tab_id="tab-report",
+                                    tab_id="tab-report-builder",  # New ID
                                     children=[
                                         dbc.Container(
                                             [
-                                                html.H3("Report Builder"),
-                                                html.P("Feature coming soon."),
+                                                html.H3(
+                                                    "Report Builder",
+                                                    className="mt-4 mb-3",
+                                                ),
+                                                # --- Dataset Selector --- Start
+                                                dbc.Card(
+                                                    [
+                                                        dbc.CardHeader(
+                                                            "Select Dataset for Report"
+                                                        ),
+                                                        dbc.CardBody(
+                                                            [
+                                                                dcc.Dropdown(
+                                                                    id="report-dataset-selector",
+                                                                    placeholder="Select a processed dataset...",
+                                                                    options=[],  # Populated by callback
+                                                                ),
+                                                                dbc.Alert(
+                                                                    id="report-selector-message",
+                                                                    color="info",
+                                                                    is_open=False,
+                                                                    className="mt-3",
+                                                                ),
+                                                            ]
+                                                        ),
+                                                    ],
+                                                    className="mb-4",
+                                                ),
+                                                # --- Report Builder Content (Initially Hidden) --- Start
+                                                html.Div(
+                                                    id="report-builder-content",
+                                                    style={"display": "none"},
+                                                    children=[
+                                                        dbc.Row(
+                                                            [
+                                                                # --- Left Column: Config & Metrics --- Start
+                                                                dbc.Col(
+                                                                    [
+                                                                        # Report Configuration Card
+                                                                        dbc.Card(
+                                                                            [
+                                                                                dbc.CardHeader(
+                                                                                    "Report Configuration"
+                                                                                ),
+                                                                                dbc.CardBody(
+                                                                                    [
+                                                                                        dbc.Label(
+                                                                                            "Report Name:"
+                                                                                        ),
+                                                                                        dbc.Input(
+                                                                                            id="report-name-input",
+                                                                                            value="Thermogram_Analysis_Report",
+                                                                                            type="text",
+                                                                                            className="mb-3",
+                                                                                        ),
+                                                                                        dbc.Label(
+                                                                                            "Report Format:"
+                                                                                        ),
+                                                                                        dcc.Dropdown(
+                                                                                            id="report-format-dropdown",
+                                                                                            options=[
+                                                                                                {
+                                                                                                    "label": "CSV (Comma Separated Values)",
+                                                                                                    "value": "csv",
+                                                                                                },
+                                                                                                {
+                                                                                                    "label": "Excel Workbook (.xlsx)",
+                                                                                                    "value": "xlsx",
+                                                                                                },
+                                                                                            ],
+                                                                                            value="csv",
+                                                                                            clearable=False,
+                                                                                        ),
+                                                                                    ]
+                                                                                ),
+                                                                            ],
+                                                                            className="mb-4",
+                                                                        ),
+                                                                        # Select Metrics Card
+                                                                        dbc.Card(
+                                                                            [
+                                                                                dbc.CardHeader(
+                                                                                    html.H5(
+                                                                                        "Select Metrics"
+                                                                                    ),
+                                                                                ),
+                                                                                dbc.CardBody(
+                                                                                    [
+                                                                                        # Add Control Buttons
+                                                                                        dbc.ButtonGroup(
+                                                                                            [
+                                                                                                dbc.Button(
+                                                                                                    "Select All",
+                                                                                                    id="report-metric-select-all",
+                                                                                                    color="light",
+                                                                                                    size="sm",
+                                                                                                    className="me-1",
+                                                                                                ),
+                                                                                                dbc.Button(
+                                                                                                    "Clear All",
+                                                                                                    id="report-metric-clear-all",
+                                                                                                    color="light",
+                                                                                                    size="sm",
+                                                                                                    className="me-1",
+                                                                                                ),
+                                                                                                dbc.Button(
+                                                                                                    "Reset Selection",
+                                                                                                    id="report-metric-reset",
+                                                                                                    color="light",
+                                                                                                    size="sm",
+                                                                                                ),
+                                                                                            ],
+                                                                                            className="mb-2",  # Add margin below buttons
+                                                                                        ),
+                                                                                        # Metric Checklist
+                                                                                        dbc.Checklist(
+                                                                                            id="report-metric-selector",
+                                                                                            options=[],  # Populated by callback
+                                                                                            value=[],  # Default selected metrics set by callback
+                                                                                            labelStyle={
+                                                                                                "display": "block"
+                                                                                            },  # Display options vertically
+                                                                                        ),
+                                                                                        # Add container for tooltips
+                                                                                        html.Div(
+                                                                                            id="report-metric-tooltips-div"
+                                                                                        ),
+                                                                                    ]
+                                                                                ),
+                                                                            ]
+                                                                        ),
+                                                                    ],
+                                                                    width=4,
+                                                                ),
+                                                                # --- Left Column: Config & Metrics --- End
+                                                                # --- Right Column: Preview & Generate --- Start
+                                                                dbc.Col(
+                                                                    [
+                                                                        # --- Report Preview Section --- Dynamically Updated
+                                                                        dbc.Card(
+                                                                            [
+                                                                                dbc.CardHeader(
+                                                                                    # Row for Title and Button
+                                                                                    dbc.Row(
+                                                                                        [
+                                                                                            dbc.Col(
+                                                                                                html.H4(
+                                                                                                    "Report Preview",
+                                                                                                    className="mb-0",  # Remove bottom margin if needed
+                                                                                                ),
+                                                                                                width=True,  # Allow title to take space
+                                                                                            ),
+                                                                                            dbc.Col(
+                                                                                                dbc.Button(
+                                                                                                    "Generate Report",
+                                                                                                    id="generate-report-button",
+                                                                                                    color="success",
+                                                                                                    disabled=True,  # Initially disabled
+                                                                                                    # n_clicks=0, # REMOVE - n_clicks is input only
+                                                                                                    size="sm",  # Optional: smaller button
+                                                                                                ),
+                                                                                                width="auto",  # Fit button width
+                                                                                            ),
+                                                                                        ],
+                                                                                        justify="between",  # Push items apart
+                                                                                        align="center",  # Vertically align items
+                                                                                    )
+                                                                                ),
+                                                                                dbc.CardBody(
+                                                                                    [
+                                                                                        dbc.Spinner(
+                                                                                            html.Div(  # Wrap table preview for spinner
+                                                                                                id="report-preview-table-div",
+                                                                                                children=html.Em(
+                                                                                                    "Select a dataset and metrics to see a preview."
+                                                                                                ),
+                                                                                            ),
+                                                                                            color="primary",
+                                                                                            size="sm",
+                                                                                        ),
+                                                                                    ],
+                                                                                ),
+                                                                            ],
+                                                                            # className="mt-4", # REMOVED margin top
+                                                                        ),
+                                                                    ],
+                                                                    width=8,  # Set width 8 for right column
+                                                                ),
+                                                                # --- Right Column: Preview & Generate --- End
+                                                            ]
+                                                        )  # End Row
+                                                    ],
+                                                ),
+                                                # --- Report Builder Content (Initially Hidden) --- End
                                             ],
-                                            className="p-5 px-md-5 text-center",
+                                            fluid=True,
+                                            className="p-4 px-md-5",
                                         )
-                                    ],
-                                ),
+                                    ],  # End Report Builder Tab children
+                                ),  # End Report Builder Tab
                             ],  # End Main Tabs Children
                         ),  # End Main Tabs
                     ],  # End Main Column Children
@@ -789,6 +985,8 @@ def create_layout() -> dbc.Container:
                 backdrop="static",
             ),
             # --- Upload Modal --- End
+            # Add the new processed data upload modal
+            create_upload_processed_modal(),
             # --- Data Stores ---
             # (Keep as is, already reviewed)
             dcc.Store(id="all-samples-data", data={}),
@@ -800,6 +998,14 @@ def create_layout() -> dbc.Container:
             dcc.Store(id="select-first-row-trigger", data=0),
             dcc.Download(id="download-data"),
             dcc.Store(id="processed-datasets-store", data={}),
+            # Add store for temporary processed upload data
+            dcc.Store(id="upload-processed-temp-store"),
+            # Add store for report builder intermediate results
+            dcc.Store(id="report-calculated-metrics-temp"),
+            # Add download component for reports
+            dcc.Download(id="download-report"),
+            # Add store for generated report metadata
+            dcc.Store(id="generated-reports-store", data={}),
             # --- Data Stores --- End
         ],  # End Root Container Children
         fluid=True,
