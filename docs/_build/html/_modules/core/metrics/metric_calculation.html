@@ -1,0 +1,900 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>core.metrics.metric_calculation &#8212; ThermogramForge 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/core/metrics/metric_calculation';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">ThermogramForge</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributor Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Naalu/ThermogramForge/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributor Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Naalu/ThermogramForge/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">core.metrics.metric_calculation</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for core.metrics.metric_calculation</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Functions for calculating standard metrics from thermogram data.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pandas.api.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_numeric_dtype</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">trapezoid</span>  <span class="c1"># Use scipy.integrate.trapezoid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.interpolate</span><span class="w"> </span><span class="kn">import</span> <span class="n">interp1d</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># --- Helper Functions for Specific Metrics --- Start</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_calculate_area</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the area under the baseline-subtracted curve.</span>
+
+<span class="sd">    Uses the trapezoidal rule for numerical integration.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df: DataFrame containing numeric &#39;Temperature&#39; and &#39;dCp_subtracted&#39; columns.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The calculated area (float), or None if calculation is not possible</span>
+<span class="sd">        (e.g., insufficient valid data points).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="s2">&quot;Temperature&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+        <span class="ow">or</span> <span class="s2">&quot;dCp_subtracted&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+    <span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;_calculate_area: Invalid DataFrame input.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">temps</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+        <span class="n">dcp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Remove rows with NaN in either temperature or dCp after coercion</span>
+        <span class="n">valid_mask</span> <span class="o">=</span> <span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">dcp</span><span class="p">)</span>
+        <span class="n">temps_valid</span> <span class="o">=</span> <span class="n">temps</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">dcp_valid</span> <span class="o">=</span> <span class="n">dcp</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">temps_valid</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;_calculate_area: Need at least two valid points for integration.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Ensure temperatures are sorted for trapz</span>
+        <span class="n">sort_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">temps_valid</span><span class="p">)</span>
+        <span class="n">temps_sorted</span> <span class="o">=</span> <span class="n">temps_valid</span><span class="p">[</span><span class="n">sort_idx</span><span class="p">]</span>
+        <span class="n">dcp_sorted</span> <span class="o">=</span> <span class="n">dcp_valid</span><span class="p">[</span><span class="n">sort_idx</span><span class="p">]</span>
+
+        <span class="c1"># Calculate area using the trapezoidal rule</span>
+        <span class="n">area</span> <span class="o">=</span> <span class="n">trapezoid</span><span class="p">(</span><span class="n">dcp_sorted</span><span class="p">,</span> <span class="n">temps_sorted</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">area</span><span class="p">)</span>  <span class="c1"># Ensure return type is float</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error calculating area: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_calculate_tfm</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the First Moment Temperature (TFM), a weighted average temperature.</span>
+
+<span class="sd">    TFM = sum(T_i * dCp_i) / sum(dCp_i)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df: DataFrame containing numeric &#39;Temperature&#39; and &#39;dCp_subtracted&#39; columns.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The calculated TFM (float), or None if calculation is not possible</span>
+<span class="sd">        (e.g., sum of dCp is zero or invalid data).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="s2">&quot;Temperature&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+        <span class="ow">or</span> <span class="s2">&quot;dCp_subtracted&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+    <span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;_calculate_tfm: Invalid DataFrame input.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">temps</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+        <span class="n">dcp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Remove rows with NaN in either temperature or dCp</span>
+        <span class="n">valid_mask</span> <span class="o">=</span> <span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">dcp</span><span class="p">)</span>
+        <span class="n">temps_valid</span> <span class="o">=</span> <span class="n">temps</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">dcp_valid</span> <span class="o">=</span> <span class="n">dcp</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">temps_valid</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;_calculate_tfm: No valid data points found.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Calculate numerator and denominator for TFM formula</span>
+        <span class="n">numerator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">temps_valid</span> <span class="o">*</span> <span class="n">dcp_valid</span><span class="p">)</span>
+        <span class="n">denominator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dcp_valid</span><span class="p">)</span>
+
+        <span class="c1"># Check for zero or NaN denominator to avoid division errors</span>
+        <span class="k">if</span> <span class="n">denominator</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">denominator</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;_calculate_tfm: Denominator (sum of dCp) is </span><span class="si">{</span><span class="n">denominator</span><span class="si">}</span><span class="s2">, cannot calculate TFM.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">tfm</span> <span class="o">=</span> <span class="n">numerator</span> <span class="o">/</span> <span class="n">denominator</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">tfm</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error calculating TFM: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_calculate_fwhm</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the Full Width at Half Maximum (FWHM) of the main peak.</span>
+
+<span class="sd">    Finds the maximum peak height, calculates the half-maximum height, and uses</span>
+<span class="sd">    linear interpolation to find the temperatures at which the curve crosses</span>
+<span class="sd">    this half-height.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df: DataFrame containing numeric &#39;Temperature&#39; and &#39;dCp_subtracted&#39; columns.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The calculated FWHM (float), or None if calculation is not possible (e.g.,</span>
+<span class="sd">        no clear peak, insufficient points for interpolation, or cannot find crossings).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="s2">&quot;Temperature&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+        <span class="ow">or</span> <span class="s2">&quot;dCp_subtracted&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+    <span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;_calculate_fwhm: Invalid DataFrame input.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">temps</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+        <span class="n">dcp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Remove rows with NaN in either temperature or dCp</span>
+        <span class="n">valid_mask</span> <span class="o">=</span> <span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">dcp</span><span class="p">)</span>
+        <span class="n">temps_valid</span> <span class="o">=</span> <span class="n">temps</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span>
+        <span class="n">dcp_valid</span> <span class="o">=</span> <span class="n">dcp</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">temps_valid</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span>
+        <span class="p">):</span>  <span class="c1"># Need at least 3 points for reasonable peak finding/interp</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;_calculate_fwhm: Need at least 3 valid points.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Find the minimum and maximum dCp values and the temperature of the max peak</span>
+        <span class="n">min_dcp</span> <span class="o">=</span> <span class="n">dcp_valid</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">max_idx</span> <span class="o">=</span> <span class="n">dcp_valid</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>  <span class="c1"># Use idxmax on Series to get index</span>
+        <span class="n">max_dcp</span> <span class="o">=</span> <span class="n">dcp_valid</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">max_idx</span><span class="p">]</span>
+        <span class="c1"># max_temp = temps_valid.loc[max_idx] # Temperature at max peak</span>
+
+        <span class="c1"># Check if there is a peak (max &gt; min)</span>
+        <span class="k">if</span> <span class="n">max_dcp</span> <span class="o">&lt;=</span> <span class="n">min_dcp</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;_calculate_fwhm: No peak found (max_dcp &lt;= min_dcp).&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mf">0.0</span>  <span class="c1"># FWHM is arguably 0 if there&#39;s no peak</span>
+
+        <span class="c1"># Calculate the half-maximum height</span>
+        <span class="n">half_height</span> <span class="o">=</span> <span class="n">min_dcp</span> <span class="o">+</span> <span class="p">(</span><span class="n">max_dcp</span> <span class="o">-</span> <span class="n">min_dcp</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+
+        <span class="c1"># --- Interpolation Setup ---</span>
+        <span class="c1"># Ensure temperatures are sorted and unique for interpolation</span>
+        <span class="n">sorted_indices</span> <span class="o">=</span> <span class="n">temps_valid</span><span class="o">.</span><span class="n">argsort</span><span class="p">()</span>
+        <span class="n">temps_sorted</span> <span class="o">=</span> <span class="n">temps_valid</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">sorted_indices</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">dcp_sorted</span> <span class="o">=</span> <span class="n">dcp_valid</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">sorted_indices</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+        <span class="n">unique_temps</span><span class="p">,</span> <span class="n">unique_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">temps_sorted</span><span class="p">,</span> <span class="n">return_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_temps</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;_calculate_fwhm: Need at least 2 unique temperature points for interpolation.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">unique_dcp</span> <span class="o">=</span> <span class="n">dcp_sorted</span><span class="p">[</span><span class="n">unique_indices</span><span class="p">]</span>
+
+        <span class="c1"># Create the interpolation function</span>
+        <span class="n">interp_func</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span>
+            <span class="n">unique_temps</span><span class="p">,</span>
+            <span class="n">unique_dcp</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>  <span class="c1"># Use linear interpolation</span>
+            <span class="n">bounds_error</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># Do not raise error for out-of-bounds</span>
+            <span class="n">fill_value</span><span class="o">=</span><span class="n">min_dcp</span><span class="p">,</span>  <span class="c1"># Use min_dcp for out-of-bounds points</span>
+        <span class="p">)</span>
+
+        <span class="c1"># --- Find Crossings ---</span>
+        <span class="c1"># Find indices where the dCp curve crosses the half_height value</span>
+        <span class="c1"># Check where the sign of (dCp - half_height) changes</span>
+        <span class="n">sign_diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">dcp_sorted</span> <span class="o">-</span> <span class="n">half_height</span><span class="p">)</span>
+        <span class="n">crossings_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">sign_diff</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">crossings_idx</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;_calculate_fwhm: Could not find two crossings at half height (</span><span class="si">{</span><span class="n">half_height</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">). &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">crossings_idx</span><span class="p">)</span><span class="si">}</span><span class="s2"> crossings.&quot;</span>
+            <span class="p">)</span>
+            <span class="c1"># Attempt to interpolate even if only one crossing? No, FWHM needs two.</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Interpolate to find the precise temperatures at the first and last crossings</span>
+        <span class="n">t_crossings</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="n">crossings_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">crossings_idx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+        <span class="p">]:</span>  <span class="c1"># First and last crossing index</span>
+            <span class="c1"># Temperature and dCp values around the crossing</span>
+            <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">temps_sorted</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">temps_sorted</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span> <span class="o">=</span> <span class="n">dcp_sorted</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">dcp_sorted</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># Linear interpolation formula: t = t1 + (t2 - t1) * (half_h - d1) / (d2 - d1)</span>
+            <span class="k">if</span> <span class="n">d2</span> <span class="o">==</span> <span class="n">d1</span><span class="p">:</span>  <span class="c1"># Avoid division by zero if dCp is flat at crossing</span>
+                <span class="n">t_cross</span> <span class="o">=</span> <span class="p">(</span><span class="n">t1</span> <span class="o">+</span> <span class="n">t2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">t_cross</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">+</span> <span class="p">(</span><span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">half_height</span> <span class="o">-</span> <span class="n">d1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">d2</span> <span class="o">-</span> <span class="n">d1</span><span class="p">)</span>
+            <span class="n">t_crossings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t_cross</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t_crossings</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;_calculate_fwhm: Failed to interpolate crossing temperatures.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">fwhm</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">t_crossings</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t_crossings</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">fwhm</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error calculating FWHM: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_calculate_valley_v12</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">t_peak1</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">t_peak2</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds the minimum dCp (V1.2) and its temperature (TV1.2) between two peaks.</span>
+
+<span class="sd">    Searches the DataFrame for the minimum `dCp_subtracted` value strictly between</span>
+<span class="sd">    the temperatures of Peak 1 and Peak 2.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df: DataFrame containing numeric &#39;Temperature&#39; and &#39;dCp_subtracted&#39; columns.</span>
+<span class="sd">        t_peak1: Temperature of the first peak.</span>
+<span class="sd">        t_peak2: Temperature of the second peak.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A tuple containing: (valley_height, valley_temperature). Both values are</span>
+<span class="sd">        float if the valley is found, otherwise None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">t_peak1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">t_peak2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">t_peak1</span><span class="p">)</span> <span class="ow">or</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">t_peak2</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;_calculate_valley_v12: One or both peak temperatures are None.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;_calculate_valley_v12: Invalid DataFrame input.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="s2">&quot;Temperature&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="ow">or</span> <span class="s2">&quot;dCp_subtracted&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;_calculate_valley_v12: Missing required columns.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>  <span class="c1"># Or raise?</span>
+
+    <span class="c1"># Ensure correct temperature range for searching</span>
+    <span class="n">t_start</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">t_peak1</span><span class="p">,</span> <span class="n">t_peak2</span><span class="p">)</span>
+    <span class="n">t_end</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">t_peak1</span><span class="p">,</span> <span class="n">t_peak2</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Filter DataFrame to the region strictly between the peaks</span>
+        <span class="n">valley_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">t_start</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">t_end</span><span class="p">)</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="c1"># Coerce dCp to numeric and find minimum</span>
+        <span class="n">valley_df</span><span class="p">[</span><span class="s2">&quot;dCp_numeric&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span>
+            <span class="n">valley_df</span><span class="p">[</span><span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">valley_df</span><span class="o">.</span><span class="n">empty</span> <span class="ow">or</span> <span class="n">valley_df</span><span class="p">[</span><span class="s2">&quot;dCp_numeric&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;_calculate_valley_v12: No valid data points between peaks.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="c1"># Find the index of the minimum dCp value in the filtered region</span>
+        <span class="n">min_idx</span> <span class="o">=</span> <span class="n">valley_df</span><span class="p">[</span><span class="s2">&quot;dCp_numeric&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()</span>
+
+        <span class="c1"># Check if idxmin returned NaN (can happen if all are NaN)</span>
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">min_idx</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;_calculate_valley_v12: Could not find minimum index (all NaN?).&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="c1"># Retrieve the valley temperature and height using the original index</span>
+        <span class="n">valley_temp</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">min_idx</span><span class="p">,</span> <span class="s2">&quot;Temperature&quot;</span><span class="p">]</span>
+        <span class="n">valley_height</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+            <span class="n">min_idx</span><span class="p">,</span> <span class="s2">&quot;dCp_subtracted&quot;</span>
+        <span class="p">]</span>  <span class="c1"># Use original for consistency</span>
+
+        <span class="c1"># Final check if retrieved values are valid</span>
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">valley_temp</span><span class="p">)</span> <span class="ow">or</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">valley_height</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;_calculate_valley_v12: Retrieved valley temp or height is NaN.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">valley_height</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">valley_temp</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error calculating valley V1.2: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_safe_ratio</span><span class="p">(</span>
+    <span class="n">numerator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">denominator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Safely calculates the ratio of two numbers, handling None and zero denominator.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">numerator</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="ow">or</span> <span class="n">denominator</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="ow">or</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">numerator</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">denominator</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">denominator</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># Or np.inf? Returning None is safer for general metrics.</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">numerator</span> <span class="o">/</span> <span class="n">denominator</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># Should not happen if inputs are validated, but as safety</span>
+
+
+<span class="c1"># --- Helper Functions for Specific Metrics --- End</span>
+
+
+<div class="viewcode-block" id="calculate_thermogram_metrics">
+<a class="viewcode-back" href="../../../api/core.html#core.metrics.calculate_thermogram_metrics">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_thermogram_metrics</span><span class="p">(</span>
+    <span class="n">df_processed</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">peaks_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates a standard set of metrics from processed thermogram data.</span>
+
+<span class="sd">    Utilizes detected peak information to calculate peak heights, temperatures,</span>
+<span class="sd">    ratios, valley metrics, and global curve properties like Area, TFM, and FWHM.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df_processed: DataFrame containing baseline-subtracted data with at least</span>
+<span class="sd">                      numeric &#39;Temperature&#39; and &#39;dCp_subtracted&#39; columns.</span>
+<span class="sd">        peaks_data: A dictionary where keys are peak region names (e.g., &#39;Peak_1&#39;)</span>
+<span class="sd">                    and values are dictionaries containing &#39;peak_temp&#39; and</span>
+<span class="sd">                    &#39;peak_height&#39; for that peak.</span>
+<span class="sd">                    Example: {&#39;Peak_1&#39;: {&#39;peak_temp&#39;: 55.2, &#39;peak_height&#39;: 0.8}}.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary where keys are metric names (str) and values are the</span>
+<span class="sd">        calculated metric values (float or None if calculation failed).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">metrics</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Calculating thermogram metrics.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># --- Input Validation --- Start</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df_processed</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="ow">or</span> <span class="n">df_processed</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="s2">&quot;calculate_thermogram_metrics: Input DataFrame is invalid or empty.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">metrics</span>  <span class="c1"># Return empty dict</span>
+
+    <span class="n">required_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">col</span> <span class="ow">in</span> <span class="n">df_processed</span><span class="o">.</span><span class="n">columns</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">required_cols</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;calculate_thermogram_metrics: DataFrame missing required columns: </span><span class="si">{</span><span class="n">required_cols</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">metrics</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_numeric_dtype</span><span class="p">(</span><span class="n">df_processed</span><span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">is_numeric_dtype</span><span class="p">(</span>
+        <span class="n">df_processed</span><span class="p">[</span><span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s2">&quot;calculate_thermogram_metrics: &#39;Temperature&#39; or &#39;dCp_subtracted&#39; not numeric.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">metrics</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">peaks_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="s2">&quot;calculate_thermogram_metrics: peaks_data is not a dict. Proceeding without peak data.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">peaks_data</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Treat as empty if invalid format</span>
+    <span class="c1"># --- Input Validation --- End</span>
+
+    <span class="c1"># --- Peak-Based Metrics --- Start</span>
+    <span class="n">peak_regions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Peak_F&quot;</span><span class="p">,</span> <span class="s2">&quot;Peak_1&quot;</span><span class="p">,</span> <span class="s2">&quot;Peak_2&quot;</span><span class="p">,</span> <span class="s2">&quot;Peak_3&quot;</span><span class="p">]</span>
+    <span class="n">peak_heights</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">peak_temps</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="n">peak_regions</span><span class="p">:</span>
+        <span class="c1"># Get peak info safely, defaulting to None if region or keys are missing</span>
+        <span class="n">peak_info</span> <span class="o">=</span> <span class="n">peaks_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">region</span><span class="p">,</span> <span class="p">{})</span>  <span class="c1"># Default to empty dict</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="n">peak_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;peak_height&quot;</span><span class="p">)</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">peak_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;peak_temp&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Store raw height and temp for ratio calculations</span>
+        <span class="n">peak_heights</span><span class="p">[</span><span class="n">region</span><span class="p">]</span> <span class="o">=</span> <span class="n">height</span>
+        <span class="n">peak_temps</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;T</span><span class="si">{</span><span class="n">region</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
+
+        <span class="c1"># Add direct metrics to the output dictionary</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="n">region</span><span class="p">]</span> <span class="o">=</span> <span class="n">height</span>  <span class="c1"># Metric name is Peak_X</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;T</span><span class="si">{</span><span class="n">region</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>  <span class="c1"># Metric name is TPeak_X</span>
+
+    <span class="c1"># Peak Ratios (using the safe helper function)</span>
+    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;Peak1_Peak2_Ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_safe_ratio</span><span class="p">(</span>
+        <span class="n">peak_heights</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Peak_1&quot;</span><span class="p">),</span> <span class="n">peak_heights</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Peak_2&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;Peak1_Peak3_Ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_safe_ratio</span><span class="p">(</span>
+        <span class="n">peak_heights</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Peak_1&quot;</span><span class="p">),</span> <span class="n">peak_heights</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Peak_3&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;Peak2_Peak3_Ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_safe_ratio</span><span class="p">(</span>
+        <span class="n">peak_heights</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Peak_2&quot;</span><span class="p">),</span> <span class="n">peak_heights</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Peak_3&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="c1"># --- Peak-Based Metrics --- End</span>
+
+    <span class="c1"># --- Valley Metrics --- Start</span>
+    <span class="n">v12_height</span><span class="p">,</span> <span class="n">tv12_temp</span> <span class="o">=</span> <span class="n">_calculate_valley_v12</span><span class="p">(</span>
+        <span class="n">df_processed</span><span class="p">,</span> <span class="n">metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;TPeak_1&quot;</span><span class="p">),</span> <span class="n">metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;TPeak_2&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;V1.2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v12_height</span>  <span class="c1"># Height of the valley between Peak 1 and Peak 2</span>
+    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;TV1.2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tv12_temp</span>  <span class="c1"># Temperature of the valley between Peak 1 and Peak 2</span>
+
+    <span class="c1"># Valley Ratios</span>
+    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;V1.2_Peak1_Ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_safe_ratio</span><span class="p">(</span><span class="n">v12_height</span><span class="p">,</span> <span class="n">peak_heights</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Peak_1&quot;</span><span class="p">))</span>
+    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;V1.2_Peak2_Ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_safe_ratio</span><span class="p">(</span><span class="n">v12_height</span><span class="p">,</span> <span class="n">peak_heights</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Peak_2&quot;</span><span class="p">))</span>
+    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;V1.2_Peak3_Ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_safe_ratio</span><span class="p">(</span>
+        <span class="n">v12_height</span><span class="p">,</span> <span class="n">peak_heights</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Peak_3&quot;</span><span class="p">)</span>
+    <span class="p">)</span>  <span class="c1"># Added for completeness</span>
+    <span class="c1"># --- Valley Metrics --- End</span>
+
+    <span class="c1"># --- Global Curve Metrics --- Start</span>
+    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;Area&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_calculate_area</span><span class="p">(</span><span class="n">df_processed</span><span class="p">)</span>
+    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;TFM&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_calculate_tfm</span><span class="p">(</span><span class="n">df_processed</span><span class="p">)</span>
+    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;FWHM&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_calculate_fwhm</span><span class="p">(</span><span class="n">df_processed</span><span class="p">)</span>
+
+    <span class="c1"># --- Add Max/Min/Median Calculations --- Start</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">dcp_values</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df_processed</span><span class="p">[</span><span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+        <span class="n">temp_values</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df_processed</span><span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+        <span class="n">valid_mask</span> <span class="o">=</span> <span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">dcp_values</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">temp_values</span><span class="p">)</span>
+        <span class="n">dcp_valid</span> <span class="o">=</span> <span class="n">dcp_values</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span>
+        <span class="n">temp_valid</span> <span class="o">=</span> <span class="n">temp_values</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dcp_valid</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;Max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dcp_valid</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;TMax&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_valid</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">dcp_valid</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()]</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;Min&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dcp_valid</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;TMin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_valid</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">dcp_valid</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()]</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;Median&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dcp_valid</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;Max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;TMax&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;Min&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;TMin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;Median&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error calculating Max/Min/Median metrics: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;Max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;TMax&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;Min&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;TMin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;Median&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># --- Add Max/Min/Median Calculations --- End</span>
+
+    <span class="c1"># --- Global Curve Metrics --- End</span>
+
+    <span class="c1"># Final check: Replace any potential np.nan floats with None for consistency</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">metrics</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Calculated metrics: </span><span class="si">{</span><span class="w"> </span><span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">metrics</span><span class="o">.</span><span class="n">items</span><span class="p">()</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="ow">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="kc">None</span><span class="p">}</span><span class="w"> </span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">metrics</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Chris Reger.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

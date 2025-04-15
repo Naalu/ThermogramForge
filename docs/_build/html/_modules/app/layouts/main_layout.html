@@ -1,0 +1,1453 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app.layouts.main_layout &#8212; ThermogramForge 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/app/layouts/main_layout';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">ThermogramForge</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributor Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Naalu/ThermogramForge/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributor Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Naalu/ThermogramForge/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">app.layouts.main_layout</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for app.layouts.main_layout</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Main layout definition for the ThermogramForge application.</span>
+
+<span class="sd">Defines the structure and components of the user interface using Dash Bootstrap Components</span>
+<span class="sd">and Dash Core Components. Includes the main tab structure, data overview section,</span>
+<span class="sd">review endpoints section (with grid, plots, control panel), upload modal, and data stores.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># --- Add logger --- Start</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">dash_ag_grid</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dag</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dash_bootstrap_components</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dbc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dash_uploader</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">du</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dash</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">html</span>  <span class="c1"># Import Dash for type hinting</span>
+
+<span class="c1"># Import the new modal component</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">app.components.upload_processed_modal</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_upload_processed_modal</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>  <span class="c1"># Add logger for consistency</span>
+<span class="c1"># --- Add logger --- End</span>
+
+<span class="c1"># &quot;&quot;&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_layout</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Container</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates the main layout container with all UI elements.</span>
+
+<span class="sd">    Defines the overall structure including header, tabs (Overview, Review),</span>
+<span class="sd">    modals, and necessary dcc.Store components for holding application state.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dbc.Container: The root Dash Bootstrap Container for the app layout.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Container</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="c1"># --- Main Content Area (Full Width) --- Start</span>
+            <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+                <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                    <span class="p">[</span>
+                        <span class="c1"># Header Section</span>
+                        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+                            <span class="p">[</span>
+                                <span class="n">html</span><span class="o">.</span><span class="n">H2</span><span class="p">(</span><span class="s2">&quot;ThermogramForge&quot;</span><span class="p">,</span> <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-0&quot;</span><span class="p">),</span>
+                                <span class="c1"># Future: Add theme switch? User info?</span>
+                            <span class="p">],</span>
+                            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;d-flex justify-content-between align-items-center p-4 bg-white border-bottom&quot;</span><span class="p">,</span>
+                            <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;border-bottom&quot;</span><span class="p">:</span> <span class="s2">&quot;2px solid #dee2e6&quot;</span><span class="p">},</span>
+                        <span class="p">),</span>
+                        <span class="c1"># Main Tabs Section</span>
+                        <span class="n">dbc</span><span class="o">.</span><span class="n">Tabs</span><span class="p">(</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;main-tabs&quot;</span><span class="p">,</span>
+                            <span class="n">active_tab</span><span class="o">=</span><span class="s2">&quot;tab-overview&quot;</span><span class="p">,</span>
+                            <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+                                <span class="c1"># 1. Data Overview Tab</span>
+                                <span class="n">dbc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span>
+                                    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Data Overview&quot;</span><span class="p">,</span>
+                                    <span class="n">tab_id</span><span class="o">=</span><span class="s2">&quot;tab-overview&quot;</span><span class="p">,</span>
+                                    <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Container</span><span class="p">(</span>
+                                            <span class="p">[</span>
+                                                <span class="n">html</span><span class="o">.</span><span class="n">H3</span><span class="p">(</span>
+                                                    <span class="s2">&quot;Data Overview&quot;</span><span class="p">,</span>
+                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mt-4 mb-3&quot;</span><span class="p">,</span>
+                                                <span class="p">),</span>
+                                                <span class="c1"># --- Section: Raw Data --- Redesigned ---</span>
+                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Card</span><span class="p">(</span>
+                                                    <span class="p">[</span>
+                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">CardHeader</span><span class="p">(</span>
+                                                            <span class="c1"># Use Row to place Title and Button side-by-side</span>
+                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+                                                                <span class="p">[</span>
+                                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                        <span class="n">html</span><span class="o">.</span><span class="n">H4</span><span class="p">(</span>
+                                                                            <span class="s2">&quot;Raw Thermogram Files&quot;</span><span class="p">,</span>
+                                                                            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-0 align-middle&quot;</span><span class="p">,</span>  <span class="c1"># Keep vertical align</span>
+                                                                        <span class="p">),</span>
+                                                                        <span class="n">width</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># Allow title col to take available space</span>
+                                                                    <span class="p">),</span>
+                                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                                                                            <span class="s2">&quot;Upload New Raw Thermogram Data&quot;</span><span class="p">,</span>
+                                                                            <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;open-upload-modal-btn-overview&quot;</span><span class="p">,</span>
+                                                                            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;primary&quot;</span><span class="p">,</span>
+                                                                            <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>  <span class="c1"># Smaller button in header</span>
+                                                                        <span class="p">),</span>
+                                                                        <span class="n">width</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>  <span class="c1"># Fit button width</span>
+                                                                    <span class="p">),</span>
+                                                                <span class="p">],</span>
+                                                                <span class="n">align</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>  <span class="c1"># Vertically align items</span>
+                                                                <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;between&quot;</span><span class="p">,</span>  <span class="c1"># Push items apart</span>
+                                                            <span class="p">)</span>
+                                                        <span class="p">),</span>
+                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">CardBody</span><span class="p">(</span>
+                                                            <span class="p">[</span>
+                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;upload-status&quot;</span><span class="p">,</span>
+                                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-3&quot;</span><span class="p">,</span>
+                                                                    <span class="n">is_open</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                                    <span class="n">dismissable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                <span class="p">),</span>
+                                                                <span class="c1"># Container for the styled list of raw data files</span>
+                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Spinner</span><span class="p">(</span>
+                                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">ListGroup</span><span class="p">(</span>
+                                                                        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;raw-data-overview-display&quot;</span><span class="p">,</span>
+                                                                        <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                        <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+                                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">ListGroupItem</span><span class="p">(</span>
+                                                                                <span class="s2">&quot;No raw files uploaded yet.&quot;</span>
+                                                                            <span class="p">)</span>
+                                                                        <span class="p">],</span>  <span class="c1"># Placeholder</span>
+                                                                    <span class="p">),</span>
+                                                                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;primary&quot;</span><span class="p">,</span>
+                                                                    <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>
+                                                                <span class="p">),</span>
+                                                            <span class="p">]</span>
+                                                        <span class="p">),</span>
+                                                    <span class="p">],</span>
+                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-4&quot;</span><span class="p">,</span>
+                                                <span class="p">),</span>
+                                                <span class="c1"># --- Section: Processed Data --- Redesigned ---</span>
+                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Card</span><span class="p">(</span>
+                                                    <span class="p">[</span>
+                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">CardHeader</span><span class="p">(</span>
+                                                            <span class="c1"># Use Row for Title and Button</span>
+                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+                                                                <span class="p">[</span>
+                                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                        <span class="n">html</span><span class="o">.</span><span class="n">H4</span><span class="p">(</span>
+                                                                            <span class="s2">&quot;Processed Thermograms&quot;</span><span class="p">,</span>  <span class="c1"># RENAMED Title</span>
+                                                                            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-0 align-middle&quot;</span><span class="p">,</span>
+                                                                        <span class="p">),</span>
+                                                                        <span class="n">width</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                    <span class="p">),</span>
+                                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                                                                            <span class="s2">&quot;Upload New Processed Thermogram Data&quot;</span><span class="p">,</span>  <span class="c1"># RENAMED Button Text</span>
+                                                                            <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;open-upload-processed-modal-btn&quot;</span><span class="p">,</span>
+                                                                            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;primary&quot;</span><span class="p">,</span>
+                                                                            <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>  <span class="c1"># Smaller button</span>
+                                                                            <span class="c1"># REMOVED outline=True</span>
+                                                                            <span class="c1"># REMOVED disabled=True</span>
+                                                                        <span class="p">),</span>
+                                                                        <span class="n">width</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+                                                                    <span class="p">),</span>
+                                                                <span class="p">],</span>
+                                                                <span class="n">align</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                                                                <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;between&quot;</span><span class="p">,</span>
+                                                            <span class="p">)</span>
+                                                        <span class="p">),</span>
+                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">CardBody</span><span class="p">(</span>
+                                                            <span class="p">[</span>
+                                                                <span class="c1"># REMOVED Button Row from Body</span>
+                                                                <span class="c1"># Container for the styled list of processed datasets</span>
+                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Spinner</span><span class="p">(</span>
+                                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">ListGroup</span><span class="p">(</span>
+                                                                        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;processed-data-overview-display&quot;</span><span class="p">,</span>
+                                                                        <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                        <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+                                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">ListGroupItem</span><span class="p">(</span>
+                                                                                <span class="s2">&quot;No data processed yet.&quot;</span>
+                                                                            <span class="p">)</span>
+                                                                        <span class="p">],</span>  <span class="c1"># Placeholder</span>
+                                                                    <span class="p">),</span>
+                                                                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;primary&quot;</span><span class="p">,</span>
+                                                                    <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>
+                                                                <span class="p">)</span>
+                                                            <span class="p">]</span>
+                                                        <span class="p">),</span>
+                                                    <span class="p">],</span>
+                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-4&quot;</span><span class="p">,</span>
+                                                <span class="p">),</span>
+                                                <span class="c1"># --- Section: Reports --- Redesigned ---</span>
+                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Card</span><span class="p">(</span>
+                                                    <span class="p">[</span>
+                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">CardHeader</span><span class="p">(</span>
+                                                            <span class="n">html</span><span class="o">.</span><span class="n">H4</span><span class="p">(</span>
+                                                                <span class="s2">&quot;Reports Generated&quot;</span><span class="p">,</span>
+                                                                <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-0&quot;</span><span class="p">,</span>
+                                                            <span class="p">)</span>
+                                                        <span class="p">),</span>
+                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">CardBody</span><span class="p">(</span>
+                                                            <span class="p">[</span>
+                                                                <span class="c1"># Container for the styled list of reports</span>
+                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Spinner</span><span class="p">(</span>
+                                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">ListGroup</span><span class="p">(</span>
+                                                                        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;reports-overview-display&quot;</span><span class="p">,</span>
+                                                                        <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                        <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+                                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">ListGroupItem</span><span class="p">(</span>
+                                                                                <span class="s2">&quot;No reports generated yet.&quot;</span>
+                                                                            <span class="p">)</span>
+                                                                        <span class="p">],</span>  <span class="c1"># Placeholder</span>
+                                                                    <span class="p">),</span>
+                                                                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;primary&quot;</span><span class="p">,</span>
+                                                                    <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>
+                                                                <span class="p">)</span>
+                                                            <span class="p">]</span>
+                                                        <span class="p">),</span>
+                                                    <span class="p">]</span>
+                                                <span class="p">),</span>
+                                            <span class="p">],</span>
+                                            <span class="n">fluid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;p-4 px-md-5&quot;</span><span class="p">,</span>
+                                        <span class="p">)</span>
+                                    <span class="p">],</span>  <span class="c1"># End Data Overview Tab children</span>
+                                <span class="p">),</span>  <span class="c1"># End Data Overview Tab</span>
+                                <span class="c1"># 2. Review Endpoints Tab</span>
+                                <span class="n">dbc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span>
+                                    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Review Endpoints&quot;</span><span class="p">,</span>
+                                    <span class="n">tab_id</span><span class="o">=</span><span class="s2">&quot;tab-review&quot;</span><span class="p">,</span>
+                                    <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Container</span><span class="p">(</span>
+                                            <span class="p">[</span>
+                                                <span class="n">html</span><span class="o">.</span><span class="n">H3</span><span class="p">(</span>
+                                                    <span class="s2">&quot;Review Sample Endpoints&quot;</span><span class="p">,</span>
+                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mt-4 mb-3&quot;</span><span class="p">,</span>
+                                                <span class="p">),</span>
+                                                <span class="c1"># Dataset Selector Card</span>
+                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Card</span><span class="p">(</span>
+                                                    <span class="p">[</span>
+                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">CardHeader</span><span class="p">(</span>
+                                                            <span class="s2">&quot;Select Dataset for Review&quot;</span>
+                                                        <span class="p">),</span>
+                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">CardBody</span><span class="p">(</span>
+                                                            <span class="p">[</span>
+                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+                                                                    <span class="p">[</span>
+                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                            <span class="p">[</span>
+                                                                                <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
+                                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;review-dataset-selector&quot;</span><span class="p">,</span>
+                                                                                    <span class="n">placeholder</span><span class="o">=</span><span class="s2">&quot;Select an uploaded raw dataset...&quot;</span><span class="p">,</span>
+                                                                                    <span class="n">options</span><span class="o">=</span><span class="p">[],</span>
+                                                                                <span class="p">)</span>
+                                                                            <span class="p">],</span>
+                                                                            <span class="n">width</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                        <span class="p">),</span>
+                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                            <span class="p">[</span>
+                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                                                                                    <span class="s2">&quot;Upload New Data&quot;</span><span class="p">,</span>
+                                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;open-upload-modal-btn-review&quot;</span><span class="p">,</span>
+                                                                                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;primary&quot;</span><span class="p">,</span>
+                                                                                    <span class="n">outline</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                                                    <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                                                <span class="p">)</span>
+                                                                            <span class="p">],</span>
+                                                                            <span class="n">width</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+                                                                        <span class="p">),</span>
+                                                                    <span class="p">],</span>
+                                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;align-items-center mb-2&quot;</span><span class="p">,</span>
+                                                                <span class="p">),</span>  <span class="c1"># Add margin below row</span>
+                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;review-selector-message&quot;</span><span class="p">,</span>
+                                                                    <span class="n">is_open</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                                    <span class="n">dismissable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">,</span>
+                                                                <span class="p">),</span>  <span class="c1"># Make dismissable</span>
+                                                            <span class="p">]</span>
+                                                        <span class="p">),</span>
+                                                    <span class="p">],</span>
+                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-4&quot;</span><span class="p">,</span>
+                                                <span class="p">),</span>
+                                                <span class="c1"># Main Review Area (Grid, Plots, Controls)</span>
+                                                <span class="c1"># Initially hidden, shown by callback when dataset selected</span>
+                                                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;review-content-area&quot;</span><span class="p">,</span>
+                                                    <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">},</span>
+                                                    <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+                                                            <span class="p">[</span>
+                                                                <span class="c1"># Left Column: Control Panel &amp; Grid</span>
+                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                    <span class="p">[</span>
+                                                                        <span class="c1"># Control Panel Card</span>
+                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Card</span><span class="p">(</span>
+                                                                            <span class="p">[</span>
+                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">CardHeader</span><span class="p">(</span>
+                                                                                    <span class="s2">&quot;Review Samples&quot;</span>
+                                                                                <span class="p">),</span>
+                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">CardBody</span><span class="p">(</span>
+                                                                                    <span class="p">[</span>
+                                                                                        <span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span>
+                                                                                            <span class="s2">&quot;Select a sample from the grid below&quot;</span><span class="p">,</span>
+                                                                                            <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;selected-sample-display&quot;</span><span class="p">,</span>
+                                                                                        <span class="p">),</span>
+                                                                                        <span class="c1"># Collapsible controls section</span>
+                                                                                        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+                                                                                            <span class="p">[</span>
+                                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+                                                                                                    <span class="p">[</span>
+                                                                                                        <span class="c1"># Lower Endpoint Display</span>
+                                                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                                                            <span class="p">[</span>
+                                                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span>
+                                                                                                                    <span class="s2">&quot;Lower Endpoint (°C):&quot;</span>
+                                                                                                                <span class="p">),</span>
+                                                                                                                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+                                                                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;display-lower-endpoint&quot;</span><span class="p">,</span>
+                                                                                                                    <span class="n">children</span><span class="o">=</span><span class="s2">&quot;N/A&quot;</span><span class="p">,</span>
+                                                                                                                <span class="p">),</span>
+                                                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">FormText</span><span class="p">(</span>
+                                                                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;lower-endpoint-source&quot;</span><span class="p">,</span>
+                                                                                                                    <span class="n">children</span><span class="o">=</span><span class="s2">&quot;Source: auto&quot;</span><span class="p">,</span>
+                                                                                                                <span class="p">),</span>
+                                                                                                            <span class="p">],</span>
+                                                                                                            <span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+                                                                                                        <span class="p">),</span>
+                                                                                                        <span class="c1"># Upper Endpoint Display</span>
+                                                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                                                            <span class="p">[</span>
+                                                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span>
+                                                                                                                    <span class="s2">&quot;Upper Endpoint (°C):&quot;</span>
+                                                                                                                <span class="p">),</span>
+                                                                                                                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+                                                                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;display-upper-endpoint&quot;</span><span class="p">,</span>
+                                                                                                                    <span class="n">children</span><span class="o">=</span><span class="s2">&quot;N/A&quot;</span><span class="p">,</span>
+                                                                                                                <span class="p">),</span>
+                                                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">FormText</span><span class="p">(</span>
+                                                                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;upper-endpoint-source&quot;</span><span class="p">,</span>
+                                                                                                                    <span class="n">children</span><span class="o">=</span><span class="s2">&quot;Source: auto&quot;</span><span class="p">,</span>
+                                                                                                                <span class="p">),</span>
+                                                                                                            <span class="p">],</span>
+                                                                                                            <span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+                                                                                                        <span class="p">),</span>
+                                                                                                    <span class="p">],</span>
+                                                                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-3&quot;</span><span class="p">,</span>
+                                                                                                <span class="p">),</span>
+                                                                                                <span class="c1"># Endpoint Selection Buttons</span>
+                                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+                                                                                                    <span class="p">[</span>
+                                                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                                                                                                                <span class="s2">&quot;Manually Adjust Lower Endpoint&quot;</span><span class="p">,</span>
+                                                                                                                <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;select-lower-btn&quot;</span><span class="p">,</span>
+                                                                                                                <span class="n">outline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                                                                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;primary&quot;</span><span class="p">,</span>
+                                                                                                                <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>
+                                                                                                                <span class="n">className</span><span class="o">=</span><span class="s2">&quot;me-1&quot;</span><span class="p">,</span>
+                                                                                                                <span class="n">disabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                                                            <span class="p">),</span>
+                                                                                                            <span class="n">width</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+                                                                                                        <span class="p">),</span>
+                                                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                                                                                                                <span class="s2">&quot;Manually Adjust Upper Endpoint&quot;</span><span class="p">,</span>
+                                                                                                                <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;select-upper-btn&quot;</span><span class="p">,</span>
+                                                                                                                <span class="n">outline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                                                                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;primary&quot;</span><span class="p">,</span>
+                                                                                                                <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>
+                                                                                                                <span class="n">className</span><span class="o">=</span><span class="s2">&quot;me-1&quot;</span><span class="p">,</span>
+                                                                                                                <span class="n">disabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                                                            <span class="p">),</span>
+                                                                                                            <span class="n">width</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+                                                                                                        <span class="p">),</span>
+                                                                                                    <span class="p">],</span>
+                                                                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-3&quot;</span><span class="p">,</span>
+                                                                                                <span class="p">),</span>
+                                                                                                <span class="c1"># Exclude Checkbox</span>
+                                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+                                                                                                    <span class="p">[</span>
+                                                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">Checkbox</span><span class="p">(</span>
+                                                                                                                <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;edit-exclude-checkbox&quot;</span><span class="p">,</span>
+                                                                                                                <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Exclude this Sample&quot;</span><span class="p">,</span>
+                                                                                                                <span class="n">value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                                                                                <span class="n">disabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                                                            <span class="p">),</span>
+                                                                                                            <span class="n">width</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+                                                                                                        <span class="p">)</span>
+                                                                                                    <span class="p">],</span>
+                                                                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-3&quot;</span><span class="p">,</span>
+                                                                                                <span class="p">),</span>
+                                                                                                <span class="c1"># Action Buttons</span>
+                                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+                                                                                                    <span class="p">[</span>
+                                                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                                                                                                                <span class="s2">&quot;Discard Changes&quot;</span><span class="p">,</span>
+                                                                                                                <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;cancel-sample-changes-btn&quot;</span><span class="p">,</span>
+                                                                                                                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;secondary&quot;</span><span class="p">,</span>
+                                                                                                                <span class="n">outline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                                                                <span class="n">disabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                                                            <span class="p">),</span>
+                                                                                                            <span class="n">width</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+                                                                                                        <span class="p">),</span>
+                                                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                                                            <span class="p">[</span>
+                                                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                                                                                                                    <span class="s2">&quot;Previous Sample&quot;</span><span class="p">,</span>
+                                                                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;previous-sample-btn&quot;</span><span class="p">,</span>
+                                                                                                                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;secondary&quot;</span><span class="p">,</span>
+                                                                                                                    <span class="n">outline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                                                                    <span class="n">disabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;me-2&quot;</span><span class="p">,</span>
+                                                                                                                <span class="p">),</span>
+                                                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                                                                                                                    <span class="s2">&quot;Mark Reviewed &amp; Next&quot;</span><span class="p">,</span>
+                                                                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;mark-reviewed-next-btn&quot;</span><span class="p">,</span>
+                                                                                                                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">,</span>
+                                                                                                                    <span class="n">disabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                                                                <span class="p">),</span>
+                                                                                                            <span class="p">],</span>
+                                                                                                            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;ms-auto d-flex&quot;</span><span class="p">,</span>
+                                                                                                        <span class="p">),</span>
+                                                                                                    <span class="p">],</span>
+                                                                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-3&quot;</span><span class="p">,</span>
+                                                                                                <span class="p">),</span>
+                                                                                                <span class="c1"># Alert Area</span>
+                                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+                                                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;control-panel-alert&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">children</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">is_open</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                                                                    <span class="n">duration</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span>
+                                                                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mt-3&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">dismissable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                                                <span class="p">),</span>
+                                                                                            <span class="p">],</span>
+                                                                                            <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;sample-control-panel-content&quot;</span><span class="p">,</span>
+                                                                                            <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                                                                                                <span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span>
+                                                                                            <span class="p">},</span>  <span class="c1"># Initially hidden until a sample is selected</span>
+                                                                                        <span class="p">),</span>
+                                                                                    <span class="p">]</span>
+                                                                                <span class="p">),</span>  <span class="c1"># End Control Panel CardBody</span>
+                                                                            <span class="p">],</span>
+                                                                            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-4&quot;</span><span class="p">,</span>
+                                                                        <span class="p">),</span>  <span class="c1"># Add margin below control panel</span>
+                                                                        <span class="c1"># Sample Overview Grid Card</span>
+                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Card</span><span class="p">(</span>
+                                                                            <span class="p">[</span>
+                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">CardHeader</span><span class="p">(</span>
+                                                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+                                                                                        <span class="p">[</span>
+                                                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                                                <span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span>
+                                                                                                    <span class="s2">&quot;Sample Overview&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-0&quot;</span><span class="p">,</span>
+                                                                                                <span class="p">),</span>
+                                                                                                <span class="n">width</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+                                                                                            <span class="p">),</span>
+                                                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                                                                                                    <span class="s2">&quot;Save Processed Data&quot;</span><span class="p">,</span>
+                                                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;save-processed-data-btn&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;success&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>  <span class="c1"># Smaller button</span>
+                                                                                                    <span class="n">outline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                                                <span class="p">),</span>
+                                                                                                <span class="n">width</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+                                                                                            <span class="p">),</span>
+                                                                                        <span class="p">],</span>
+                                                                                        <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;between&quot;</span><span class="p">,</span>
+                                                                                        <span class="n">align</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                                                                                    <span class="p">)</span>
+                                                                                <span class="p">),</span>
+                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">CardBody</span><span class="p">(</span>
+                                                                                    <span class="p">[</span>
+                                                                                        <span class="c1"># AG Grid Component</span>
+                                                                                        <span class="n">dag</span><span class="o">.</span><span class="n">AgGrid</span><span class="p">(</span>
+                                                                                            <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;sample-grid&quot;</span><span class="p">,</span>
+                                                                                            <span class="n">rowData</span><span class="o">=</span><span class="p">[],</span>
+                                                                                            <span class="n">columnDefs</span><span class="o">=</span><span class="p">[</span>
+                                                                                                <span class="p">{</span>
+                                                                                                    <span class="s2">&quot;headerName&quot;</span><span class="p">:</span> <span class="s2">&quot;Sample ID&quot;</span><span class="p">,</span>
+                                                                                                    <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;sample_id&quot;</span><span class="p">,</span>
+                                                                                                    <span class="s2">&quot;filter&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                                                                                                    <span class="s2">&quot;sortable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                                                                                                    <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span>
+                                                                                                <span class="p">},</span>
+                                                                                                <span class="p">{</span>
+                                                                                                    <span class="s2">&quot;headerName&quot;</span><span class="p">:</span> <span class="s2">&quot;Lower (°C)&quot;</span><span class="p">,</span>
+                                                                                                    <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;lower&quot;</span><span class="p">,</span>
+                                                                                                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;numericColumn&quot;</span><span class="p">,</span>
+                                                                                                    <span class="s2">&quot;valueFormatter&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                                                                        <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;params.value == null ? &#39;&#39; : d3.format(&#39;.1f&#39;)(params.value) + &#39; (&#39; + params.data.lower_source + &#39;)&#39;&quot;</span>
+                                                                                                    <span class="p">},</span>
+                                                                                                    <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">120</span><span class="p">,</span>
+                                                                                                <span class="p">},</span>
+                                                                                                <span class="p">{</span>
+                                                                                                    <span class="s2">&quot;headerName&quot;</span><span class="p">:</span> <span class="s2">&quot;Upper (°C)&quot;</span><span class="p">,</span>
+                                                                                                    <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;upper&quot;</span><span class="p">,</span>
+                                                                                                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;numericColumn&quot;</span><span class="p">,</span>
+                                                                                                    <span class="s2">&quot;valueFormatter&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                                                                        <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;params.value == null ? &#39;&#39; : d3.format(&#39;.1f&#39;)(params.value) + &#39; (&#39; + params.data.upper_source + &#39;)&#39;&quot;</span>
+                                                                                                    <span class="p">},</span>
+                                                                                                    <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">120</span><span class="p">,</span>
+                                                                                                <span class="p">},</span>
+                                                                                                <span class="p">{</span>
+                                                                                                    <span class="s2">&quot;headerName&quot;</span><span class="p">:</span> <span class="s2">&quot;Reviewed&quot;</span><span class="p">,</span>
+                                                                                                    <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;reviewed&quot;</span><span class="p">,</span>
+                                                                                                    <span class="s2">&quot;cellRenderer&quot;</span><span class="p">:</span> <span class="s2">&quot;CheckboxRenderer&quot;</span><span class="p">,</span>
+                                                                                                <span class="p">},</span>  <span class="c1"># Assuming CheckboxRenderer defined in assets</span>
+                                                                                                <span class="p">{</span>
+                                                                                                    <span class="s2">&quot;headerName&quot;</span><span class="p">:</span> <span class="s2">&quot;Exclude&quot;</span><span class="p">,</span>
+                                                                                                    <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;exclude&quot;</span><span class="p">,</span>
+                                                                                                    <span class="s2">&quot;cellRenderer&quot;</span><span class="p">:</span> <span class="s2">&quot;CheckboxRenderer&quot;</span><span class="p">,</span>
+                                                                                                <span class="p">},</span>
+                                                                                            <span class="p">],</span>
+                                                                                            <span class="n">dashGridOptions</span><span class="o">=</span><span class="p">{</span>
+                                                                                                <span class="s2">&quot;rowSelection&quot;</span><span class="p">:</span> <span class="s2">&quot;single&quot;</span><span class="p">,</span>
+                                                                                                <span class="s2">&quot;pagination&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                                                                                                <span class="s2">&quot;paginationPageSize&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                                                                                                <span class="s2">&quot;paginationPageSizeSelector&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                                                                                                <span class="s2">&quot;domLayout&quot;</span><span class="p">:</span> <span class="s2">&quot;autoHeight&quot;</span><span class="p">,</span>
+                                                                                                <span class="s2">&quot;suppressRowClickSelection&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                                                                                            <span class="p">},</span>
+                                                                                            <span class="n">columnSize</span><span class="o">=</span><span class="s2">&quot;sizeToFit&quot;</span><span class="p">,</span>
+                                                                                            <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                                                                                                <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="s2">&quot;100%&quot;</span><span class="p">,</span>
+                                                                                                <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+                                                                                                <span class="s2">&quot;minHeight&quot;</span><span class="p">:</span> <span class="s2">&quot;350px&quot;</span><span class="p">,</span>
+                                                                                            <span class="p">},</span>
+                                                                                        <span class="p">),</span>
+                                                                                    <span class="p">]</span>
+                                                                                <span class="p">),</span>
+                                                                            <span class="p">]</span>
+                                                                        <span class="p">),</span>
+                                                                    <span class="p">],</span>
+                                                                    <span class="n">width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;d-flex flex-column&quot;</span><span class="p">,</span>
+                                                                <span class="p">),</span>
+                                                                <span class="c1"># Right Column: Plots</span>
+                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                    <span class="p">[</span>
+                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Card</span><span class="p">(</span>
+                                                                            <span class="p">[</span>
+                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">CardHeader</span><span class="p">(</span>
+                                                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Tabs</span><span class="p">(</span>
+                                                                                        <span class="p">[</span>
+                                                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span>
+                                                                                                <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Baseline Subtracted&quot;</span><span class="p">,</span>
+                                                                                                <span class="n">tab_id</span><span class="o">=</span><span class="s2">&quot;tab-processed&quot;</span><span class="p">,</span>
+                                                                                            <span class="p">),</span>
+                                                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span>
+                                                                                                <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Raw Thermogram&quot;</span><span class="p">,</span>
+                                                                                                <span class="n">tab_id</span><span class="o">=</span><span class="s2">&quot;tab-raw&quot;</span><span class="p">,</span>
+                                                                                            <span class="p">),</span>
+                                                                                        <span class="p">],</span>
+                                                                                        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;plot-tabs&quot;</span><span class="p">,</span>
+                                                                                        <span class="n">active_tab</span><span class="o">=</span><span class="s2">&quot;tab-processed&quot;</span><span class="p">,</span>
+                                                                                    <span class="p">)</span>
+                                                                                <span class="p">),</span>
+                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">CardBody</span><span class="p">(</span>
+                                                                                    <span class="p">[</span>
+                                                                                        <span class="c1"># Raw Plot Area (Initially hidden)</span>
+                                                                                        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+                                                                                            <span class="n">dcc</span><span class="o">.</span><span class="n">Loading</span><span class="p">(</span>
+                                                                                                <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span>
+                                                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;raw-plot-graph&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                                                                                                        <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="s2">&quot;45vh&quot;</span>
+                                                                                                    <span class="p">},</span>
+                                                                                                <span class="p">)</span>
+                                                                                            <span class="p">),</span>
+                                                                                            <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;raw-plot-content&quot;</span><span class="p">,</span>
+                                                                                            <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                                                                                                <span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span>
+                                                                                            <span class="p">},</span>
+                                                                                            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;flex-grow-1&quot;</span><span class="p">,</span>
+                                                                                        <span class="p">),</span>
+                                                                                        <span class="c1"># Processed Plot Area (Initially visible)</span>
+                                                                                        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+                                                                                            <span class="n">dcc</span><span class="o">.</span><span class="n">Loading</span><span class="p">(</span>
+                                                                                                <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span>
+                                                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;processed-plot-graph&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                                                                                                        <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="s2">&quot;45vh&quot;</span>
+                                                                                                    <span class="p">},</span>
+                                                                                                <span class="p">)</span>
+                                                                                            <span class="p">),</span>
+                                                                                            <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;processed-plot-content&quot;</span><span class="p">,</span>
+                                                                                            <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                                                                                                <span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;block&quot;</span>
+                                                                                            <span class="p">},</span>
+                                                                                            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;flex-grow-1&quot;</span><span class="p">,</span>
+                                                                                        <span class="p">),</span>
+                                                                                    <span class="p">],</span>
+                                                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;d-flex flex-column&quot;</span><span class="p">,</span>
+                                                                                <span class="p">),</span>
+                                                                            <span class="p">]</span>
+                                                                        <span class="p">),</span>
+                                                                    <span class="p">],</span>
+                                                                    <span class="n">width</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+                                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;d-flex flex-column&quot;</span><span class="p">,</span>
+                                                                <span class="p">),</span>
+                                                            <span class="p">]</span>
+                                                        <span class="p">)</span>  <span class="c1"># End Row for review grid/plots</span>
+                                                    <span class="p">],</span>
+                                                <span class="p">),</span>  <span class="c1"># End review-content-area div</span>
+                                            <span class="p">],</span>
+                                            <span class="n">fluid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;p-4 px-md-5&quot;</span><span class="p">,</span>
+                                        <span class="p">)</span>  <span class="c1"># End Review Tab Container</span>
+                                    <span class="p">],</span>  <span class="c1"># End Review Tab children</span>
+                                <span class="p">),</span>  <span class="c1"># End Review Tab</span>
+                                <span class="c1"># 3. Report Builder Tab --- NEW ---</span>
+                                <span class="n">dbc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span>
+                                    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Report Builder&quot;</span><span class="p">,</span>
+                                    <span class="n">tab_id</span><span class="o">=</span><span class="s2">&quot;tab-report-builder&quot;</span><span class="p">,</span>  <span class="c1"># New ID</span>
+                                    <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Container</span><span class="p">(</span>
+                                            <span class="p">[</span>
+                                                <span class="n">html</span><span class="o">.</span><span class="n">H3</span><span class="p">(</span>
+                                                    <span class="s2">&quot;Report Builder&quot;</span><span class="p">,</span>
+                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mt-4 mb-3&quot;</span><span class="p">,</span>
+                                                <span class="p">),</span>
+                                                <span class="c1"># --- Dataset Selector --- Start</span>
+                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Card</span><span class="p">(</span>
+                                                    <span class="p">[</span>
+                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">CardHeader</span><span class="p">(</span>
+                                                            <span class="s2">&quot;Select Dataset for Report&quot;</span>
+                                                        <span class="p">),</span>
+                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">CardBody</span><span class="p">(</span>
+                                                            <span class="p">[</span>
+                                                                <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
+                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;report-dataset-selector&quot;</span><span class="p">,</span>
+                                                                    <span class="n">placeholder</span><span class="o">=</span><span class="s2">&quot;Select a processed dataset...&quot;</span><span class="p">,</span>
+                                                                    <span class="n">options</span><span class="o">=</span><span class="p">[],</span>  <span class="c1"># Populated by callback</span>
+                                                                <span class="p">),</span>
+                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;report-selector-message&quot;</span><span class="p">,</span>
+                                                                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">,</span>
+                                                                    <span class="n">is_open</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mt-3&quot;</span><span class="p">,</span>
+                                                                <span class="p">),</span>
+                                                            <span class="p">]</span>
+                                                        <span class="p">),</span>
+                                                    <span class="p">],</span>
+                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-4&quot;</span><span class="p">,</span>
+                                                <span class="p">),</span>
+                                                <span class="c1"># --- Report Builder Content (Initially Hidden) --- Start</span>
+                                                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;report-builder-content&quot;</span><span class="p">,</span>
+                                                    <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">},</span>
+                                                    <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+                                                            <span class="p">[</span>
+                                                                <span class="c1"># --- Left Column: Config &amp; Metrics --- Start</span>
+                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                    <span class="p">[</span>
+                                                                        <span class="c1"># Report Configuration Card</span>
+                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Card</span><span class="p">(</span>
+                                                                            <span class="p">[</span>
+                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">CardHeader</span><span class="p">(</span>
+                                                                                    <span class="s2">&quot;Report Configuration&quot;</span>
+                                                                                <span class="p">),</span>
+                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">CardBody</span><span class="p">(</span>
+                                                                                    <span class="p">[</span>
+                                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span>
+                                                                                            <span class="s2">&quot;Report Name:&quot;</span>
+                                                                                        <span class="p">),</span>
+                                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span>
+                                                                                            <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;report-name-input&quot;</span><span class="p">,</span>
+                                                                                            <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Thermogram_Analysis_Report&quot;</span><span class="p">,</span>
+                                                                                            <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                                                                                            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-3&quot;</span><span class="p">,</span>
+                                                                                        <span class="p">),</span>
+                                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span>
+                                                                                            <span class="s2">&quot;Report Format:&quot;</span>
+                                                                                        <span class="p">),</span>
+                                                                                        <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
+                                                                                            <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;report-format-dropdown&quot;</span><span class="p">,</span>
+                                                                                            <span class="n">options</span><span class="o">=</span><span class="p">[</span>
+                                                                                                <span class="p">{</span>
+                                                                                                    <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;CSV (Comma Separated Values)&quot;</span><span class="p">,</span>
+                                                                                                    <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;csv&quot;</span><span class="p">,</span>
+                                                                                                <span class="p">},</span>
+                                                                                                <span class="p">{</span>
+                                                                                                    <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Excel Workbook (.xlsx)&quot;</span><span class="p">,</span>
+                                                                                                    <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;xlsx&quot;</span><span class="p">,</span>
+                                                                                                <span class="p">},</span>
+                                                                                            <span class="p">],</span>
+                                                                                            <span class="n">value</span><span class="o">=</span><span class="s2">&quot;csv&quot;</span><span class="p">,</span>
+                                                                                            <span class="n">clearable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                                                        <span class="p">),</span>
+                                                                                    <span class="p">]</span>
+                                                                                <span class="p">),</span>
+                                                                            <span class="p">],</span>
+                                                                            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-4&quot;</span><span class="p">,</span>
+                                                                        <span class="p">),</span>
+                                                                        <span class="c1"># Select Metrics Card</span>
+                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Card</span><span class="p">(</span>
+                                                                            <span class="p">[</span>
+                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">CardHeader</span><span class="p">(</span>
+                                                                                    <span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span>
+                                                                                        <span class="s2">&quot;Select Metrics&quot;</span>
+                                                                                    <span class="p">),</span>
+                                                                                <span class="p">),</span>
+                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">CardBody</span><span class="p">(</span>
+                                                                                    <span class="p">[</span>
+                                                                                        <span class="c1"># Add Control Buttons</span>
+                                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">ButtonGroup</span><span class="p">(</span>
+                                                                                            <span class="p">[</span>
+                                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                                                                                                    <span class="s2">&quot;Select All&quot;</span><span class="p">,</span>
+                                                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;report-metric-select-all&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;light&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;me-1&quot;</span><span class="p">,</span>
+                                                                                                <span class="p">),</span>
+                                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                                                                                                    <span class="s2">&quot;Clear All&quot;</span><span class="p">,</span>
+                                                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;report-metric-clear-all&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;light&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;me-1&quot;</span><span class="p">,</span>
+                                                                                                <span class="p">),</span>
+                                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                                                                                                    <span class="s2">&quot;Reset Selection&quot;</span><span class="p">,</span>
+                                                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;report-metric-reset&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;light&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>
+                                                                                                <span class="p">),</span>
+                                                                                            <span class="p">],</span>
+                                                                                            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-2&quot;</span><span class="p">,</span>  <span class="c1"># Add margin below buttons</span>
+                                                                                        <span class="p">),</span>
+                                                                                        <span class="c1"># Metric Checklist</span>
+                                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Checklist</span><span class="p">(</span>
+                                                                                            <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;report-metric-selector&quot;</span><span class="p">,</span>
+                                                                                            <span class="n">options</span><span class="o">=</span><span class="p">[],</span>  <span class="c1"># Populated by callback</span>
+                                                                                            <span class="n">value</span><span class="o">=</span><span class="p">[],</span>  <span class="c1"># Default selected metrics set by callback</span>
+                                                                                            <span class="n">labelStyle</span><span class="o">=</span><span class="p">{</span>
+                                                                                                <span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;block&quot;</span>
+                                                                                            <span class="p">},</span>  <span class="c1"># Display options vertically</span>
+                                                                                        <span class="p">),</span>
+                                                                                        <span class="c1"># Add container for tooltips</span>
+                                                                                        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+                                                                                            <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;report-metric-tooltips-div&quot;</span>
+                                                                                        <span class="p">),</span>
+                                                                                    <span class="p">]</span>
+                                                                                <span class="p">),</span>
+                                                                            <span class="p">]</span>
+                                                                        <span class="p">),</span>
+                                                                    <span class="p">],</span>
+                                                                    <span class="n">width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                                                                <span class="p">),</span>
+                                                                <span class="c1"># --- Left Column: Config &amp; Metrics --- End</span>
+                                                                <span class="c1"># --- Right Column: Preview &amp; Generate --- Start</span>
+                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                    <span class="p">[</span>
+                                                                        <span class="c1"># --- Report Preview Section --- Dynamically Updated</span>
+                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Card</span><span class="p">(</span>
+                                                                            <span class="p">[</span>
+                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">CardHeader</span><span class="p">(</span>
+                                                                                    <span class="c1"># Row for Title and Button</span>
+                                                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+                                                                                        <span class="p">[</span>
+                                                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                                                <span class="n">html</span><span class="o">.</span><span class="n">H4</span><span class="p">(</span>
+                                                                                                    <span class="s2">&quot;Report Preview&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-0&quot;</span><span class="p">,</span>  <span class="c1"># Remove bottom margin if needed</span>
+                                                                                                <span class="p">),</span>
+                                                                                                <span class="n">width</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># Allow title to take space</span>
+                                                                                            <span class="p">),</span>
+                                                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                                                                                                    <span class="s2">&quot;Generate Report&quot;</span><span class="p">,</span>
+                                                                                                    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;generate-report-button&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;success&quot;</span><span class="p">,</span>
+                                                                                                    <span class="n">disabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># Initially disabled</span>
+                                                                                                    <span class="c1"># n_clicks=0, # REMOVE - n_clicks is input only</span>
+                                                                                                    <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>  <span class="c1"># Optional: smaller button</span>
+                                                                                                <span class="p">),</span>
+                                                                                                <span class="n">width</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>  <span class="c1"># Fit button width</span>
+                                                                                            <span class="p">),</span>
+                                                                                        <span class="p">],</span>
+                                                                                        <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;between&quot;</span><span class="p">,</span>  <span class="c1"># Push items apart</span>
+                                                                                        <span class="n">align</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>  <span class="c1"># Vertically align items</span>
+                                                                                    <span class="p">)</span>
+                                                                                <span class="p">),</span>
+                                                                                <span class="n">dbc</span><span class="o">.</span><span class="n">CardBody</span><span class="p">(</span>
+                                                                                    <span class="p">[</span>
+                                                                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Spinner</span><span class="p">(</span>
+                                                                                            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>  <span class="c1"># Wrap table preview for spinner</span>
+                                                                                                <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;report-preview-table-div&quot;</span><span class="p">,</span>
+                                                                                                <span class="n">children</span><span class="o">=</span><span class="n">html</span><span class="o">.</span><span class="n">Em</span><span class="p">(</span>
+                                                                                                    <span class="s2">&quot;Select a dataset and metrics to see a preview.&quot;</span>
+                                                                                                <span class="p">),</span>
+                                                                                            <span class="p">),</span>
+                                                                                            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;primary&quot;</span><span class="p">,</span>
+                                                                                            <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>
+                                                                                        <span class="p">),</span>
+                                                                                    <span class="p">],</span>
+                                                                                <span class="p">),</span>
+                                                                            <span class="p">],</span>
+                                                                            <span class="c1"># className=&quot;mt-4&quot;, # REMOVED margin top</span>
+                                                                        <span class="p">),</span>
+                                                                    <span class="p">],</span>
+                                                                    <span class="n">width</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>  <span class="c1"># Set width 8 for right column</span>
+                                                                <span class="p">),</span>
+                                                                <span class="c1"># --- Right Column: Preview &amp; Generate --- End</span>
+                                                            <span class="p">]</span>
+                                                        <span class="p">)</span>  <span class="c1"># End Row</span>
+                                                    <span class="p">],</span>
+                                                <span class="p">),</span>
+                                                <span class="c1"># --- Report Builder Content (Initially Hidden) --- End</span>
+                                            <span class="p">],</span>
+                                            <span class="n">fluid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;p-4 px-md-5&quot;</span><span class="p">,</span>
+                                        <span class="p">)</span>
+                                    <span class="p">],</span>  <span class="c1"># End Report Builder Tab children</span>
+                                <span class="p">),</span>  <span class="c1"># End Report Builder Tab</span>
+                            <span class="p">],</span>  <span class="c1"># End Main Tabs Children</span>
+                            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;main-tabs-container mt-3&quot;</span><span class="p">,</span>
+                        <span class="p">),</span>  <span class="c1"># End Main Tabs</span>
+                    <span class="p">],</span>  <span class="c1"># End Main Column Children</span>
+                    <span class="n">width</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;p-0 d-flex flex-column&quot;</span><span class="p">,</span>
+                    <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="s2">&quot;100vh&quot;</span><span class="p">,</span> <span class="s2">&quot;overflowY&quot;</span><span class="p">:</span> <span class="s2">&quot;auto&quot;</span><span class="p">},</span>
+                <span class="p">)</span>  <span class="c1"># End Main Column</span>
+            <span class="p">),</span>  <span class="c1"># End Main Content Row</span>
+            <span class="c1"># --- Main Content Area --- End</span>
+            <span class="c1"># --- Upload Modal ---</span>
+            <span class="c1"># (Keep as is, already reviewed)</span>
+            <span class="n">dbc</span><span class="o">.</span><span class="n">Modal</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">dbc</span><span class="o">.</span><span class="n">ModalHeader</span><span class="p">(</span>
+                        <span class="n">dbc</span><span class="o">.</span><span class="n">ModalTitle</span><span class="p">(</span><span class="s2">&quot;Data Input Settings&quot;</span><span class="p">),</span> <span class="n">close_button</span><span class="o">=</span><span class="kc">True</span>
+                    <span class="p">),</span>
+                    <span class="n">dbc</span><span class="o">.</span><span class="n">ModalBody</span><span class="p">(</span>
+                        <span class="p">[</span>
+                            <span class="c1"># Upload Component</span>
+                            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+                                <span class="p">[</span>
+                                    <span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span><span class="s2">&quot;Upload Thermogram File&quot;</span><span class="p">),</span>
+                                    <span class="n">html</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="s2">&quot;Supported formats: CSV, Excel&quot;</span><span class="p">),</span>
+                                    <span class="n">du</span><span class="o">.</span><span class="n">Upload</span><span class="p">(</span>
+                                        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;dash-uploader&quot;</span><span class="p">,</span>
+                                        <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Drag and Drop or Click to Upload&quot;</span><span class="p">,</span>
+                                        <span class="n">text_completed</span><span class="o">=</span><span class="s2">&quot;Uploaded: &quot;</span><span class="p">,</span>
+                                        <span class="n">cancel_button</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                        <span class="n">max_file_size</span><span class="o">=</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">20</span><span class="p">,</span>
+                                        <span class="n">filetypes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;csv&quot;</span><span class="p">,</span> <span class="s2">&quot;xlsx&quot;</span><span class="p">,</span> <span class="s2">&quot;xls&quot;</span><span class="p">],</span>
+                                        <span class="n">upload_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                        <span class="n">default_style</span><span class="o">=</span><span class="p">{</span>
+                                            <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="s2">&quot;100%&quot;</span><span class="p">,</span>
+                                            <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="s2">&quot;60px&quot;</span><span class="p">,</span>
+                                            <span class="s2">&quot;lineHeight&quot;</span><span class="p">:</span> <span class="s2">&quot;60px&quot;</span><span class="p">,</span>
+                                            <span class="s2">&quot;borderWidth&quot;</span><span class="p">:</span> <span class="s2">&quot;1px&quot;</span><span class="p">,</span>
+                                            <span class="s2">&quot;borderStyle&quot;</span><span class="p">:</span> <span class="s2">&quot;dashed&quot;</span><span class="p">,</span>
+                                            <span class="s2">&quot;borderRadius&quot;</span><span class="p">:</span> <span class="s2">&quot;5px&quot;</span><span class="p">,</span>
+                                            <span class="s2">&quot;textAlign&quot;</span><span class="p">:</span> <span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                                            <span class="s2">&quot;margin&quot;</span><span class="p">:</span> <span class="s2">&quot;10px 0&quot;</span><span class="p">,</span>
+                                        <span class="p">},</span>
+                                    <span class="p">),</span>
+                                <span class="p">],</span>
+                                <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-4&quot;</span><span class="p">,</span>
+                            <span class="p">),</span>
+                            <span class="c1"># Temperature Range</span>
+                            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+                                <span class="p">[</span>
+                                    <span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span><span class="s2">&quot;Temperature Range (°C)&quot;</span><span class="p">),</span>
+                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+                                        <span class="p">[</span>
+                                            <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                <span class="p">[</span>
+                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="s2">&quot;Min Temp:&quot;</span><span class="p">),</span>
+                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span>
+                                                        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;min-temp-input&quot;</span><span class="p">,</span>
+                                                        <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;number&quot;</span><span class="p">,</span>
+                                                        <span class="n">value</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span>
+                                                        <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+                                                    <span class="p">),</span>
+                                                <span class="p">],</span>
+                                                <span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+                                            <span class="p">),</span>
+                                            <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                <span class="p">[</span>
+                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="s2">&quot;Max Temp:&quot;</span><span class="p">),</span>
+                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span>
+                                                        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;max-temp-input&quot;</span><span class="p">,</span>
+                                                        <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;number&quot;</span><span class="p">,</span>
+                                                        <span class="n">value</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span>
+                                                        <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+                                                    <span class="p">),</span>
+                                                <span class="p">],</span>
+                                                <span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+                                            <span class="p">),</span>
+                                        <span class="p">]</span>
+                                    <span class="p">),</span>
+                                <span class="p">],</span>
+                                <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-3&quot;</span><span class="p">,</span>
+                            <span class="p">),</span>
+                            <span class="c1"># Advanced Options</span>
+                            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+                                <span class="p">[</span>
+                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Checklist</span><span class="p">(</span>
+                                        <span class="n">options</span><span class="o">=</span><span class="p">[</span>
+                                            <span class="p">{</span>
+                                                <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Show Advanced Options&quot;</span><span class="p">,</span>
+                                                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                                            <span class="p">}</span>
+                                        <span class="p">],</span>
+                                        <span class="n">value</span><span class="o">=</span><span class="p">[],</span>
+                                        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;advanced-options-toggle&quot;</span><span class="p">,</span>
+                                        <span class="n">switch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="p">),</span>
+                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Collapse</span><span class="p">(</span>
+                                        <span class="n">dbc</span><span class="o">.</span><span class="n">Card</span><span class="p">(</span>
+                                            <span class="n">dbc</span><span class="o">.</span><span class="n">CardBody</span><span class="p">(</span>
+                                                <span class="p">[</span>
+                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+                                                        <span class="p">[</span>
+                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                <span class="p">[</span>
+                                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span>
+                                                                        <span class="s2">&quot;Lower Exclusion Temp (°C):&quot;</span>
+                                                                    <span class="p">),</span>
+                                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span>
+                                                                        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;lower-exclusion-input&quot;</span><span class="p">,</span>
+                                                                        <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;number&quot;</span><span class="p">,</span>
+                                                                        <span class="n">value</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+                                                                        <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+                                                                    <span class="p">),</span>
+                                                                <span class="p">],</span>
+                                                                <span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+                                                            <span class="p">),</span>
+                                                            <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                                                                <span class="p">[</span>
+                                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span>
+                                                                        <span class="s2">&quot;Upper Exclusion Temp (°C):&quot;</span>
+                                                                    <span class="p">),</span>
+                                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span>
+                                                                        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;upper-exclusion-input&quot;</span><span class="p">,</span>
+                                                                        <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;number&quot;</span><span class="p">,</span>
+                                                                        <span class="n">value</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span>
+                                                                        <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+                                                                    <span class="p">),</span>
+                                                                <span class="p">],</span>
+                                                                <span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+                                                            <span class="p">),</span>
+                                                        <span class="p">],</span>
+                                                        <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mb-3&quot;</span><span class="p">,</span>
+                                                    <span class="p">),</span>
+                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span>
+                                                        <span class="s2">&quot;Automatic Point Selection Method:&quot;</span>
+                                                    <span class="p">),</span>
+                                                    <span class="n">dbc</span><span class="o">.</span><span class="n">RadioItems</span><span class="p">(</span>
+                                                        <span class="n">options</span><span class="o">=</span><span class="p">[</span>
+                                                            <span class="p">{</span>
+                                                                <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Innermost&quot;</span><span class="p">,</span>
+                                                                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;Innermost&quot;</span><span class="p">,</span>
+                                                            <span class="p">},</span>
+                                                            <span class="p">{</span>
+                                                                <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Outermost&quot;</span><span class="p">,</span>
+                                                                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;Outermost&quot;</span><span class="p">,</span>
+                                                            <span class="p">},</span>
+                                                            <span class="p">{</span>
+                                                                <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Middle&quot;</span><span class="p">,</span>
+                                                                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;Middle&quot;</span><span class="p">,</span>
+                                                            <span class="p">},</span>
+                                                        <span class="p">],</span>
+                                                        <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Innermost&quot;</span><span class="p">,</span>
+                                                        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;point-selection-method&quot;</span><span class="p">,</span>
+                                                        <span class="n">inline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                    <span class="p">),</span>
+                                                <span class="p">]</span>
+                                            <span class="p">)</span>
+                                        <span class="p">),</span>
+                                        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;advanced-options-collapse&quot;</span><span class="p">,</span>
+                                        <span class="n">is_open</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                        <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mt-3&quot;</span><span class="p">,</span>
+                                    <span class="p">),</span>
+                                <span class="p">],</span>
+                                <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mt-4&quot;</span><span class="p">,</span>
+                            <span class="p">),</span>
+                        <span class="p">]</span>
+                    <span class="p">),</span>
+                    <span class="n">dbc</span><span class="o">.</span><span class="n">ModalFooter</span><span class="p">(</span>
+                        <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                            <span class="s2">&quot;Close&quot;</span><span class="p">,</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;close-upload-modal-btn&quot;</span><span class="p">,</span>
+                            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;ms-auto&quot;</span><span class="p">,</span>
+                            <span class="n">n_clicks</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="p">)</span>
+                    <span class="p">),</span>
+                <span class="p">],</span>
+                <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;upload-modal&quot;</span><span class="p">,</span>
+                <span class="n">is_open</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="s2">&quot;lg&quot;</span><span class="p">,</span>
+                <span class="n">backdrop</span><span class="o">=</span><span class="s2">&quot;static&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="c1"># --- Upload Modal --- End</span>
+            <span class="c1"># Add the new processed data upload modal</span>
+            <span class="n">create_upload_processed_modal</span><span class="p">(),</span>
+            <span class="c1"># --- Data Stores ---</span>
+            <span class="c1"># (Keep as is, already reviewed)</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;all-samples-data&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{}),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;baseline-params&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{}),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;processed-data&quot;</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;temporary-baseline-params&quot;</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;endpoint-selection-mode&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;grid-action-trigger&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;select-first-row-trigger&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Download</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;download-data&quot;</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;processed-datasets-store&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{}),</span>
+            <span class="c1"># Add store for temporary processed upload data</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;upload-processed-temp-store&quot;</span><span class="p">),</span>
+            <span class="c1"># Add store for report builder intermediate results</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;report-calculated-metrics-temp&quot;</span><span class="p">),</span>
+            <span class="c1"># Add download component for reports</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Download</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;download-report&quot;</span><span class="p">),</span>
+            <span class="c1"># Add store for generated report metadata</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;generated-reports-store&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{}),</span>
+            <span class="c1"># --- Data Stores --- End</span>
+        <span class="p">],</span>  <span class="c1"># End Root Container Children</span>
+        <span class="n">fluid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">className</span><span class="o">=</span><span class="s2">&quot;vh-100 d-flex flex-column p-0&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;overflow&quot;</span><span class="p">:</span> <span class="s2">&quot;hidden&quot;</span><span class="p">},</span>  <span class="c1"># Prevent scrolling on the main container itself</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">layout</span>
+
+
+<div class="viewcode-block" id="register_layout">
+<a class="viewcode-back" href="../../../api/app.html#app.layouts.register_layout">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_layout</span><span class="p">(</span><span class="n">app</span><span class="p">:</span> <span class="n">Dash</span><span class="p">):</span>  <span class="c1"># Add type hint for app</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Registers the layout with the Dash app instance.</span>
+
+<span class="sd">    Assigns the layout created by `create_layout()` to the `app.layout` attribute.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        app (Dash): The Dash application instance.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">create_layout</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Main layout registered with app&quot;</span><span class="p">)</span>  <span class="c1"># Use logger</span></div>
+
+
+
+<span class="c1"># Note: Removed the print statement, assuming logger is configured in main.py</span>
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Chris Reger.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
