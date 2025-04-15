@@ -36,6 +36,7 @@ dependencies = [
     "dash-ag-grid>=6.0.0",
     "openpyxl>=3.1.5",
     "dash-uploader>=0.6.1",
+    "python-dateutil>=2.8.0",
 ]
 
 [project.optional-dependencies]
