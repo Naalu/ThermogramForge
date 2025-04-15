@@ -51,7 +51,7 @@ It allows researchers to upload raw thermogram data, review automatically determ
 
 ## Documentation
 
-For detailed usage instructions, contribution guidelines, and API reference, please see the **[Full Documentation](https://thermogramforge.readthedocs.io/)** (Link needs update when hosted).
+or detailed usage instructions, contribution guidelines, and API reference, please see the **[Full Documentation](docs/_build/html/index.html)** 
 
 ## Contributing
 
