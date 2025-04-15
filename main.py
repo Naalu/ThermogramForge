@@ -50,7 +50,7 @@ try:
         # and interactive debugging in the browser. Requires restarting the app.
         # Set debug=False for production, demonstration, or performance testing.
         # --- Debug Mode Toggle ---
-        app.run(debug=False)  # Set debug to False for production/demo
+        app.run(debug=True)  # Set debug to False for production/demo
 
     # Run the server
     if __name__ == "__main__":

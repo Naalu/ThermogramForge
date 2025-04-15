@@ -9,12 +9,18 @@ from typing import Any, Dict, List, Optional, Tuple  # Added types
 
 import dash_bootstrap_components as dbc
 import pandas as pd
-from dash import (Input, Output, State,  # Added ctx, ALL, MATCH just in case
-                  callback, ctx, html, no_update)
+from dash import (  # Added ctx, ALL, MATCH just in case
+    Input,
+    Output,
+    State,
+    callback,
+    ctx,
+    html,
+    no_update,
+)
 
 from app import UPLOAD_FOLDER_ROOT
 from app.utils.data_processing import extract_samples
-from app.utils.debug_utils import debug_callback
 from core.baseline import EndpointSelectionMethod, find_spline_endpoints
 
 # Ensure core baseline functions are imported
@@ -23,7 +29,6 @@ from core.baseline import EndpointSelectionMethod, find_spline_endpoints
 logger = logging.getLogger(__name__)
 
 
-@debug_callback
 @callback(
     # Store Outputs
     Output("baseline-params", "data", allow_duplicate=True),
@@ -409,15 +414,6 @@ def build_raw_data_overview(
     return items if items else [dbc.ListGroupItem("No valid raw files found.")]
 
 
-# Keep old function temporarily for reference if needed
-# def build_raw_data_overview_v1(all_samples_data: Optional[Dict[str, Any]]) -> List[Any]:
-#     if not all_samples_data:
-#         return ["No raw data uploaded yet."]
-#     items = [html.H5("Uploaded Raw Files:")]
-#     items.extend([html.Li(filename) for filename in sorted(all_samples_data.keys())])
-#     return items
-
-
 def cleanup_upload_folder(upload_id: str, filename: str) -> None:
     """Removes the specific uploaded file and its parent folder."""
     if not upload_id or not filename:  # Basic check
@@ -446,7 +442,6 @@ def cleanup_upload_folder(upload_id: str, filename: str) -> None:
 
 
 # --- NEW Callback to Update Raw Data Overview UI ---
-@debug_callback
 @callback(
     Output("raw-data-overview-display", "children"),
     Input("all-samples-data", "data"),

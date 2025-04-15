@@ -4,11 +4,12 @@ Utility for checking layout for duplicate IDs.
 
 import logging
 from collections import defaultdict
+from typing import Any, DefaultDict, Dict
 
 logger = logging.getLogger(__name__)
 
 
-def find_duplicate_ids(layout):
+def find_duplicate_ids(layout: Any) -> Dict[str, int]:
     """
     Find duplicate IDs in a Dash layout.
 
@@ -22,11 +23,11 @@ def find_duplicate_ids(layout):
         logger.warning("Empty layout provided to duplicate ID checker")
         return {}
 
-    ids = defaultdict(int)
+    ids: DefaultDict[str, int] = defaultdict(int)
     _extract_ids(layout, ids)
 
     # Filter for IDs that appear more than once
-    duplicates = {id: count for id, count in ids.items() if count > 1}
+    duplicates: Dict[str, int] = {id: count for id, count in ids.items() if count > 1}
 
     if duplicates:
         logger.error(f"Found duplicate IDs in layout: {duplicates}")
@@ -36,7 +37,7 @@ def find_duplicate_ids(layout):
     return duplicates
 
 
-def _extract_ids(component, id_counter):
+def _extract_ids(component: Any, id_counter: DefaultDict[str, int]) -> None:
     """
     Recursively extract component IDs from a layout.
 

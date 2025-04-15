@@ -1,16 +1,14 @@
 """
-Initialize components package and make components easily importable.
+Initialize components for the ThermogramForge app.
 """
 
-from .thermogram_plot import (create_comparison_figure, create_data_preview,
-                              create_thermogram_figure, data_preview_card,
-                              metrics_table, thermogram_card)
+# Import individual component creation functions/layouts
+# Removed import from deleted thermogram_plot.py
+from .renderers import CheckboxRenderer  # Ensure renderers are available
+from .upload_processed_modal import create_upload_processed_modal
 
 __all__ = [
-    "create_comparison_figure",
-    "create_data_preview",
-    "create_thermogram_figure",
-    "data_preview_card",
-    "metrics_table",
-    "thermogram_card",
+    # Removed thermogram_plot exports
+    "create_upload_processed_modal",
+    "CheckboxRenderer",
 ]

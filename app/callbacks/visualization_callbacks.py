@@ -16,7 +16,7 @@ from dash import Input, Output, State, callback, no_update
 from dash.exceptions import PreventUpdate
 
 # Utils
-from app.utils.debug_utils import debug_callback
+# from app.utils.debug_utils import debug_callback # Removed
 # from app.utils.plotting_utils import (
 #     # create_processed_figure, # Defined locally
 #     # create_raw_thermogram_figure, # Defined locally
@@ -259,7 +259,6 @@ def create_processed_figure(
 
 # --- Dataset Selection Callbacks ---
 # Callback to update dataset selector options
-@debug_callback
 @callback(
     Output("review-dataset-selector", "options"),
     Output("review-dataset-selector", "value", allow_duplicate=True),
@@ -325,7 +324,6 @@ def update_dataset_selector_options(
 
 
 # Callback to show/hide the main review content area and update message
-@debug_callback
 @callback(
     Output("review-selector-message", "children"),
     Output("review-selector-message", "is_open"),
@@ -373,7 +371,6 @@ def update_review_panel_visibility(
 # --- Row Selection Callback (AG Grid) --- Split Callbacks Approach ---
 
 
-@debug_callback
 @callback(
     Output("raw-plot-graph", "figure", allow_duplicate=True),
     Output("processed-plot-graph", "figure", allow_duplicate=True),
@@ -533,7 +530,6 @@ def update_plots_on_grid_row_select(
     return fig_raw, fig_processed, default_tab, style_hidden, style_visible
 
 
-@debug_callback
 @callback(
     Output("temporary-baseline-params", "data", allow_duplicate=True),
     Input("sample-grid", "selectedRows"),
@@ -590,7 +586,6 @@ def update_stores_on_grid_row_select(
 
 
 # --- Separate callback to reset endpoint selection mode ---
-@debug_callback
 @callback(
     Output("endpoint-selection-mode", "data", allow_duplicate=True),
     Input("sample-grid", "selectedRows"),
@@ -614,7 +609,6 @@ def reset_selection_mode_on_grid_row_select(
 
 
 # --- Callback to Update Raw Plot Based on Temporary Parameters ---
-@debug_callback
 @callback(
     Output("raw-plot-graph", "figure", allow_duplicate=True),
     Output("processed-plot-graph", "figure", allow_duplicate=True),
@@ -767,7 +761,6 @@ def update_raw_plot_from_temp_params(
 
 
 # --- NEW Callback to Update Tab Content ---
-@debug_callback
 @callback(
     Output("raw-plot-content", "style", allow_duplicate=True),
     Output("processed-plot-content", "style", allow_duplicate=True),

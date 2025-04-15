@@ -1,28 +1,32 @@
+"""Utility functions for ThermogramForge application.
+
+This package exports various helper functions used across the application,
+primarily related to data processing and visualization generation.
 """
-Utility functions for ThermogramForge.
 
-This package contains utility functions for data processing and visualization.
-"""
-
-from .data_processing import (  # simple_baseline_subtraction, # Removed - Defined in baseline_callbacks.py
-    extract_samples, preprocess_thermogram_data)
-
-# --- Check Imports from visualization --- Start
-# These seem to be older/unused utils based on current structure
-# create_baseline_figure, create_data_preview, create_thermogram_figure
-# Let's comment them out for now to avoid potential errors if they don't exist
-# from .visualization import (
-#     create_baseline_figure,
-#     create_data_preview,
-#     create_thermogram_figure,
-# )
-# --- Check Imports from visualization --- End
+from .data_processing import (
+    extract_samples,
+    interpolate_thermogram,
+    preprocess_thermogram_data,
+)
+from .layout_checker import find_duplicate_ids
+from .visualization import (
+    create_baseline_figure,
+    create_comparison_figure,
+    create_data_preview,
+    create_thermogram_figure,
+)
 
 __all__ = [
+    # data_processing
     "preprocess_thermogram_data",
     "extract_samples",
-    # "simple_baseline_subtraction", # Removed
-    # "create_thermogram_figure", # Removed
-    # "create_data_preview", # Removed
-    # "create_baseline_figure", # Removed
+    "interpolate_thermogram",
+    # layout_checker
+    "find_duplicate_ids",
+    # visualization
+    "create_thermogram_figure",
+    "create_data_preview",
+    "create_baseline_figure",
+    "create_comparison_figure",
 ]

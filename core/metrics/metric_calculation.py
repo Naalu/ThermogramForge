@@ -430,9 +430,39 @@ def calculate_thermogram_metrics(
     # --- Valley Metrics --- End
 
     # --- Global Curve Metrics --- Start
-    metrics["TotalArea"] = _calculate_area(df_processed)
+    metrics["Area"] = _calculate_area(df_processed)
     metrics["TFM"] = _calculate_tfm(df_processed)
     metrics["FWHM"] = _calculate_fwhm(df_processed)
+
+    # --- Add Max/Min/Median Calculations --- Start
+    try:
+        dcp_values = pd.to_numeric(df_processed["dCp_subtracted"], errors="coerce")
+        temp_values = pd.to_numeric(df_processed["Temperature"], errors="coerce")
+        valid_mask = ~pd.isna(dcp_values) & ~pd.isna(temp_values)
+        dcp_valid = dcp_values[valid_mask]
+        temp_valid = temp_values[valid_mask]
+
+        if not dcp_valid.empty:
+            metrics["Max"] = dcp_valid.max()
+            metrics["TMax"] = temp_valid.loc[dcp_valid.idxmax()]
+            metrics["Min"] = dcp_valid.min()
+            metrics["TMin"] = temp_valid.loc[dcp_valid.idxmin()]
+            metrics["Median"] = dcp_valid.median()
+        else:
+            metrics["Max"] = None
+            metrics["TMax"] = None
+            metrics["Min"] = None
+            metrics["TMin"] = None
+            metrics["Median"] = None
+    except Exception as e:
+        logger.error(f"Error calculating Max/Min/Median metrics: {e}", exc_info=True)
+        metrics["Max"] = None
+        metrics["TMax"] = None
+        metrics["Min"] = None
+        metrics["TMin"] = None
+        metrics["Median"] = None
+    # --- Add Max/Min/Median Calculations --- End
+
     # --- Global Curve Metrics --- End
 
     # Final check: Replace any potential np.nan floats with None for consistency

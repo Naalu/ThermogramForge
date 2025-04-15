@@ -28,7 +28,6 @@ from dateutil import parser
 
 # Need interpolation and baseline subtraction utils
 from app.utils.data_processing import interpolate_thermogram
-from app.utils.debug_utils import debug_callback
 from core.baseline import subtract_spline_baseline
 
 logger = logging.getLogger(__name__)
@@ -56,7 +55,6 @@ ControlPanelOutputs = namedtuple(
 )
 
 
-@debug_callback
 @callback(
     Output("sample-control-panel-content", "style", allow_duplicate=True),
     Output("selected-sample-display", "children", allow_duplicate=True),
@@ -1066,7 +1064,6 @@ def update_raw_data_status(
 def load_data_for_review(
     selected_filename: Optional[str],
     baseline_data: Optional[Dict[str, Dict[str, Dict[str, Any]]]],
-    # all_samples_data: Optional[Dict[str, Dict[str, List[Dict[str, Any]]]]],
 ) -> Tuple[List[Dict[str, Any]], int, str, bool, str]:
     """Loads AG Grid data when a dataset is selected for review.
 
@@ -1153,7 +1150,6 @@ def select_first_grid_row(trigger_value, grid_data):
 
 
 # --- Callback to Update Default Download Filename Placeholder ---
-@debug_callback
 @callback(
     Output("download-filename-input", "placeholder"),
     Input("review-dataset-selector", "value"),

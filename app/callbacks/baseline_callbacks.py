@@ -2,7 +2,6 @@
 Callbacks related to baseline parameter selection, adjustment, and application.
 
 This module includes:
-- The core baseline subtraction logic (`simple_baseline_subtraction`).
 - Callbacks to handle user interaction for selecting/adjusting baseline endpoints:
     - Clicking the thermogram plot (`handle_endpoint_click_ag`).
     - Directly editing flags (Reviewed, Exclude) in the AG Grid (`update_flags_from_grid`).
@@ -12,122 +11,13 @@ This module includes:
 import logging
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-import numpy as np
-import pandas as pd  # Import pandas for type hinting
 from dash import Input, Output, State, callback, ctx, no_update
-
-from app.utils.debug_utils import debug_callback
 
 # Set up logger
 logger = logging.getLogger(__name__)
 
-# --- Baseline Subtraction Function ---
-
-
-def simple_baseline_subtraction(
-    data: Optional[pd.DataFrame],
-    lower_temp: Optional[float],
-    upper_temp: Optional[float],
-) -> Optional[pd.DataFrame]:
-    """Subtracts a linear baseline from thermogram data.
-
-    Finds the closest data points to the specified lower and upper temperatures,
-    calculates a linear baseline between these points (or a horizontal baseline
-    if the points resolve to the same temperature), and subtracts this baseline
-    from the 'dCp' column.
-
-    Args:
-        data: DataFrame containing thermogram data with 'Temperature' and 'dCp' columns.
-              Can be None or empty.
-        lower_temp: The target lower temperature for the baseline start.
-        upper_temp: The target upper temperature for the baseline end.
-
-    Returns:
-        A DataFrame with added columns 'dCp_baseline' and 'dCp_subtracted',
-        or the original DataFrame if inputs are invalid or subtraction fails.
-        Returns None if the input data was None.
-    """
-    if data is None:
-        logger.warning("simple_baseline_subtraction: Input data is None.")
-        return None
-    if data.empty or lower_temp is None or upper_temp is None:
-        logger.warning("simple_baseline_subtraction: Invalid input data or temps.")
-        # Return original df with expected columns (filled with NaN) if invalid temps
-        result = data.copy()
-        result["dCp_baseline"] = np.nan
-        result["dCp_subtracted"] = np.nan
-        return result
-
-    result = data.copy()
-    # Default to NaN for subtracted data
-    result["dCp_baseline"] = np.nan
-    result["dCp_subtracted"] = np.nan
-
-    try:
-        # Ensure Temperature column exists
-        if "Temperature" not in data.columns or "dCp" not in data.columns:
-            logger.error("simple_baseline_subtraction: Missing required columns.")
-            # Return original with NaN columns
-            result["dCp_baseline"] = np.nan
-            result["dCp_subtracted"] = np.nan
-            return result
-
-        # Find closest actual data points to the target temps
-        lower_point_idx = (data["Temperature"] - lower_temp).abs().idxmin()
-        upper_point_idx = (data["Temperature"] - upper_temp).abs().idxmin()
-        lower_point = data.loc[lower_point_idx]
-        upper_point = data.loc[upper_point_idx]
-
-        lower_temp_actual = lower_point["Temperature"]
-        lower_dcp = lower_point["dCp"]
-        upper_temp_actual = upper_point["Temperature"]
-        upper_dcp = upper_point["dCp"]
-
-        # Calculate baseline
-        if lower_temp_actual != upper_temp_actual:
-            # Calculate linear baseline (standard case)
-            slope = (upper_dcp - lower_dcp) / (upper_temp_actual - lower_temp_actual)
-            intercept = lower_dcp - slope * lower_temp_actual
-            baseline = slope * data["Temperature"] + intercept
-            logger.debug(
-                f"Linear baseline calculated: slope={slope:.3f}, intercept={intercept:.3f}"
-            )
-        else:
-            # Calculate horizontal baseline if endpoints resolve to same temp
-            baseline = lower_dcp  # Use the dCp value at the single point
-            intercept = baseline  # Slope is 0
-            logger.warning(
-                f"Baseline endpoints resolve to same temp ({lower_temp_actual:.2f}°C). Using horizontal baseline at dCp={baseline:.3f}."
-            )
-
-        # Perform subtraction using the calculated baseline (linear or horizontal)
-        result["dCp_baseline"] = baseline
-        result["dCp_subtracted"] = result["dCp"] - baseline
-
-    except Exception as e:
-        logger.error(
-            f"Error during baseline subtraction calculation: {e}", exc_info=True
-        )
-        # Ensure defaults are NaN if unexpected error occurs
-        result["dCp_baseline"] = np.nan
-        result["dCp_subtracted"] = np.nan
-
-    return result
-
-
-# --- LEGACY Callbacks for Baseline Interaction (AG Grid - Likely Deprecated) ---
-# These callbacks were likely used with a previous approach involving buttons
-# directly within the AG Grid. The current approach uses the control panel buttons
-# (`select-lower-btn`, `select-upper-btn`) and the main plot click handler below.
-
-# --- DELETING Legacy Callbacks --- Start
-# --- DELETING Legacy Callbacks --- End
-
-# --- CURRENT Callbacks --- #
-
 
 # --- Grid Cell Change Callback ---
-@debug_callback
 @callback(
     Output("baseline-params", "data", allow_duplicate=True),
     Input("sample-grid", "cellValueChanged"),
@@ -211,7 +101,6 @@ def update_flags_from_grid(
 
 
 # --- UI Helper Callbacks ---
-@debug_callback
 @callback(
     Output("advanced-options-collapse", "is_open"),
     Input("advanced-options-toggle", "value"),
@@ -236,7 +125,6 @@ def toggle_advanced_options(toggle_value: List[int], is_open: bool) -> bool:
 
 
 # --- Plot Click Handler (Main Interaction) ---
-@debug_callback
 @callback(
     # Outputs for temporary state
     Output("temporary-baseline-params", "data", allow_duplicate=True),
@@ -392,16 +280,3 @@ def handle_endpoint_click_ag(
         "primary",  # lower color
         "primary",  # upper color
     )
-
-
-# Callback to update flags in baseline params (Keep active if needed, e.g., for exclude checkbox)
-# @debug_callback
-# @callback(
-#     Output("baseline-params", "data", allow_duplicate=True),
-#     Input("sample-grid", "cellValueChanged"),
-#     State("baseline-params", "data"),
-#     prevent_initial_call=True,
-# )
-# def update_flags_from_grid(cell_change_params, current_baseline_data):
-# ... implementation ...
-#    pass

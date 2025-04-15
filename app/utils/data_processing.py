@@ -2,352 +2,291 @@
 Data processing utilities for thermogram analysis.
 
 Includes functions for preprocessing raw data, extracting individual samples
-from multi-sample files, detecting baseline endpoints, and interpolating data.
+from multi-sample files, and interpolating data onto a defined grid.
 """
 
 import logging
 import re
-from typing import Dict, Optional, Tuple
+from typing import Dict, List, Optional
 
 import numpy as np
 import pandas as pd
+from pandas.api.types import is_numeric_dtype
 
 logger = logging.getLogger(__name__)
 
 
 def preprocess_thermogram_data(df: pd.DataFrame) -> pd.DataFrame:
-    """Preprocesses raw thermogram data.
+    """Preprocesses a single thermogram sample DataFrame.
 
-    Renames columns if necessary (assuming Temperature, dCp are first two),
-    converts columns to numeric types, drops NaN values, sorts by temperature,
-    and resets the index.
+    Standardizes column names to 'Temperature' and 'dCp' (assuming they are the
+    first two columns if not named correctly). Converts these columns to numeric
+    types, coercing errors to NaN. Drops rows with NaN in either column.
+    Sorts the data by 'Temperature' and resets the index.
 
     Args:
-        df: Raw DataFrame, potentially with incorrect column names or types.
+        df: Raw DataFrame representing a single thermogram sample.
 
     Returns:
-        Processed DataFrame with 'Temperature' and 'dCp' columns, sorted,
-        cleaned, and indexed.
+        A processed DataFrame with standardized 'Temperature' and 'dCp' columns,
+        sorted, cleaned, and with a reset index. Returns an empty DataFrame with
+        the expected columns if preprocessing fails or results in no valid data.
+
+    Raises:
+        ValueError: If the input is not a DataFrame.
     """
-    # Ensure we are working with a copy to avoid SettingWithCopyWarning
-    df = df.copy()
-    logger.debug(f"Preprocessing DataFrame with initial shape {df.shape}")
-    # Check for required columns
-    if "Temperature" not in df.columns or "dCp" not in df.columns:
-        # Try to guess columns - first column might be temp, second might be dCp
-        if len(df.columns) >= 2:
+    if not isinstance(df, pd.DataFrame):
+        raise ValueError("Input must be a pandas DataFrame.")
+
+    # Work with a copy to avoid modifying the original DataFrame
+    processed_df = df.copy()
+    logger.debug(f"Preprocessing DataFrame with initial shape {processed_df.shape}")
+
+    # Standardize column names if necessary
+    required_cols = ["Temperature", "dCp"]
+    if not all(col in processed_df.columns for col in required_cols):
+        if len(processed_df.columns) >= 2:
             logger.warning(
-                "'Temperature' or 'dCp' not found. Renaming first two columns."
+                "'Temperature' or 'dCp' column names not found. "
+                "Assuming first column is Temperature, second is dCp and renaming."
             )
-            df = df.rename(columns={df.columns[0]: "Temperature", df.columns[1]: "dCp"})
+            rename_map = {
+                processed_df.columns[0]: "Temperature",
+                processed_df.columns[1]: "dCp",
+            }
+            processed_df.rename(columns=rename_map, inplace=True)
         else:
             logger.error(
-                "Cannot preprocess: DataFrame has less than 2 columns and lacks 'Temperature'/'dCp'."
+                "Cannot preprocess: DataFrame has < 2 columns and lacks required names."
             )
-            # Return empty dataframe with expected columns?
-            return pd.DataFrame(columns=["Temperature", "dCp"])
+            # Return an empty DataFrame with the expected columns
+            return pd.DataFrame(columns=required_cols)
 
-    # Make sure columns are the right type
-    df["Temperature"] = pd.to_numeric(df["Temperature"], errors="coerce")
-    df["dCp"] = pd.to_numeric(df["dCp"], errors="coerce")
+    # Ensure correct numeric types, coercing errors to NaN
+    try:
+        processed_df["Temperature"] = pd.to_numeric(
+            processed_df["Temperature"], errors="coerce"
+        )
+        processed_df["dCp"] = pd.to_numeric(processed_df["dCp"], errors="coerce")
+    except Exception as e:
+        logger.error(f"Error converting columns to numeric: {e}", exc_info=True)
+        # Return empty df if conversion fails catastrophically
+        return pd.DataFrame(columns=required_cols)
 
-    # Drop NaN values
-    initial_rows = len(df)
-    df = df.dropna(subset=["Temperature", "dCp"])
-    if len(df) < initial_rows:
+    # Drop rows where Temperature or dCp became NaN after coercion
+    initial_rows = len(processed_df)
+    processed_df.dropna(subset=["Temperature", "dCp"], inplace=True)
+    rows_dropped = initial_rows - len(processed_df)
+    if rows_dropped > 0:
         logger.debug(
-            f"Dropped {initial_rows - len(df)} rows with NaN in Temperature or dCp."
+            f"Dropped {rows_dropped} rows with NaN in Temperature or dCp during preprocessing."
         )
 
-    # Sort by temperature
-    df = df.sort_values("Temperature")
+    if processed_df.empty:
+        logger.warning("Preprocessing resulted in an empty DataFrame.")
+        return processed_df  # Return the empty frame
 
-    # Reset index
-    df = df.reset_index(drop=True)
-    logger.debug(f"Preprocessing complete. Final shape {df.shape}")
-    return df
+    # Sort by Temperature (crucial for many downstream processes)
+    processed_df.sort_values("Temperature", inplace=True)
+
+    # Reset index after sorting and dropping NaNs
+    processed_df.reset_index(drop=True, inplace=True)
+
+    logger.debug(f"Preprocessing complete. Final shape {processed_df.shape}")
+    return processed_df
 
 
 def extract_samples(df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
-    """Extracts individual samples based on paired column names (e.g., T[ID] and ID).
+    """Extracts and preprocesses individual samples from a multi-column DataFrame.
 
-    Iterates through columns, identifies pairs like 'T[SampleName]' and 'SampleName',
-    extracts the corresponding data, renames columns to 'Temperature' and 'dCp',
-    and performs initial cleaning.
+    Assumes samples are stored in paired columns, typically named 'T[SampleID]'
+    for temperature and 'SampleID' for the corresponding dCp values (or similar
+    patterns identifiable by regex).
 
     Args:
         df: The input DataFrame, potentially containing multiple sample pairs.
 
     Returns:
-        A dictionary where keys are the extracted sample IDs (as strings) and
-        values are DataFrames containing the cleaned numeric data (Temperature, dCp)
-        for each corresponding sample. Returns an empty dictionary if no valid sample
-        pairs are found.
+        A dictionary where keys are the extracted sample IDs (str) and values
+        are the fully preprocessed DataFrames (containing 'Temperature' and 'dCp'
+        columns, cleaned and sorted) for each sample. Returns an empty dictionary
+        if no valid sample pairs are found or processed successfully.
     """
-    samples: Dict[str, pd.DataFrame] = {}
-    column_names = df.columns
-    logger.info(
-        f"Starting sample extraction (paired column method) from DataFrame with shape {df.shape}"
-    )
-    logger.debug(f"Input columns: {list(column_names)}")
+    extracted_samples: Dict[str, pd.DataFrame] = {}
+    if not isinstance(df, pd.DataFrame) or df.empty:
+        logger.warning("extract_samples: Input DataFrame is empty or invalid.")
+        return extracted_samples
 
-    # Regex to find temperature columns like T[SampleID] or TSampleID
-    temp_col_pattern = re.compile(r"^T(.*)$")
+    column_names: List[str] = df.columns.tolist()
+    logger.info(
+        f"Starting sample extraction (paired columns) from DataFrame with shape {df.shape}"
+    )
+    logger.debug(f"Input columns: {column_names}")
+
+    # Regex to capture SampleID from temperature columns like T[SampleID] or TSampleID
+    # Allows for optional brackets around the ID.
+    temp_col_pattern = re.compile(r"^T\[?([\w\-. ]+)\]?$")  # More flexible ID chars
 
     processed_ids = set()
 
-    for col_name in column_names:
-        match = temp_col_pattern.match(col_name)
+    for temp_col_name in column_names:
+        match = temp_col_pattern.match(temp_col_name)
         if match:
-            sample_id = match.group(1)  # Extract the SampleID
+            # Extract the SampleID (group 1 of the regex)
+            sample_id = match.group(1).strip()
             logger.debug(
-                f"Found potential temperature column: '{col_name}' with ID: '{sample_id}'"
+                f"Found potential temperature column: '{temp_col_name}' -> ID: '{sample_id}'"
             )
 
-            # Check if we already processed this ID (to avoid duplicates if columns aren't perfectly paired)
+            # Avoid reprocessing the same sample ID
             if sample_id in processed_ids:
+                logger.debug(f"Skipping already processed ID: '{sample_id}'")
                 continue
 
-            # Look for the corresponding dCp column (exact match for sample_id)
+            # Corresponding dCp column should match the extracted sample_id exactly
             dcp_col_name = sample_id
             if dcp_col_name in column_names:
                 logger.info(
-                    f"Found matching pair: Temp='{col_name}', dCp='{dcp_col_name}' for ID='{sample_id}'"
+                    f"Found matching pair: Temp='{temp_col_name}', dCp='{dcp_col_name}' for ID='{sample_id}'"
                 )
 
-                # Extract the two columns
+                # Extract and initially clean the data for this sample
                 try:
-                    sample_df_raw = df[[col_name, dcp_col_name]].copy()
+                    # Select the pair of columns and create a copy
+                    sample_df_raw = df[[temp_col_name, dcp_col_name]].copy()
+
+                    # Rename columns to standard names 'Temperature' and 'dCp'
                     sample_df_raw.rename(
-                        columns={col_name: "Temperature", dcp_col_name: "dCp"},
+                        columns={temp_col_name: "Temperature", dcp_col_name: "dCp"},
                         inplace=True,
                     )
 
-                    # Initial Cleaning (Convert to numeric, drop NaNs)
-                    sample_df_raw["Temperature"] = pd.to_numeric(
-                        sample_df_raw["Temperature"], errors="coerce"
-                    )
-                    sample_df_raw["dCp"] = pd.to_numeric(
-                        sample_df_raw["dCp"], errors="coerce"
-                    )
-                    initial_rows = len(sample_df_raw)
-                    sample_df_cleaned = sample_df_raw.dropna(
-                        subset=["Temperature", "dCp"]
-                    )
+                    # Apply full preprocessing (numeric conversion, NaN drop, sort, reset index)
+                    processed_sample_df = preprocess_thermogram_data(sample_df_raw)
 
-                    if sample_df_cleaned.empty:
-                        logger.warning(
-                            f"Sample '{sample_id}' resulted in empty DataFrame after initial cleaning (NaNs?). Skipping."
+                    if not processed_sample_df.empty:
+                        extracted_samples[sample_id] = processed_sample_df
+                        processed_ids.add(sample_id)
+                        logger.debug(
+                            f"Successfully extracted and preprocessed sample '{sample_id}'. Shape: {processed_sample_df.shape}"
                         )
                     else:
-                        rows_dropped = initial_rows - len(sample_df_cleaned)
-                        logger.debug(
-                            f"Sample '{sample_id}' initial cleaning: Dropped {rows_dropped} rows. Shape: {sample_df_cleaned.shape}"
+                        logger.warning(
+                            f"Sample '{sample_id}' resulted in empty DataFrame after preprocessing. Skipping."
                         )
-                        # Store the cleaned (but not yet fully preprocessed/sorted) DataFrame
-                        samples[sample_id] = sample_df_cleaned
-                        processed_ids.add(sample_id)
 
                 except KeyError as ke:
                     logger.error(
-                        f"KeyError extracting columns for sample '{sample_id}': {ke}"
+                        f"KeyError extracting columns for sample '{sample_id}' (Temp: '{temp_col_name}', dCp: '{dcp_col_name}'): {ke}"
                     )
                 except Exception as e:
                     logger.error(
-                        f"Error processing pair for sample '{sample_id}': {e}",
+                        f"Unexpected error processing pair for sample '{sample_id}': {e}",
                         exc_info=True,
                     )
             else:
+                # Log if a potential temp column doesn't have a matching dCp column
                 logger.warning(
-                    f"Found temperature column '{col_name}' but no matching dCp column '{dcp_col_name}'"
+                    f"Found temperature column '{temp_col_name}' but no matching dCp column named '{dcp_col_name}'"
                 )
 
-    if not samples:
-        logger.warning("No valid sample column pairs found in the provided DataFrame.")
+    # Final log message summarizing results
+    if not extracted_samples:
+        logger.warning(
+            "No valid sample column pairs were successfully extracted and processed."
+        )
     else:
         logger.info(
-            f"Finished initial sample extraction. Found {len(samples)} samples: {list(samples.keys())}"
+            f"Finished sample extraction. Found {len(extracted_samples)} valid samples: {list(extracted_samples.keys())}"
         )
 
-    # --- Post-process extracted samples --- Start
-    # Apply full preprocessing (sorting, etc.) to each extracted sample DataFrame
-    processed_samples: Dict[str, pd.DataFrame] = {}
-    logger.info("Starting post-processing of extracted samples.")
-    for sample_id, sample_df in samples.items():
-        logger.debug(
-            f"Post-processing sample '{sample_id}' (Shape before: {sample_df.shape})"
-        )
-        try:
-            processed_df = preprocess_thermogram_data(sample_df)
-            if not processed_df.empty:
-                processed_samples[sample_id] = processed_df
-                logger.debug(
-                    f"Successfully preprocessed extracted sample '{sample_id}'. Final Shape: {processed_df.shape}"
-                )
-            else:
-                logger.warning(
-                    f"Preprocessing resulted in an empty DataFrame for sample '{sample_id}'. Skipping."
-                )
-        except Exception as e:
-            logger.error(
-                f"Error during final preprocessing of extracted sample '{sample_id}': {e}",
-                exc_info=True,
-            )
-    logger.info("Finished post-processing of extracted samples.")
-    # --- Post-process extracted samples --- End
-
-    return processed_samples
-
-
-def detect_endpoints(
-    df: pd.DataFrame,
-    window_size: int = 5,
-    exclusion_window: Optional[Tuple[float, float]] = (60, 80),
-) -> Dict[str, Optional[float]]:
-    """Detects potential baseline endpoints using rolling variance analysis.
-
-    Calculates the rolling variance of the 'dCp' values and finds the temperatures
-    corresponding to the minimum variance outside a specified exclusion window
-    (typically the main transition region).
-
-    Args:
-        df: DataFrame with 'Temperature' and 'dCp' columns, sorted by Temperature.
-        window_size: The size of the rolling window used for variance calculation.
-        exclusion_window: A tuple (min_temp, max_temp) defining the temperature range
-                          to exclude from the search for minimum variance.
-                          If None, no region is excluded.
-
-    Returns:
-        A dictionary with keys 'lower' and 'upper', containing the temperatures
-        corresponding to the detected lower and upper baseline endpoints, respectively.
-        Values can be None if detection fails.
-    """
-    if df.empty or "Temperature" not in df.columns or "dCp" not in df.columns:
-        logger.warning("detect_endpoints: Input DataFrame is empty or missing columns.")
-        return {"lower": None, "upper": None}
-
-    # Ensure data is sorted by Temperature (should be from preprocessing)
-    df_sorted = df.sort_values("Temperature").reset_index(drop=True)
-
-    # Calculate rolling variance
-    try:
-        df_sorted["dCp_variance"] = (
-            df_sorted["dCp"].rolling(window=window_size, center=True).var()
-        )
-    except Exception as e:
-        logger.error(f"Error calculating rolling variance: {e}", exc_info=True)
-        return {"lower": None, "upper": None}
-
-    # --- Apply Exclusion Window --- Start
-    df_analysis = df_sorted.copy()
-    if exclusion_window is not None:
-        min_exclude, max_exclude = exclusion_window
-        if min_exclude is not None and max_exclude is not None:
-            # Filter out the exclusion zone for endpoint detection
-            df_analysis = df_analysis[
-                (df_analysis["Temperature"] < min_exclude)
-                | (df_analysis["Temperature"] > max_exclude)
-            ]
-            logger.debug(f"Applied exclusion window: {min_exclude}°C - {max_exclude}°C")
-        else:
-            logger.warning(
-                "Exclusion window provided but contains None. Ignoring window."
-            )
-    # --- Apply Exclusion Window --- End
-
-    if df_analysis.empty or df_analysis["dCp_variance"].isnull().all():
-        logger.warning(
-            "No data points remain after applying exclusion window, or all variances are NaN."
-        )
-        return {"lower": None, "upper": None}
-
-    # --- Find Minimum Variance Points --- Start
-    # Helper function to find min variance index within a given DataFrame slice
-    def find_min_var_temp(data_slice: pd.DataFrame) -> Optional[float]:
-        if data_slice.empty or data_slice["dCp_variance"].isnull().all():
-            return None
-        try:
-            min_var_idx = data_slice["dCp_variance"].idxmin()
-            return data_slice.loc[min_var_idx, "Temperature"]
-        except Exception as e:
-            logger.error(f"Error finding min variance temp: {e}", exc_info=True)
-            return None
-
-    lower_endpoint_temp = None
-    upper_endpoint_temp = None
-
-    # Define regions for lower and upper endpoint search
-    # Use the midpoint of the *original* data range (or exclusion window if provided) to split
-    midpoint_temp = df_sorted["Temperature"].mean()
-    if exclusion_window and exclusion_window[0] is not None:
-        midpoint_temp = exclusion_window[0]  # Use start of exclusion as rough split
-
-    lower_region = df_analysis[df_analysis["Temperature"] <= midpoint_temp]
-    upper_region = df_analysis[df_analysis["Temperature"] > midpoint_temp]
-
-    lower_endpoint_temp = find_min_var_temp(lower_region)
-    upper_endpoint_temp = find_min_var_temp(upper_region)
-
-    logger.info(
-        f"Detected endpoints: Lower={lower_endpoint_temp}, Upper={upper_endpoint_temp}"
-    )
-    # --- Find Minimum Variance Points --- End
-
-    return {"lower": lower_endpoint_temp, "upper": upper_endpoint_temp}
+    return extracted_samples
 
 
 def interpolate_thermogram(
     df: pd.DataFrame,
     temp_grid: Optional[np.ndarray] = None,
-    num_points: int = 500,  # Default number of points if no grid specified
+    num_points: int = 500,
 ) -> Optional[pd.DataFrame]:
-    """Interpolates thermogram data onto a specified or uniform temperature grid.
+    """Interpolates thermogram dCp values onto a specified or uniform temperature grid.
 
-    Uses linear interpolation.
+    Uses linear interpolation via numpy.interp.
 
     Args:
-        df: DataFrame with 'Temperature' and 'dCp' columns, sorted by Temperature.
-        temp_grid: Optional NumPy array representing the desired temperature grid for interpolation.
-                   If None, a uniform grid with `num_points` between the min and max
-                   temperature of the input df will be generated.
-        num_points: The number of points to use for the uniform grid if `temp_grid` is None.
+        df: DataFrame containing numeric 'Temperature' and 'dCp' columns.
+            Data should ideally be preprocessed and sorted by Temperature.
+        temp_grid: Optional 1D NumPy array representing the desired target
+                   temperature grid for interpolation. If None, a uniform grid
+                   with `num_points` between the min and max temperature of the
+                   input `df` will be generated.
+        num_points: The number of points to use for the uniform grid generation
+                    if `temp_grid` is None. Ignored if `temp_grid` is provided.
 
     Returns:
-        A DataFrame with interpolated 'dCp' values on the target temperature grid,
-        or None if interpolation fails or input is invalid.
+        A new DataFrame with 'Temperature' (from the target grid) and interpolated
+        'dCp' columns. Returns None if interpolation fails, input is invalid,
+        or the temperature range cannot be determined.
     """
-    if df.empty or "Temperature" not in df.columns or "dCp" not in df.columns:
-        logger.warning("interpolate_thermogram: Input DataFrame invalid.")
+    # --- Input Validation --- Start
+    if not isinstance(df, pd.DataFrame) or df.empty:
+        logger.warning("interpolate_thermogram: Input DataFrame is invalid or empty.")
         return None
+    if "Temperature" not in df.columns or "dCp" not in df.columns:
+        logger.error("interpolate_thermogram: DataFrame missing required columns.")
+        return None
+    if not is_numeric_dtype(df["Temperature"]) or not is_numeric_dtype(df["dCp"]):
+        logger.error("interpolate_thermogram: Columns are not numeric.")
+        return None
+    if not df["Temperature"].is_monotonic_increasing:
+        # Interpolation requires sorted x-values (temperature)
+        logger.warning(
+            "interpolate_thermogram: Input DataFrame is not sorted by Temperature. Sorting..."
+        )
+        df = df.sort_values("Temperature").copy()  # Sort and copy
+    # --- Input Validation --- End
 
+    # Determine the target temperature grid
+    target_temp_grid: np.ndarray
     if temp_grid is None:
         min_temp = df["Temperature"].min()
         max_temp = df["Temperature"].max()
-        if pd.isna(min_temp) or pd.isna(max_temp):
+        if pd.isna(min_temp) or pd.isna(max_temp) or min_temp == max_temp:
             logger.warning(
-                "interpolate_thermogram: Cannot determine temp range for uniform grid."
+                "interpolate_thermogram: Cannot determine valid temp range for uniform grid generation."
             )
             return None
-        temp_grid = np.linspace(min_temp, max_temp, num=num_points)
+        target_temp_grid = np.linspace(min_temp, max_temp, num=num_points)
         logger.debug(
-            f"Generated uniform temp grid with {num_points} points from {min_temp:.1f} to {max_temp:.1f}"
+            f"Generated uniform temp grid: {num_points} points from {min_temp:.2f} to {max_temp:.2f}"
         )
     else:
-        # Ensure provided grid is sorted
-        temp_grid = np.sort(temp_grid)
+        if not isinstance(temp_grid, np.ndarray) or temp_grid.ndim != 1:
+            logger.error(
+                "interpolate_thermogram: Provided temp_grid must be a 1D NumPy array."
+            )
+            return None
+        # Ensure provided grid is sorted for clarity, although np.interp handles unsorted target x.
+        target_temp_grid = np.sort(temp_grid)
+        logger.debug(f"Using provided temp grid with {len(target_temp_grid)} points.")
 
     try:
-        # Perform linear interpolation
+        # Perform linear interpolation using numpy.interp
+        # np.interp requires sorted source x-values (df["Temperature"])
+        # It handles the target x-values (target_temp_grid) potentially being outside source range.
+        # `left=np.nan, right=np.nan` ensures points outside the original range get NaN.
         interpolated_dcp = np.interp(
-            temp_grid, df["Temperature"], df["dCp"], left=np.nan, right=np.nan
+            target_temp_grid,
+            df["Temperature"].values,  # Source x (must be sorted)
+            df["dCp"].values,  # Source y
+            left=np.nan,  # Value for target x < min(source x)
+            right=np.nan,  # Value for target x > max(source x)
         )
 
+        # Create the resulting DataFrame
         interpolated_df = pd.DataFrame(
-            {"Temperature": temp_grid, "dCp": interpolated_dcp}
+            {"Temperature": target_temp_grid, "dCp": interpolated_dcp}
         )
 
-        # Removed the dropna() call to preserve NaNs and ensure consistent length
-        # interpolated_df = interpolated_df.dropna()
         logger.info(f"Interpolation complete. Result shape: {interpolated_df.shape}")
         return interpolated_df
 
