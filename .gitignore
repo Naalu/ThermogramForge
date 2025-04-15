@@ -44,6 +44,8 @@ env.bak/
 venv.bak/
 .python-version
 venv-v1/
+test-venv/
+from_main_branch/
 
 # Build and distribution
 build/

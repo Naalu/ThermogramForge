@@ -47,7 +47,7 @@ try:
         print("Visit http://127.0.0.1:8050/ in your browser")
         # Set debug=True for development features (hot-reloading, error debugging)
         # Set debug=False for production or performance testing
-        app.run(debug=True)  # Keep True during active development
+        app.run(debug=False)  # Set debug to False for production/demo
 
     # Run the server
     if __name__ == "__main__":

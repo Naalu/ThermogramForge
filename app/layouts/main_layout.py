@@ -47,7 +47,8 @@ def create_layout() -> dbc.Container:
                                 html.H2("ThermogramForge", className="mb-0"),
                                 # Future: Add theme switch? User info?
                             ],
-                            className="d-flex justify-content-between align-items-center p-3 bg-light border-bottom",
+                            className="d-flex justify-content-between align-items-center p-4 bg-white border-bottom",
+                            style={"border-bottom": "2px solid #dee2e6"},
                         ),
                         # Main Tabs Section
                         dbc.Tabs(
@@ -806,6 +807,7 @@ def create_layout() -> dbc.Container:
                                     ],  # End Report Builder Tab children
                                 ),  # End Report Builder Tab
                             ],  # End Main Tabs Children
+                            className="main-tabs-container mt-3",
                         ),  # End Main Tabs
                     ],  # End Main Column Children
                     width=12,
