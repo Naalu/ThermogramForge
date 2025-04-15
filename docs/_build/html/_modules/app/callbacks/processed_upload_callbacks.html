@@ -1,0 +1,1188 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app.callbacks.processed_upload_callbacks &#8212; ThermogramForge 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/app/callbacks/processed_upload_callbacks';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">ThermogramForge</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributor Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Naalu/ThermogramForge/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributor Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Naalu/ThermogramForge/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../callbacks.html" class="nav-link">app.callbacks</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">app.callbacks.processed_upload_callbacks</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for app.callbacks.processed_upload_callbacks</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">dash_bootstrap_components</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dbc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dash</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Input</span><span class="p">,</span>
+    <span class="n">Output</span><span class="p">,</span>
+    <span class="n">State</span><span class="p">,</span>
+    <span class="n">callback</span><span class="p">,</span>
+    <span class="n">callback_context</span><span class="p">,</span>
+    <span class="n">dash_table</span><span class="p">,</span>
+    <span class="n">html</span><span class="p">,</span>
+    <span class="n">no_update</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dash.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreventUpdate</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="c1"># --- FORMAT DETECTION HELPER --- Start</span>
+<div class="viewcode-block" id="detect_and_validate_format">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.processed_upload_callbacks.detect_and_validate_format">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">detect_and_validate_format</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detects if DataFrame is wide or long format and validates accordingly.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df: The input DataFrame read from the file/sheet.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple containing:</span>
+<span class="sd">            - Validated DataFrame (or None if invalid).</span>
+<span class="sd">            - Detected format string (&#39;wide&#39; or &#39;long&#39;) or None.</span>
+<span class="sd">            - Error message string or None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Attempting to detect and validate DataFrame format.&quot;</span><span class="p">)</span>
+    <span class="n">df_original</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># Keep original for long format check if wide fails</span>
+
+    <span class="c1"># --- Try Standard Wide Format Validation --- Start</span>
+    <span class="n">e_wide_std</span> <span class="o">=</span> <span class="s2">&quot;Standard Wide validation skipped or passed.&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Attempting WIDE format validation.&quot;</span><span class="p">)</span>
+        <span class="n">temp_df_wide</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WIDE Check: Initial df shape: </span><span class="si">{</span><span class="n">temp_df_wide</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WIDE Check: Initial columns: </span><span class="si">{</span><span class="n">temp_df_wide</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WIDE Check: Initial index: </span><span class="si">{</span><span class="n">temp_df_wide</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 1. Identify SampleID/SampleCode (Index or First Column)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">temp_df_wide</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;SampleID&quot;</span>
+            <span class="ow">or</span> <span class="n">temp_df_wide</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;SampleCode&quot;</span>
+        <span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WIDE Check: Identifier is index &#39;</span><span class="si">{</span><span class="n">temp_df_wide</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+            <span class="n">temp_df_wide</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;SampleID&quot;</span>
+        <span class="k">elif</span> <span class="n">temp_df_wide</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span>  <span class="c1"># Check column exists before accessing</span>
+            <span class="n">temp_df_wide</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;sampleid&quot;</span><span class="p">,</span> <span class="s2">&quot;samplecode&quot;</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="n">original_col_name</span> <span class="o">=</span> <span class="n">temp_df_wide</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;WIDE Check: Identifier is first column &#39;</span><span class="si">{</span><span class="n">original_col_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+            <span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">temp_df_wide</span> <span class="o">=</span> <span class="n">temp_df_wide</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">original_col_name</span><span class="p">)</span>
+                <span class="n">temp_df_wide</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;SampleID&quot;</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;WIDE Check: df shape after set_index: </span><span class="si">{</span><span class="n">temp_df_wide</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;WIDE Check: columns after set_index: </span><span class="si">{</span><span class="n">temp_df_wide</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e_set_index</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;WIDE Check: Error during set_index(&#39;</span><span class="si">{</span><span class="n">original_col_name</span><span class="si">}</span><span class="s2">&#39;): </span><span class="si">{</span><span class="n">e_set_index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed to set index using column &#39;</span><span class="si">{</span><span class="n">original_col_name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
+                <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">temp_df_wide</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Check column exists before assuming</span>
+            <span class="c1"># Assume first column if unnamed</span>
+            <span class="n">original_col_name</span> <span class="o">=</span> <span class="n">temp_df_wide</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Assuming first column (&#39;</span><span class="si">{</span><span class="n">original_col_name</span><span class="si">}</span><span class="s2">&#39;) is sample identifier for wide format.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">temp_df_wide</span> <span class="o">=</span> <span class="n">temp_df_wide</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">original_col_name</span><span class="p">)</span>
+                <span class="n">temp_df_wide</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;SampleID&quot;</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;WIDE Check: df shape after assuming and set_index: </span><span class="si">{</span><span class="n">temp_df_wide</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;WIDE Check: columns after assuming and set_index: </span><span class="si">{</span><span class="n">temp_df_wide</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e_set_index</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;WIDE Check: Error during set_index on assumed col &#39;</span><span class="si">{</span><span class="n">original_col_name</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e_set_index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed to set index using assumed column &#39;</span><span class="si">{</span><span class="n">original_col_name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># No columns to treat as SampleID or Data</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;DataFrame has no columns to identify as SampleID or Data.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">temp_df_wide</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;SampleID/SampleCode column/index contains missing values.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># ---&gt; MOVE Temperature Column Check AFTER Index is Set &lt;---</span>
+        <span class="c1"># 2. Check Temperature Columns (must be numeric headers)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;WIDE Check: About to check columns: </span><span class="si">{</span><span class="n">temp_df_wide</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">temp_df_wide</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;WIDE Check: Validation failed - length of columns is 0 after index set.&quot;</span>
+            <span class="p">)</span>  <span class="c1"># Specific log</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;No data columns found after identifying SampleID/SampleCode.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">num_data_columns</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">temp_df_wide</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="n">invalid_temp_cols</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">temp_df_wide</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>  <span class="c1"># Attempt conversion</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="n">invalid_temp_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">col</span><span class="p">))</span>
+
+        <span class="c1"># If more than half the columns are non-numeric, assume it&#39;s a metrics report</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">invalid_temp_cols</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">num_data_columns</span> <span class="o">/</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;WIDE Check: Validation failed - Headers resemble metrics, not temperatures: </span><span class="si">{</span><span class="n">invalid_temp_cols</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Invalid column headers. File appears to be a metrics report, not wide-format thermogram data. Expected numeric temperature headers.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">invalid_temp_cols</span><span class="p">:</span>  <span class="c1"># If *any* column is invalid (stricter, optional)</span>
+            <span class="c1"># This case handles files that are mixed or have a few bad headers</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Found some non-numeric column headers: </span><span class="si">{</span><span class="n">invalid_temp_cols</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Invalid column headers. Expected numeric temperatures, but got non-numeric: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">invalid_temp_cols</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="c1"># ---&gt; END MOVED BLOCK &lt;---</span>
+
+        <span class="c1"># 3. Check dCp Values (must be numeric data)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">temp_df_wide</span> <span class="o">=</span> <span class="n">temp_df_wide</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+            <span class="c1"># NaNs might be acceptable, depending on requirements. Pass for now.</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e_val</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Non-numeric dCp data found. Ensure all values are numbers. Hint: </span><span class="si">{</span><span class="n">e_val</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Standard WIDE format validation successful.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">temp_df_wide</span><span class="p">,</span> <span class="s2">&quot;wide&quot;</span><span class="p">,</span> <span class="kc">None</span>  <span class="c1"># Return validated wide df</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">wide_exception</span><span class="p">:</span>
+        <span class="n">e_wide_std</span> <span class="o">=</span> <span class="n">wide_exception</span>  <span class="c1"># Capture the actual exception</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Standard WIDE format validation failed: </span><span class="si">{</span><span class="n">e_wide_std</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">pass</span>
+    <span class="c1"># --- Try Standard Wide Format Validation --- End</span>
+
+    <span class="c1"># --- Try TRANSPOSED Wide Format Validation --- Start</span>
+    <span class="n">e_wide_transposed</span> <span class="o">=</span> <span class="s2">&quot;Transposed Wide validation skipped or passed.&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Attempting TRANSPOSED WIDE format validation.&quot;</span><span class="p">)</span>
+        <span class="n">temp_df_transposed</span> <span class="o">=</span> <span class="n">df_original</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="c1"># 1. Identify Temperature Column (Index or First Column)</span>
+        <span class="n">temp_col_header</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="s2">&quot;temp&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">temp_df_transposed</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;TRANSPOSED Check: Temperature found as index.&quot;</span><span class="p">)</span>
+            <span class="n">temp_df_transposed</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Temperature&quot;</span>  <span class="c1"># Standardize</span>
+        <span class="k">elif</span> <span class="n">temp_df_transposed</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="s2">&quot;temp&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">temp_df_transposed</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="p">):</span>
+            <span class="n">temp_col_header</span> <span class="o">=</span> <span class="n">temp_df_transposed</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;TRANSPOSED Check: Temperature likely first column &#39;</span><span class="si">{</span><span class="n">temp_col_header</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+            <span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">temp_df_transposed</span> <span class="o">=</span> <span class="n">temp_df_transposed</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">temp_col_header</span><span class="p">)</span>
+                <span class="n">temp_df_transposed</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Temperature&quot;</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;TRANSPOSED Check: df shape after setting Temp index: </span><span class="si">{</span><span class="n">temp_df_transposed</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e_set_idx</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed setting Temp index &#39;</span><span class="si">{</span><span class="n">temp_col_header</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e_set_idx</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Cannot identify Temperature column/index for transposed format.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># 2. Check Temperature Index is Numeric</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_numeric_dtype</span><span class="p">(</span><span class="n">temp_df_transposed</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">temp_df_transposed</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">temp_df_transposed</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Temperature index/column contains non-numeric values.&quot;</span>
+                <span class="p">)</span>
+        <span class="k">if</span> <span class="n">temp_df_transposed</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Temperature index/column contains missing values.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 3. Check SampleID Columns Headers (remaining columns)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">temp_df_transposed</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No SampleID columns found after identifying Temperature.&quot;</span><span class="p">)</span>
+        <span class="c1"># Check if column headers look like Sample IDs (simplistic check: not purely numeric)</span>
+        <span class="n">non_string_headers</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">h</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">temp_df_transposed</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_numeric_dtype</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">non_string_headers</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;TRANSPOSED Check: Found numeric-like column headers treated as SampleIDs: </span><span class="si">{</span><span class="n">non_string_headers</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="c1"># Allow numeric sample IDs for now, but log a warning.</span>
+
+        <span class="c1"># 4. Check dCp values are numeric</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Apply astype to data columns only</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">temp_df_transposed</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">temp_df_transposed</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">temp_df_transposed</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e_val</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Non-numeric dCp data found in cells. Hint: </span><span class="si">{</span><span class="n">e_val</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 5. TRANSPOSE to standard wide format</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;TRANSPOSED WIDE format validation successful. Transposing to standard format.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">validated_wide_df</span> <span class="o">=</span> <span class="n">temp_df_transposed</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+        <span class="n">validated_wide_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;SampleID&quot;</span>  <span class="c1"># Set correct index name</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final shape after transpose: </span><span class="si">{</span><span class="n">validated_wide_df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">validated_wide_df</span><span class="p">,</span> <span class="s2">&quot;wide&quot;</span><span class="p">,</span> <span class="kc">None</span>  <span class="c1"># Return standard wide df</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">transposed_exception</span><span class="p">:</span>
+        <span class="n">e_wide_transposed</span> <span class="o">=</span> <span class="n">transposed_exception</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TRANSPOSED WIDE format validation failed: </span><span class="si">{</span><span class="n">e_wide_transposed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">pass</span>  <span class="c1"># Continue to long format check</span>
+    <span class="c1"># --- Try TRANSPOSED Wide Format Validation --- End</span>
+
+    <span class="c1"># --- Try Long Format Validation --- Start</span>
+    <span class="n">e_long</span> <span class="o">=</span> <span class="s2">&quot;Long format validation skipped or passed.&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Attempting LONG format validation.&quot;</span><span class="p">)</span>
+        <span class="n">temp_df_long</span> <span class="o">=</span> <span class="n">df_original</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># Use the original df</span>
+        <span class="n">required_long_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">]</span>
+        <span class="n">sample_id_col_options</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SampleID&quot;</span><span class="p">,</span> <span class="s2">&quot;SampleCode&quot;</span><span class="p">,</span> <span class="s2">&quot;sampleid&quot;</span><span class="p">,</span> <span class="s2">&quot;samplecode&quot;</span><span class="p">]</span>
+        <span class="n">actual_sample_id_col</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Find SampleID/SampleCode column</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">sample_id_col_options</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">temp_df_long</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">actual_sample_id_col</span> <span class="o">=</span> <span class="n">col</span>
+                <span class="k">break</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">actual_sample_id_col</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing required column: &#39;SampleID&#39; or &#39;SampleCode&#39;.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check other required columns</span>
+        <span class="n">missing_cols</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">required_long_cols</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">temp_df_long</span><span class="o">.</span><span class="n">columns</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">missing_cols</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Missing required columns for long format: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">missing_cols</span><span class="p">)</span><span class="si">}</span><span class="s2">. Expected SampleID/Code, Temperature, dCp_subtracted.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Standardize SampleID column name</span>
+        <span class="k">if</span> <span class="n">actual_sample_id_col</span> <span class="o">!=</span> <span class="s2">&quot;SampleID&quot;</span><span class="p">:</span>
+            <span class="n">temp_df_long</span> <span class="o">=</span> <span class="n">temp_df_long</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+                <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">actual_sample_id_col</span><span class="p">:</span> <span class="s2">&quot;SampleID&quot;</span><span class="p">}</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Check numeric types</span>
+        <span class="n">numeric_cols_to_check</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">]</span>
+        <span class="n">numeric_errors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numeric_cols_to_check</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_numeric_dtype</span><span class="p">(</span><span class="n">temp_df_long</span><span class="p">[</span><span class="n">col</span><span class="p">]):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">temp_df_long</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">temp_df_long</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+                <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                    <span class="n">numeric_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">numeric_errors</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Data type error in long format. Columns must be numeric: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">numeric_errors</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Check for missing values in essential columns</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">temp_df_long</span><span class="p">[</span><span class="s2">&quot;SampleID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+            <span class="ow">or</span> <span class="n">temp_df_long</span><span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;&#39;SampleID&#39; or &#39;Temperature&#39; column contains missing values.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;LONG format validation successful.&quot;</span><span class="p">)</span>
+        <span class="c1"># Select only the required columns in standard order for consistency</span>
+        <span class="n">final_long_df</span> <span class="o">=</span> <span class="n">temp_df_long</span><span class="p">[[</span><span class="s2">&quot;SampleID&quot;</span><span class="p">,</span> <span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">final_long_df</span><span class="p">,</span> <span class="s2">&quot;long&quot;</span><span class="p">,</span> <span class="kc">None</span>  <span class="c1"># Return validated long df</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">long_exception</span><span class="p">:</span>
+        <span class="n">e_long</span> <span class="o">=</span> <span class="n">long_exception</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;LONG format validation failed: </span><span class="si">{</span><span class="n">e_long</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># All formats failed</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="kc">None</span><span class="p">,</span>
+            <span class="kc">None</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;File does not match expected format. Std Wide Error: </span><span class="si">{</span><span class="n">e_wide_std</span><span class="si">}</span><span class="s2"> | Transposed Wide Error: </span><span class="si">{</span><span class="n">e_wide_transposed</span><span class="si">}</span><span class="s2"> | Long Error: </span><span class="si">{</span><span class="n">e_long</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+    <span class="c1"># --- Try Long Format Validation --- End</span>
+
+
+<span class="c1"># --- FORMAT DETECTION HELPER --- End</span>
+
+
+<div class="viewcode-block" id="toggle_upload_processed_modal">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.processed_upload_callbacks.toggle_upload_processed_modal">[docs]</a>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;upload-processed-modal&quot;</span><span class="p">,</span> <span class="s2">&quot;is_open&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;open-upload-processed-modal-btn&quot;</span><span class="p">,</span> <span class="s2">&quot;n_clicks&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;upload-processed-cancel-button&quot;</span><span class="p">,</span> <span class="s2">&quot;n_clicks&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span>
+        <span class="s2">&quot;upload-processed-submit-button&quot;</span><span class="p">,</span> <span class="s2">&quot;n_clicks&quot;</span>
+    <span class="p">),</span>  <span class="c1"># Close on successful submit too</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;upload-processed-modal&quot;</span><span class="p">,</span> <span class="s2">&quot;is_open&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">toggle_upload_processed_modal</span><span class="p">(</span><span class="n">n_open</span><span class="p">,</span> <span class="n">n_cancel</span><span class="p">,</span> <span class="n">n_submit</span><span class="p">,</span> <span class="n">is_open</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Opens and closes the processed data upload modal.&quot;&quot;&quot;</span>
+    <span class="c1"># Check which button triggered the callback</span>
+    <span class="n">ctx</span> <span class="o">=</span> <span class="n">callback_context</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span><span class="o">.</span><span class="n">triggered</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">no_update</span>
+
+    <span class="n">trigger_id</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">triggered</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;prop_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">trigger_id</span> <span class="o">==</span> <span class="s2">&quot;open-upload-processed-modal-btn&quot;</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Opening processed upload modal.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">trigger_id</span> <span class="ow">in</span> <span class="p">[</span>
+        <span class="s2">&quot;upload-processed-cancel-button&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;upload-processed-submit-button&quot;</span><span class="p">,</span>
+    <span class="p">]:</span>
+        <span class="c1"># We&#39;ll handle the actual submit logic elsewhere, just close the modal here</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Closing processed upload modal via </span><span class="si">{</span><span class="n">trigger_id</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="n">is_open</span>  <span class="c1"># Keep current state if no relevant button clicked</span></div>
+
+
+
+<span class="c1"># --- File Upload, Parse, Validate, Preview Callback --- REFACTORED for Dropdown</span>
+<div class="viewcode-block" id="handle_processed_file_upload">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.processed_upload_callbacks.handle_processed_file_upload">[docs]</a>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="c1"># Existing Outputs</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;upload-processed-preview-div&quot;</span><span class="p">,</span> <span class="s2">&quot;children&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;upload-processed-validation-message&quot;</span><span class="p">,</span> <span class="s2">&quot;children&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;upload-processed-submit-button&quot;</span><span class="p">,</span> <span class="s2">&quot;disabled&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;upload-processed-sheet-name-group&quot;</span><span class="p">,</span> <span class="s2">&quot;style&quot;</span><span class="p">),</span>  <span class="c1"># Keep controlling visibility</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;upload-processed-temp-store&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="c1"># New Outputs for Dropdown</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;upload-processed-sheet-dropdown&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;upload-processed-sheet-dropdown&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;upload-processed-sheet-dropdown&quot;</span><span class="p">,</span> <span class="s2">&quot;disabled&quot;</span><span class="p">),</span>
+    <span class="c1"># --- INPUTS --- Trigger on file upload OR dropdown selection</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;upload-processed-data-component&quot;</span><span class="p">,</span> <span class="s2">&quot;contents&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;upload-processed-sheet-dropdown&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>  <span class="c1"># Trigger on dropdown change</span>
+    <span class="c1"># --- STATES ---</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;upload-processed-data-component&quot;</span><span class="p">,</span> <span class="s2">&quot;filename&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;upload-processed-sheet-dropdown&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">),</span>  <span class="c1"># Get current options</span>
+    <span class="c1"># Remove n_submit/n_blur inputs for text input</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">handle_processed_file_upload</span><span class="p">(</span>
+    <span class="n">contents</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">selected_sheet_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>  <span class="c1"># Value from sheet dropdown</span>
+    <span class="n">filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">current_dropdown_options</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>  <span class="c1"># Current options state</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+    <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
+    <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="nb">bool</span><span class="p">,</span>
+<span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handles file upload, populates Excel sheet dropdown, validates selected sheet,</span>
+<span class="sd">    detects format, shows preview, and enables submit.&quot;&quot;&quot;</span>
+    <span class="n">ctx</span> <span class="o">=</span> <span class="n">callback_context</span>
+    <span class="n">triggered_id</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">triggered_id</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">triggered_id</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span>
+
+    <span class="c1"># --- Reset Outputs --- Start</span>
+    <span class="n">preview_content</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Em</span><span class="p">(</span><span class="s2">&quot;Processing...&quot;</span><span class="p">)</span>  <span class="c1"># Default preview</span>
+    <span class="n">validation_message</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">submit_disabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">sheet_group_style</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">}</span>
+    <span class="n">temp_store_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">dropdown_options</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Default empty options</span>
+    <span class="n">dropdown_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Default no selection</span>
+    <span class="n">dropdown_disabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Default disabled</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">run_validation</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="c1"># --- Reset Outputs --- End</span>
+
+    <span class="c1"># --- Determine Workflow based on Trigger --- Start</span>
+
+    <span class="c1"># Scenario 1: File Uploaded</span>
+    <span class="k">if</span> <span class="n">triggered_id</span> <span class="o">==</span> <span class="s2">&quot;upload-processed-data-component&quot;</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File uploaded: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># Reset dropdown value if a new file is uploaded</span>
+        <span class="n">dropdown_value</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Reset temp store data</span>
+        <span class="n">temp_store_data</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">contents</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;File upload triggered but no content/filename.&quot;</span><span class="p">)</span>
+            <span class="n">preview_content</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Em</span><span class="p">(</span><span class="s2">&quot;Select a file.&quot;</span><span class="p">)</span>
+            <span class="c1"># Return default reset state</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="n">preview_content</span><span class="p">,</span>
+                <span class="n">validation_message</span><span class="p">,</span>
+                <span class="n">submit_disabled</span><span class="p">,</span>
+                <span class="n">sheet_group_style</span><span class="p">,</span>
+                <span class="n">temp_store_data</span><span class="p">,</span>
+                <span class="n">dropdown_options</span><span class="p">,</span>
+                <span class="n">dropdown_value</span><span class="p">,</span>
+                <span class="n">dropdown_disabled</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">content_type</span><span class="p">,</span> <span class="n">content_string</span> <span class="o">=</span> <span class="n">contents</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+            <span class="n">decoded</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">content_string</span><span class="p">)</span>
+
+            <span class="c1"># CSV Upload</span>
+            <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.csv&quot;</span><span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Processing CSV file.&quot;</span><span class="p">)</span>
+                <span class="n">sheet_group_style</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">}</span>
+                <span class="n">dropdown_options</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">dropdown_disabled</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="c1"># --&gt; REVERT to default CSV reading &lt;-- # MODIFIED: Explicitly handle index</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+                        <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">decoded</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)),</span>
+                        <span class="n">index_col</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># ADDED: Prevent first column from being treated as index</span>
+                        <span class="c1"># header=0, # REMOVE explicit header</span>
+                        <span class="c1"># index_col=0 # REMOVE explicit index -&gt; Replaced above</span>
+                    <span class="p">)</span>
+                    <span class="c1"># ---&gt; REMOVE erroneous column conversion attempt &lt;---</span>
+                    <span class="c1"># try:</span>
+                    <span class="c1">#     numeric_columns = [pd.to_numeric(col) for col in df.columns]</span>
+                    <span class="c1">#     df.columns = numeric_columns  # Assign list of numeric columns</span>
+                    <span class="c1">#     logger.info(</span>
+                    <span class="c1">#         &quot;Successfully converted CSV column headers to numeric.&quot;</span>
+                    <span class="c1">#     )</span>
+                    <span class="c1"># except (ValueError, TypeError) as e_conv:</span>
+                    <span class="c1">#     logger.warning(</span>
+                    <span class="c1">#         f&quot;CSV column headers could not be fully converted to numeric: {e_conv}. &quot;</span>
+                    <span class="c1">#         &quot;Proceeding, but this might indicate an issue.&quot;</span>
+                    <span class="c1">#     )</span>
+                    <span class="c1">#     # Continue, validation function might handle it or raise specific error</span>
+                    <span class="c1">#     pass</span>
+
+                    <span class="n">run_validation</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">preview_content</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Em</span><span class="p">(</span><span class="s2">&quot;Validating CSV...&quot;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e_csv</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error reading CSV: </span><span class="si">{</span><span class="n">e_csv</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">validation_message</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Error reading CSV: </span><span class="si">{</span><span class="n">e_csv</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;danger&quot;</span>
+                    <span class="p">)</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="c1"># Excel Upload - Populate Dropdown</span>
+            <span class="k">elif</span> <span class="n">filename</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;.xls&quot;</span><span class="p">,</span> <span class="s2">&quot;.xlsx&quot;</span><span class="p">)):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Processing Excel file - populating sheets.&quot;</span><span class="p">)</span>
+                <span class="n">sheet_group_style</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;block&quot;</span><span class="p">}</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">excel_file</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">decoded</span><span class="p">))</span>
+                    <span class="n">sheet_names</span> <span class="o">=</span> <span class="n">excel_file</span><span class="o">.</span><span class="n">sheet_names</span>
+                    <span class="n">dropdown_options</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">sheet_names</span>
+                    <span class="p">]</span>
+                    <span class="n">dropdown_disabled</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="n">preview_content</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Em</span><span class="p">(</span><span class="s2">&quot;Select a sheet from the dropdown above.&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">sheet_names</span><span class="p">:</span>
+                        <span class="n">validation_message</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+                            <span class="s2">&quot;Excel file contains no sheets.&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span>
+                        <span class="p">)</span>
+                        <span class="n">dropdown_disabled</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">validation_message</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+                            <span class="s2">&quot;Select the sheet containing the processed data.&quot;</span><span class="p">,</span>
+                            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">,</span>
+                        <span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e_excel_sheets</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Error reading Excel sheet names: </span><span class="si">{</span><span class="n">e_excel_sheets</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">validation_message</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Error reading Excel file structure: </span><span class="si">{</span><span class="n">e_excel_sheets</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;danger&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">sheet_group_style</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">}</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Don&#39;t read data yet</span>
+                <span class="n">run_validation</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="c1"># Unsupported Type</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported file type: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">validation_message</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+                    <span class="s2">&quot;Unsupported file type.&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span>
+                <span class="p">)</span>
+                <span class="n">sheet_group_style</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">}</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e_parse</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error parsing file content: </span><span class="si">{</span><span class="n">e_parse</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">validation_message</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Error processing file content: </span><span class="si">{</span><span class="n">e_parse</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;danger&quot;</span>
+            <span class="p">)</span>
+            <span class="c1"># Reset everything</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Em</span><span class="p">(</span><span class="s2">&quot;Error processing file.&quot;</span><span class="p">),</span>
+                <span class="n">validation_message</span><span class="p">,</span>
+                <span class="kc">True</span><span class="p">,</span>
+                <span class="p">{</span><span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">},</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="p">[],</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+
+    <span class="c1"># Scenario 2: Sheet Selected from Dropdown</span>
+    <span class="k">elif</span> <span class="n">triggered_id</span> <span class="o">==</span> <span class="s2">&quot;upload-processed-sheet-dropdown&quot;</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sheet selected: </span><span class="si">{</span><span class="n">selected_sheet_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">dropdown_options</span> <span class="o">=</span> <span class="n">current_dropdown_options</span>  <span class="c1"># Preserve options</span>
+        <span class="n">dropdown_value</span> <span class="o">=</span> <span class="n">selected_sheet_value</span>  <span class="c1"># Keep selected value</span>
+        <span class="n">dropdown_disabled</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Keep dropdown enabled</span>
+        <span class="n">sheet_group_style</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;block&quot;</span><span class="p">}</span>  <span class="c1"># Keep dropdown visible</span>
+
+        <span class="c1"># Need file content to read the selected sheet</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">contents</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">filename</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">selected_sheet_value</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Sheet selected but no file content or sheet value. Ignoring.&quot;</span><span class="p">)</span>
+            <span class="c1"># This might happen if selection changes while file is cleared, prevent update</span>
+            <span class="k">raise</span> <span class="n">PreventUpdate</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">content_type</span><span class="p">,</span> <span class="n">content_string</span> <span class="o">=</span> <span class="n">contents</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+            <span class="n">decoded</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">content_string</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Reading selected sheet &#39;</span><span class="si">{</span><span class="n">selected_sheet_value</span><span class="si">}</span><span class="s2">&#39; from </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">decoded</span><span class="p">),</span> <span class="n">sheet_name</span><span class="o">=</span><span class="n">selected_sheet_value</span><span class="p">)</span>
+            <span class="n">run_validation</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Validate this specific sheet</span>
+            <span class="n">preview_content</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Em</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validating sheet &#39;</span><span class="si">{</span><span class="n">selected_sheet_value</span><span class="si">}</span><span class="s2">&#39;...&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e_read_sheet</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Error reading selected sheet &#39;</span><span class="si">{</span><span class="n">selected_sheet_value</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e_read_sheet</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">validation_message</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Error reading sheet &#39;</span><span class="si">{</span><span class="n">selected_sheet_value</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e_read_sheet</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;danger&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">run_validation</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="c1"># Reset temp store if sheet read fails</span>
+            <span class="n">temp_store_data</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Unexpected trigger</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Callback triggered by unexpected ID: </span><span class="si">{</span><span class="n">triggered_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span>
+
+    <span class="c1"># --- Determine Workflow based on Trigger --- End</span>
+
+    <span class="c1"># --- Run Validation (if applicable) --- Start</span>
+    <span class="k">if</span> <span class="n">run_validation</span> <span class="ow">and</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running format detection and validation for </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">validated_df</span><span class="p">,</span> <span class="n">detected_format</span><span class="p">,</span> <span class="n">error_msg</span> <span class="o">=</span> <span class="n">detect_and_validate_format</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">error_msg</span><span class="p">:</span>
+            <span class="n">validation_message</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Validation Error: </span><span class="si">{</span><span class="n">error_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;danger&quot;</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validation failed for </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">error_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">preview_content</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Em</span><span class="p">(</span><span class="s2">&quot;Validation failed.&quot;</span><span class="p">)</span>  <span class="c1"># Clearer message</span>
+            <span class="n">submit_disabled</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">temp_store_data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="n">validated_df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">detected_format</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Validation successful for </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">. Format: </span><span class="si">{</span><span class="n">detected_format</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="n">validation_message</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Sheet &#39;</span><span class="si">{</span><span class="n">selected_sheet_value</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;CSV&#39;</span><span class="si">}</span><span class="s2">&#39; validated as </span><span class="si">{</span><span class="n">detected_format</span><span class="si">}</span><span class="s2"> format. Ready to submit.&quot;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;success&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">submit_disabled</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="c1"># Store validated data and format type</span>
+            <span class="n">df_json</span> <span class="o">=</span> <span class="n">validated_df</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;split&quot;</span><span class="p">,</span> <span class="n">date_format</span><span class="o">=</span><span class="s2">&quot;iso&quot;</span><span class="p">)</span>
+            <span class="n">temp_store_data</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">filename</span><span class="p">,</span>
+                <span class="s2">&quot;sheet_name&quot;</span><span class="p">:</span> <span class="n">selected_sheet_value</span><span class="p">,</span>
+                <span class="s2">&quot;data_json&quot;</span><span class="p">:</span> <span class="n">df_json</span><span class="p">,</span>
+                <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="n">detected_format</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="n">preview_df</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">validated_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">detected_format</span> <span class="o">==</span> <span class="s2">&quot;wide&quot;</span>
+                <span class="k">else</span> <span class="n">validated_df</span>
+            <span class="p">)</span>
+            <span class="n">preview_table</span> <span class="o">=</span> <span class="n">dash_table</span><span class="o">.</span><span class="n">DataTable</span><span class="p">(</span>
+                <span class="n">columns</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)}</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">preview_df</span><span class="o">.</span><span class="n">columns</span><span class="p">],</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">preview_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s2">&quot;records&quot;</span><span class="p">),</span>
+                <span class="n">style_table</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;overflowX&quot;</span><span class="p">:</span> <span class="s2">&quot;auto&quot;</span><span class="p">},</span>
+                <span class="n">style_cell</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s2">&quot;textAlign&quot;</span><span class="p">:</span> <span class="s2">&quot;left&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;padding&quot;</span><span class="p">:</span> <span class="s2">&quot;5px&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;fontSize&quot;</span><span class="p">:</span> <span class="s2">&quot;0.8rem&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="n">style_header</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;fontWeight&quot;</span><span class="p">:</span> <span class="s2">&quot;bold&quot;</span><span class="p">},</span>
+            <span class="p">)</span>
+            <span class="n">preview_content</span> <span class="o">=</span> <span class="n">preview_table</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">validation_message</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="s2">&quot;Internal validation error.&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;danger&quot;</span><span class="p">)</span>
+            <span class="n">preview_content</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Em</span><span class="p">(</span><span class="s2">&quot;Internal validation error.&quot;</span><span class="p">)</span>
+            <span class="n">submit_disabled</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">temp_store_data</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">elif</span> <span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">validation_message</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># This state now primarily occurs on initial Excel upload before sheet selection</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;df is None, likely waiting for Excel sheet selection.&quot;</span><span class="p">)</span>
+        <span class="c1"># preview_content/validation_message are already set in the Excel workflow block</span>
+        <span class="n">submit_disabled</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">temp_store_data</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># --- Run Validation (if applicable) --- End</span>
+
+    <span class="c1"># Final adjustments if needed (e.g., ensuring dropdown state is correct on error)</span>
+    <span class="k">if</span> <span class="n">validation_message</span> <span class="ow">and</span> <span class="s2">&quot;Error&quot;</span> <span class="ow">in</span> <span class="n">validation_message</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+        <span class="n">submit_disabled</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Ensure submit is disabled on any error</span>
+        <span class="n">temp_store_data</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Clear store on any error</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Returning - Submit Disabled: </span><span class="si">{</span><span class="n">submit_disabled</span><span class="si">}</span><span class="s2">, Sheet Style: </span><span class="si">{</span><span class="n">sheet_group_style</span><span class="si">}</span><span class="s2">, &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Dropdown Disabled: </span><span class="si">{</span><span class="n">dropdown_disabled</span><span class="si">}</span><span class="s2">, Dropdown Value: </span><span class="si">{</span><span class="n">dropdown_value</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">preview_content</span><span class="p">,</span>
+        <span class="n">validation_message</span><span class="p">,</span>
+        <span class="n">submit_disabled</span><span class="p">,</span>
+        <span class="n">sheet_group_style</span><span class="p">,</span>
+        <span class="n">temp_store_data</span><span class="p">,</span>
+        <span class="n">dropdown_options</span><span class="p">,</span>
+        <span class="n">dropdown_value</span><span class="p">,</span>
+        <span class="n">dropdown_disabled</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="c1"># Callback to handle final submission</span>
+<div class="viewcode-block" id="submit_processed_data">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.processed_upload_callbacks.submit_processed_data">[docs]</a>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;processed-datasets-store&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">allow_duplicate</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;upload-processed-validation-message&quot;</span><span class="p">,</span> <span class="s2">&quot;children&quot;</span><span class="p">,</span> <span class="n">allow_duplicate</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span>
+        <span class="s2">&quot;upload-processed-temp-store&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">allow_duplicate</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">),</span>  <span class="c1"># Clear temp store on submit</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;upload-processed-submit-button&quot;</span><span class="p">,</span> <span class="s2">&quot;n_clicks&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;upload-processed-temp-store&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;processed-datasets-store&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">submit_processed_data</span><span class="p">(</span>
+    <span class="n">n_clicks</span><span class="p">,</span>
+    <span class="n">temp_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">existing_processed_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds the validated processed data to the main store.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">n_clicks</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">temp_data</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Submit callback triggered without click or temp data.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">no_update</span><span class="p">,</span> <span class="n">no_update</span><span class="p">,</span> <span class="n">no_update</span>
+
+    <span class="n">updated_processed_data</span> <span class="o">=</span> <span class="n">existing_processed_data</span> <span class="ow">or</span> <span class="p">{}</span>
+    <span class="n">final_validation_message</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">temp_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;filename&quot;</span><span class="p">)</span>
+        <span class="n">df_json</span> <span class="o">=</span> <span class="n">temp_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;data_json&quot;</span><span class="p">)</span>
+        <span class="n">detected_format</span> <span class="o">=</span> <span class="n">temp_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;format&quot;</span><span class="p">)</span>  <span class="c1"># Get the detected format</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">df_json</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">detected_format</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Temporary data is missing filename, dataframe JSON, or format.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Determine data_type based on format</span>
+        <span class="n">data_type</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;uploaded_</span><span class="si">{</span><span class="n">detected_format</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># e.g., &#39;uploaded_wide&#39; or &#39;uploaded_long&#39;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Generate a unique ID (e.g., filename + timestamp)</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">_%H%M%S&quot;</span><span class="p">)</span>
+        <span class="n">dataset_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;UPLOADED_</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># Check for ID collision</span>
+        <span class="k">while</span> <span class="n">dataset_id</span> <span class="ow">in</span> <span class="n">updated_processed_data</span><span class="p">:</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">_%H%M%S_</span><span class="si">%f</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">dataset_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;UPLOADED_</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Submitting uploaded </span><span class="si">{</span><span class="n">detected_format</span><span class="si">}</span><span class="s2"> data with ID: </span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Store the data, marking its type based on detected format</span>
+        <span class="n">updated_processed_data</span><span class="p">[</span><span class="n">dataset_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;data_type&quot;</span><span class="p">:</span> <span class="n">data_type</span><span class="p">,</span>  <span class="c1"># Use the dynamic type</span>
+            <span class="s2">&quot;original_filename&quot;</span><span class="p">:</span> <span class="n">filename</span><span class="p">,</span>
+            <span class="s2">&quot;data_json&quot;</span><span class="p">:</span> <span class="n">df_json</span><span class="p">,</span>
+            <span class="s2">&quot;upload_time&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+        <span class="p">}</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Successfully added uploaded dataset &#39;</span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&#39; to processed-datasets-store.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">final_validation_message</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Successfully uploaded and added dataset &#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&#39; as &#39;</span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;success&quot;</span><span class="p">,</span>
+            <span class="n">duration</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error submitting processed data: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">final_validation_message</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Failed to submit data. An error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;danger&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">no_update</span><span class="p">,</span> <span class="n">final_validation_message</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">updated_processed_data</span><span class="p">,</span>
+        <span class="n">final_validation_message</span><span class="p">,</span>
+        <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Chris Reger.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,168 +1,62 @@
 # ThermogramForge
 
-A Python implementation of thermogram analysis tools for thermal liquid biopsy (TLB) data.
+<!-- Add Shields/Badges here later: e.g., build status, license -->
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<!-- [![Documentation Status](https://readthedocs.org/projects/thermogramforge/badge/?version=latest)](https://thermogramforge.readthedocs.io/en/latest/?badge=latest) -->
 
-## Overview
+**ThermogramForge** is a Dash web application for interactive analysis and visualization of Differential Scanning Fluorimetry (DSF) thermogram data.
 
-ThermogramForge provides comprehensive tools for analyzing thermogram data, focusing on:
+It allows researchers to upload raw thermogram data, review automatically determined baseline endpoints, manually adjust endpoints, exclude problematic samples, and generate reports with calculated metrics (e.g., Tm, Onset).
 
-1. **Baseline subtraction** - Automatic detection of baseline endpoints and baseline removal
-2. **Peak analysis** - Detection and characterization of peaks in thermogram data
-3. **Thermogram metrics** - Calculation of various metrics for thermogram characterization
+<!-- Add Screenshot/GIF here later -->
 
-The package has two main components:
+## Key Features
 
-- **thermogram_baseline**: For baseline subtraction and preprocessing
-- **tlbparam**: For calculating metrics from thermogram data
-
-This project is designed to be compatible with the original R implementation while offering improved performance and usability through Python's ecosystem.
-
-## Installation
-
-### Basic Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/ThermogramForge.git
-cd ThermogramForge
-
-# Create a virtual environment with uv (recommended)
-uv venv
-
-# Install the package and its dependencies
-uv pip install -e .
-```
-
-### Installation with R Integration (Recommended)
-
-For optimal baseline subtraction that precisely matches the original R implementation's behavior:
-
-```bash
-# Install with R integration support
-uv pip install -e ".[r-integration]"
-```
-
-This requires:
-
-- R (4.0.0+) installed on your system
-- The following R packages: `smooth.spline`, `stats`
-
-You'll also need the `rpy2` Python package which will be installed automatically with the r-integration option.
+* Interactive baseline endpoint selection and adjustment.
+* Visualization of raw and baseline-subtracted thermograms.
+* AG Grid for efficient sample overview and editing.
+* Calculation of common DSF metrics (Tm, Onset, etc.).
+* Report generation in CSV or Excel format.
+* Support for multi-sample files (CSV/Excel).
 
 ## Quick Start
 
-### Basic Workflow
+1. **Clone the repository:**
 
-```python
-import polars as pl
-import numpy as np
-from thermogram_baseline.endpoint_detection import detect_endpoints
-from thermogram_baseline.baseline import subtract_baseline
-from thermogram_baseline.interpolation import interpolate_thermogram
-from tlbparam.peak_detection import PeakDetector
+    ```bash
+    git clone https://github.com/Naalu/ThermogramForge.git
+    cd ThermogramForge
+    ```
 
-# Load thermogram data
-data = pl.read_csv("your_thermogram_data.csv")
+2. **Create and activate a virtual environment (recommended):**
 
-# 1. Detect baseline endpoints
-endpoints = detect_endpoints(data)
-print(f"Detected endpoints: Lower={endpoints.lower:.2f}, Upper={endpoints.upper:.2f}")
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    ```
 
-# 2. Subtract baseline
-baseline_subtracted = subtract_baseline(data, endpoints.lower, endpoints.upper)
+3. **Install dependencies:**
 
-# 3. Interpolate to a uniform temperature grid
-interpolated = interpolate_thermogram(baseline_subtracted)
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-# 4. Detect peaks and calculate metrics
-detector = PeakDetector()
-peaks = detector.detect_peaks(interpolated)
+4. **Run the application:**
 
-# 5. Display results
-for peak_name, peak_info in peaks.items():
-    if peak_name != "FWHM":
-        print(f"{peak_name}: Height={peak_info['peak_height']:.4f}, Temperature={peak_info['peak_temp']:.2f}°C")
-    else:
-        print(f"FWHM: {peak_info['value']:.4f}°C")
+    ```bash
+    python main.py
+    ```
 
-# 6. Visualize results
-from tlbparam.visualization import plot_with_peaks, plot_thermogram
-fig = plot_with_peaks(interpolated, peaks)
-fig.write_html("thermogram_visualization.html")
-
-# 7. Save results
-baseline_subtracted.write_csv("baseline_subtracted.csv")
-```
-
-### Customizing Baseline Subtraction
-
-```python
-from thermogram_baseline.spline_fitter import SplineFitter
-from thermogram_baseline.baseline import subtract_baseline_with_custom_spline
-
-# Create a custom spline fitter
-fitter = SplineFitter(use_r=True)  # Use R for exact compatibility
-
-# Customize baseline subtraction
-baseline_subtracted = subtract_baseline_with_custom_spline(
-    data,
-    lower_temp=55.0,
-    upper_temp=85.0,
-    spline_fitter=fitter,
-    spar=0.5  # Control smoothing parameter
-)
-```
-
-### Web Application
-
-ThermogramForge includes a web application for interactive data analysis:
-
-```bash
-# Run the web application
-python -m thermogram_app.app
-```
-
-Then navigate to <http://127.0.0.1:8050/> in your browser.
+5. Open your web browser and navigate to `http://127.0.0.1:8050/`.
 
 ## Documentation
 
-For more detailed documentation:
+For detailed usage instructions, contribution guidelines, and API reference, please see the **[Full Documentation](https://thermogramforge.readthedocs.io/)** (Link needs update when hosted).
 
-- [API Reference](docs/source/api.rst)
-- [User Guide](docs/source/usage.rst)
-- [Installation](docs/source/installation.rst)
+## Contributing
 
-## Development
-
-To set up a development environment:
-
-```bash
-# Create a virtual environment with uv
-uv venv
-
-# Install development dependencies
-uv pip install -e ".[dev]"
-
-# Run tests
-pytest
-
-# Check code formatting and linting
-ruff check .
-black --check .
-mypy .
-```
-
-## Project Configuration
-
-This project uses:
-
-- `pyproject.toml` as the primary configuration file for Python tools and dependencies
-- `.editorconfig` for editor-specific settings
-- `.lintr` for R-specific linting configurations (used with R integration code)
-
-Requirements files (`requirements.txt` and `requirements-dev.txt`) are generated from `pyproject.toml`
-using the script at `scripts/generate_requirements.py`.
+Contributions are welcome! Please see the [Contribution Guidelines](CONTRIBUTING.md) and our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

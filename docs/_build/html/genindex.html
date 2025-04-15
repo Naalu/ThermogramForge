@@ -1,0 +1,946 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; ThermogramForge 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">ThermogramForge</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contributing/index.html">
+    Contributor Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Naalu/ThermogramForge/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contributing/index.html">
+    Contributor Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Naalu/ThermogramForge/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ 
+</div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.activate_endpoint_selection">activate_endpoint_selection() (in module app.callbacks.control_panel_callbacks)</a>
+</li>
+      <li>
+    app.app
+
+      <ul>
+        <li><a href="api/app.html#module-app.app">module</a>
+</li>
+      </ul></li>
+      <li>
+    app.callbacks
+
+      <ul>
+        <li><a href="api/app.html#module-app.callbacks">module</a>
+</li>
+      </ul></li>
+      <li>
+    app.callbacks.baseline_callbacks
+
+      <ul>
+        <li><a href="api/app.html#module-app.callbacks.baseline_callbacks">module</a>
+</li>
+      </ul></li>
+      <li>
+    app.callbacks.control_panel_callbacks
+
+      <ul>
+        <li><a href="api/app.html#module-app.callbacks.control_panel_callbacks">module</a>
+</li>
+      </ul></li>
+      <li>
+    app.callbacks.processed_upload_callbacks
+
+      <ul>
+        <li><a href="api/app.html#module-app.callbacks.processed_upload_callbacks">module</a>
+</li>
+      </ul></li>
+      <li>
+    app.callbacks.report_builder_callbacks
+
+      <ul>
+        <li><a href="api/app.html#module-app.callbacks.report_builder_callbacks">module</a>
+</li>
+      </ul></li>
+      <li>
+    app.callbacks.upload_callbacks
+
+      <ul>
+        <li><a href="api/app.html#module-app.callbacks.upload_callbacks">module</a>
+</li>
+      </ul></li>
+      <li>
+    app.callbacks.visualization_callbacks
+
+      <ul>
+        <li><a href="api/app.html#module-app.callbacks.visualization_callbacks">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    app.components
+
+      <ul>
+        <li><a href="api/app.html#module-app.components">module</a>
+</li>
+      </ul></li>
+      <li>
+    app.components.renderers
+
+      <ul>
+        <li><a href="api/app.html#module-app.components.renderers">module</a>
+</li>
+      </ul></li>
+      <li>
+    app.components.upload_processed_modal
+
+      <ul>
+        <li><a href="api/app.html#module-app.components.upload_processed_modal">module</a>
+</li>
+      </ul></li>
+      <li>
+    app.layouts.main_layout
+
+      <ul>
+        <li><a href="api/app.html#module-app.layouts.main_layout">module</a>
+</li>
+      </ul></li>
+      <li>
+    app.utils
+
+      <ul>
+        <li><a href="api/app.html#module-app.utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    app.utils.baseline_utils
+
+      <ul>
+        <li><a href="api/app.html#module-app.utils.baseline_utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    app.utils.data_processing
+
+      <ul>
+        <li><a href="api/app.html#module-app.utils.data_processing">module</a>
+</li>
+      </ul></li>
+      <li>
+    app.utils.layout_checker
+
+      <ul>
+        <li><a href="api/app.html#module-app.utils.layout_checker">module</a>
+</li>
+      </ul></li>
+      <li>
+    app.utils.visualization
+
+      <ul>
+        <li><a href="api/app.html#module-app.utils.visualization">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.upload_callbacks.build_raw_data_overview">build_raw_data_overview() (in module app.callbacks.upload_callbacks)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.utils.baseline_utils.calculate_linear_baseline">calculate_linear_baseline() (in module app.utils.baseline_utils)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.report_builder_callbacks.calculate_metrics_for_report">calculate_metrics_for_report() (in module app.callbacks.report_builder_callbacks)</a>
+</li>
+      <li><a href="api/core.html#core.metrics.metric_calculation.calculate_thermogram_metrics">calculate_thermogram_metrics() (in module core.metrics.metric_calculation)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.ControlPanelOutputs.cancel_disabled">cancel_disabled (app.callbacks.control_panel_callbacks.ControlPanelOutputs attribute)</a>
+</li>
+      <li><a href="api/app.html#app.components.CheckboxRenderer">CheckboxRenderer() (in module app.components)</a>
+
+      <ul>
+        <li><a href="api/app.html#app.components.renderers.CheckboxRenderer">(in module app.components.renderers)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#app.callbacks.upload_callbacks.cleanup_upload_folder">cleanup_upload_folder() (in module app.callbacks.upload_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.ControlPanelOutputs">ControlPanelOutputs (class in app.callbacks.control_panel_callbacks)</a>
+</li>
+      <li>
+    core.baseline.advanced
+
+      <ul>
+        <li><a href="api/core.html#module-core.baseline.advanced">module</a>
+</li>
+      </ul></li>
+      <li>
+    core.baseline.simple
+
+      <ul>
+        <li><a href="api/core.html#module-core.baseline.simple">module</a>
+</li>
+      </ul></li>
+      <li>
+    core.metrics.metric_calculation
+
+      <ul>
+        <li><a href="api/core.html#module-core.metrics.metric_calculation">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    core.peaks.peak_detection
+
+      <ul>
+        <li><a href="api/core.html#module-core.peaks.peak_detection">module</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#app.utils.create_baseline_figure">create_baseline_figure() (in module app.utils)</a>
+
+      <ul>
+        <li><a href="api/app.html#app.utils.visualization.create_baseline_figure">(in module app.utils.visualization)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#app.utils.create_comparison_figure">create_comparison_figure() (in module app.utils)</a>
+
+      <ul>
+        <li><a href="api/app.html#app.utils.visualization.create_comparison_figure">(in module app.utils.visualization)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#app.utils.create_data_preview">create_data_preview() (in module app.utils)</a>
+
+      <ul>
+        <li><a href="api/app.html#app.utils.visualization.create_data_preview">(in module app.utils.visualization)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#app.layouts.main_layout.create_layout">create_layout() (in module app.layouts.main_layout)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.visualization_callbacks.create_processed_figure">create_processed_figure() (in module app.callbacks.visualization_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.visualization_callbacks.create_raw_thermogram_figure">create_raw_thermogram_figure() (in module app.callbacks.visualization_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.utils.create_thermogram_figure">create_thermogram_figure() (in module app.utils)</a>
+
+      <ul>
+        <li><a href="api/app.html#app.utils.visualization.create_thermogram_figure">(in module app.utils.visualization)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#app.components.create_upload_processed_modal">create_upload_processed_modal() (in module app.components)</a>
+
+      <ul>
+        <li><a href="api/app.html#app.components.upload_processed_modal.create_upload_processed_modal">(in module app.components.upload_processed_modal)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.report_builder_callbacks.delete_generated_report">delete_generated_report() (in module app.callbacks.report_builder_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.processed_upload_callbacks.detect_and_validate_format">detect_and_validate_format() (in module app.callbacks.processed_upload_callbacks)</a>
+</li>
+      <li><a href="api/core.html#core.peaks.peak_detection.detect_thermogram_peaks">detect_thermogram_peaks() (in module core.peaks.peak_detection)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.discard_sample_changes">discard_sample_changes() (in module app.callbacks.control_panel_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.report_builder_callbacks.download_generated_report">download_generated_report() (in module app.callbacks.report_builder_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.download_processed_data_csv">download_processed_data_csv() (in module app.callbacks.control_panel_callbacks)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/core.html#core.baseline.advanced.EndpointSelectionMethod">EndpointSelectionMethod (class in core.baseline.advanced)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.ControlPanelOutputs.exclude_disabled">exclude_disabled (app.callbacks.control_panel_callbacks.ControlPanelOutputs attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.ControlPanelOutputs.exclude_value">exclude_value (app.callbacks.control_panel_callbacks.ControlPanelOutputs attribute)</a>
+</li>
+      <li><a href="api/app.html#app.utils.extract_samples">extract_samples() (in module app.utils)</a>
+
+      <ul>
+        <li><a href="api/app.html#app.utils.data_processing.extract_samples">(in module app.utils.data_processing)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.utils.find_duplicate_ids">find_duplicate_ids() (in module app.utils)</a>
+
+      <ul>
+        <li><a href="api/app.html#app.utils.layout_checker.find_duplicate_ids">(in module app.utils.layout_checker)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/core.html#core.baseline.advanced.find_spline_endpoints">find_spline_endpoints() (in module core.baseline.advanced)</a>
+</li>
+      <li><a href="api/app.html#app.utils.baseline_utils.find_value_at_temp">find_value_at_temp() (in module app.utils.baseline_utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.report_builder_callbacks.generate_report">generate_report() (in module app.callbacks.report_builder_callbacks)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.baseline_callbacks.handle_endpoint_click_ag">handle_endpoint_click_ag() (in module app.callbacks.baseline_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.handle_mark_reviewed_next">handle_mark_reviewed_next() (in module app.callbacks.control_panel_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.visualization_callbacks.handle_plot_tab_change">handle_plot_tab_change() (in module app.callbacks.visualization_callbacks)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.handle_previous_sample">handle_previous_sample() (in module app.callbacks.control_panel_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.processed_upload_callbacks.handle_processed_file_upload">handle_processed_file_upload() (in module app.callbacks.processed_upload_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.report_builder_callbacks.handle_report_dataset_selection">handle_report_dataset_selection() (in module app.callbacks.report_builder_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.handle_review_button_click">handle_review_button_click() (in module app.callbacks.control_panel_callbacks)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.init_callbacks">init_callbacks() (in module app.callbacks)</a>
+</li>
+      <li><a href="api/core.html#core.baseline.advanced.EndpointSelectionMethod.INNERMOST">INNERMOST (core.baseline.advanced.EndpointSelectionMethod attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.utils.interpolate_thermogram">interpolate_thermogram() (in module app.utils)</a>
+
+      <ul>
+        <li><a href="api/app.html#app.utils.data_processing.interpolate_thermogram">(in module app.utils.data_processing)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.load_data_for_review">load_data_for_review() (in module app.callbacks.control_panel_callbacks)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.ControlPanelOutputs.lower_display">lower_display (app.callbacks.control_panel_callbacks.ControlPanelOutputs attribute)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.ControlPanelOutputs.lower_source">lower_source (app.callbacks.control_panel_callbacks.ControlPanelOutputs attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.ControlPanelOutputs.mark_reviewed_disabled">mark_reviewed_disabled (app.callbacks.control_panel_callbacks.ControlPanelOutputs attribute)</a>
+</li>
+      <li><a href="api/core.html#core.baseline.advanced.EndpointSelectionMethod.MIDDLE">MIDDLE (core.baseline.advanced.EndpointSelectionMethod attribute)</a>
+</li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="api/app.html#module-app.app">app.app</a>
+</li>
+        <li><a href="api/app.html#module-app.callbacks">app.callbacks</a>
+</li>
+        <li><a href="api/app.html#module-app.callbacks.baseline_callbacks">app.callbacks.baseline_callbacks</a>
+</li>
+        <li><a href="api/app.html#module-app.callbacks.control_panel_callbacks">app.callbacks.control_panel_callbacks</a>
+</li>
+        <li><a href="api/app.html#module-app.callbacks.processed_upload_callbacks">app.callbacks.processed_upload_callbacks</a>
+</li>
+        <li><a href="api/app.html#module-app.callbacks.report_builder_callbacks">app.callbacks.report_builder_callbacks</a>
+</li>
+        <li><a href="api/app.html#module-app.callbacks.upload_callbacks">app.callbacks.upload_callbacks</a>
+</li>
+        <li><a href="api/app.html#module-app.callbacks.visualization_callbacks">app.callbacks.visualization_callbacks</a>
+</li>
+        <li><a href="api/app.html#module-app.components">app.components</a>
+</li>
+        <li><a href="api/app.html#module-app.components.renderers">app.components.renderers</a>
+</li>
+        <li><a href="api/app.html#module-app.components.upload_processed_modal">app.components.upload_processed_modal</a>
+</li>
+        <li><a href="api/app.html#module-app.layouts.main_layout">app.layouts.main_layout</a>
+</li>
+        <li><a href="api/app.html#module-app.utils">app.utils</a>
+</li>
+        <li><a href="api/app.html#module-app.utils.baseline_utils">app.utils.baseline_utils</a>
+</li>
+        <li><a href="api/app.html#module-app.utils.data_processing">app.utils.data_processing</a>
+</li>
+        <li><a href="api/app.html#module-app.utils.layout_checker">app.utils.layout_checker</a>
+</li>
+        <li><a href="api/app.html#module-app.utils.visualization">app.utils.visualization</a>
+</li>
+        <li><a href="api/core.html#module-core.baseline.advanced">core.baseline.advanced</a>
+</li>
+        <li><a href="api/core.html#module-core.baseline.simple">core.baseline.simple</a>
+</li>
+        <li><a href="api/core.html#module-core.metrics.metric_calculation">core.metrics.metric_calculation</a>
+</li>
+        <li><a href="api/core.html#module-core.peaks.peak_detection">core.peaks.peak_detection</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/core.html#core.baseline.advanced.EndpointSelectionMethod.OUTERMOST">OUTERMOST (core.baseline.advanced.EndpointSelectionMethod attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.report_builder_callbacks.populate_report_dataset_selector">populate_report_dataset_selector() (in module app.callbacks.report_builder_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.utils.preprocess_thermogram_data">preprocess_thermogram_data() (in module app.utils)</a>
+
+      <ul>
+        <li><a href="api/app.html#app.utils.data_processing.preprocess_thermogram_data">(in module app.utils.data_processing)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.ControlPanelOutputs.previous_sample_disabled">previous_sample_disabled (app.callbacks.control_panel_callbacks.ControlPanelOutputs attribute)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.upload_callbacks.process_upload_multi_sample">process_upload_multi_sample() (in module app.callbacks.upload_callbacks)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.layouts.main_layout.register_layout">register_layout() (in module app.layouts.main_layout)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.visualization_callbacks.reset_selection_mode_on_grid_row_select">reset_selection_mode_on_grid_row_select() (in module app.callbacks.visualization_callbacks)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.save_processed_data_to_store">save_processed_data_to_store() (in module app.callbacks.control_panel_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.select_first_grid_row">select_first_grid_row() (in module app.callbacks.control_panel_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.ControlPanelOutputs.select_lower_color">select_lower_color (app.callbacks.control_panel_callbacks.ControlPanelOutputs attribute)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.ControlPanelOutputs.select_lower_disabled">select_lower_disabled (app.callbacks.control_panel_callbacks.ControlPanelOutputs attribute)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.ControlPanelOutputs.select_upper_color">select_upper_color (app.callbacks.control_panel_callbacks.ControlPanelOutputs attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.ControlPanelOutputs.select_upper_disabled">select_upper_disabled (app.callbacks.control_panel_callbacks.ControlPanelOutputs attribute)</a>
+</li>
+      <li><a href="api/core.html#core.baseline.simple.simple_baseline_subtraction">simple_baseline_subtraction() (in module core.baseline.simple)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.ControlPanelOutputs.style">style (app.callbacks.control_panel_callbacks.ControlPanelOutputs attribute)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.processed_upload_callbacks.submit_processed_data">submit_processed_data() (in module app.callbacks.processed_upload_callbacks)</a>
+</li>
+      <li><a href="api/core.html#core.baseline.advanced.subtract_spline_baseline">subtract_spline_baseline() (in module core.baseline.advanced)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.report_builder_callbacks.switch_to_report_builder_tab">switch_to_report_builder_tab() (in module app.callbacks.report_builder_callbacks)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.ControlPanelOutputs.title">title (app.callbacks.control_panel_callbacks.ControlPanelOutputs attribute)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.baseline_callbacks.toggle_advanced_options">toggle_advanced_options() (in module app.callbacks.baseline_callbacks)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.toggle_upload_modal">toggle_upload_modal() (in module app.callbacks.control_panel_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.processed_upload_callbacks.toggle_upload_processed_modal">toggle_upload_processed_modal() (in module app.callbacks.processed_upload_callbacks)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.update_control_panel_on_selection">update_control_panel_on_selection() (in module app.callbacks.control_panel_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.visualization_callbacks.update_dataset_selector_options">update_dataset_selector_options() (in module app.callbacks.visualization_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.update_download_filename_placeholder">update_download_filename_placeholder() (in module app.callbacks.control_panel_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.baseline_callbacks.update_flags_from_grid">update_flags_from_grid() (in module app.callbacks.baseline_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.report_builder_callbacks.update_metric_selection">update_metric_selection() (in module app.callbacks.report_builder_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.visualization_callbacks.update_plots_on_grid_row_select">update_plots_on_grid_row_select() (in module app.callbacks.visualization_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.update_processed_data_overview">update_processed_data_overview() (in module app.callbacks.control_panel_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.upload_callbacks.update_raw_data_overview_ui">update_raw_data_overview_ui() (in module app.callbacks.upload_callbacks)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.update_raw_data_status">update_raw_data_status() (in module app.callbacks.control_panel_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.visualization_callbacks.update_raw_plot_from_temp_params">update_raw_plot_from_temp_params() (in module app.callbacks.visualization_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.report_builder_callbacks.update_report_preview">update_report_preview() (in module app.callbacks.report_builder_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.report_builder_callbacks.update_reports_overview">update_reports_overview() (in module app.callbacks.report_builder_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.visualization_callbacks.update_review_panel_visibility">update_review_panel_visibility() (in module app.callbacks.visualization_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.visualization_callbacks.update_stores_on_grid_row_select">update_stores_on_grid_row_select() (in module app.callbacks.visualization_callbacks)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.ControlPanelOutputs.upper_display">upper_display (app.callbacks.control_panel_callbacks.ControlPanelOutputs attribute)</a>
+</li>
+      <li><a href="api/app.html#app.callbacks.control_panel_callbacks.ControlPanelOutputs.upper_source">upper_source (app.callbacks.control_panel_callbacks.ControlPanelOutputs attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Chris Reger.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

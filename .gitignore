@@ -43,6 +43,9 @@ ENV/
 env.bak/
 venv.bak/
 .python-version
+venv-v1/
+test-venv/
+from_main_branch/
 
 # Build and distribution
 build/
@@ -75,7 +78,5 @@ data/
 
 # Project specific ( Possible candidates for future alterations )
 uv.lock
-smooth_spline_detail_comparison.html
-smooth_spline_grid_comparison.html
-smooth_spline_table_summary.html
-interpolation_plot.png
+.ruff_cache/
+

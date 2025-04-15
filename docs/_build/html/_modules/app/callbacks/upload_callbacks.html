@@ -1,0 +1,900 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app.callbacks.upload_callbacks &#8212; ThermogramForge 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/app/callbacks/upload_callbacks';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">ThermogramForge</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributor Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Naalu/ThermogramForge/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributor Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Naalu/ThermogramForge/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../callbacks.html" class="nav-link">app.callbacks</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">app.callbacks.upload_callbacks</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for app.callbacks.upload_callbacks</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Callbacks related to file uploads and initial data processing.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>  <span class="c1"># Added types</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">dash_bootstrap_components</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dbc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dash</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>  <span class="c1"># Added ctx, ALL, MATCH just in case</span>
+    <span class="n">Input</span><span class="p">,</span>
+    <span class="n">Output</span><span class="p">,</span>
+    <span class="n">State</span><span class="p">,</span>
+    <span class="n">callback</span><span class="p">,</span>
+    <span class="n">ctx</span><span class="p">,</span>
+    <span class="n">html</span><span class="p">,</span>
+    <span class="n">no_update</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">app</span><span class="w"> </span><span class="kn">import</span> <span class="n">UPLOAD_FOLDER_ROOT</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">app.utils.data_processing</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_samples</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.baseline</span><span class="w"> </span><span class="kn">import</span> <span class="n">EndpointSelectionMethod</span><span class="p">,</span> <span class="n">find_spline_endpoints</span>
+
+<span class="c1"># Ensure core baseline functions are imported</span>
+
+<span class="c1"># Set up logger</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="process_upload_multi_sample">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.upload_callbacks.process_upload_multi_sample">[docs]</a>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="c1"># Store Outputs</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;baseline-params&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">allow_duplicate</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;all-samples-data&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">allow_duplicate</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="c1"># UI Outputs</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;upload-status&quot;</span><span class="p">,</span> <span class="s2">&quot;children&quot;</span><span class="p">,</span> <span class="n">allow_duplicate</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="c1"># Inputs</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;dash-uploader&quot;</span><span class="p">,</span> <span class="s2">&quot;isCompleted&quot;</span><span class="p">),</span>
+    <span class="c1"># States (Fetch stores to update them)</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;baseline-params&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;all-samples-data&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;dash-uploader&quot;</span><span class="p">,</span> <span class="s2">&quot;fileNames&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;dash-uploader&quot;</span><span class="p">,</span> <span class="s2">&quot;upload_id&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;min-temp-input&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;max-temp-input&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;lower-exclusion-input&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;upper-exclusion-input&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;point-selection-method&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">process_upload_multi_sample</span><span class="p">(</span>
+    <span class="c1"># Input Args</span>
+    <span class="n">is_completed</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c1"># State Args</span>
+    <span class="n">store_baseline_params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">store_all_samples_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">filenames</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+    <span class="n">upload_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">min_temp</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">max_temp</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">lower_exclusion</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">upper_exclusion</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">selection_method</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span>  <span class="c1"># Define return tuple types</span>
+    <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>  <span class="c1"># baseline-params store</span>
+    <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>  <span class="c1"># all-samples-data store</span>
+    <span class="n">Any</span><span class="p">,</span>  <span class="c1"># upload-status children</span>
+<span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Processes an uploaded thermogram file (CSV or Excel).</span>
+
+<span class="sd">    Extracts samples, filters by temperature, calculates initial baseline parameters,</span>
+<span class="sd">    updates the main data stores (`all-samples-data`, `baseline-params`).</span>
+<span class="sd">    Only performs processing when triggered by the dash-uploader component completion.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        is_completed: Flag from dash-uploader indicating if upload finished.</span>
+<span class="sd">        store_baseline_params: Current state of the baseline parameters store.</span>
+<span class="sd">        store_all_samples_data: Current state of the raw sample data store.</span>
+<span class="sd">        filenames: List of uploaded filenames from dash-uploader.</span>
+<span class="sd">        upload_id: Upload ID from dash-uploader.</span>
+<span class="sd">        min_temp: Minimum temperature selected in the modal.</span>
+<span class="sd">        max_temp: Maximum temperature selected in the modal.</span>
+<span class="sd">        lower_exclusion: Lower exclusion temperature from modal (unused currently).</span>
+<span class="sd">        upper_exclusion: Upper exclusion temperature from modal (unused currently).</span>
+<span class="sd">        selection_method: Point selection method from modal (unused currently).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A tuple containing:</span>
+<span class="sd">            - Updated baseline parameters dictionary for the store.</span>
+<span class="sd">            - Updated raw sample data dictionary for the store.</span>
+<span class="sd">            - Content for the upload status alert.</span>
+
+<span class="sd">        Returns `no_update` for store outputs if not triggered by uploader or on error.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">triggered_input_id</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">triggered_id</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;process_upload_multi_sample triggered by: </span><span class="si">{</span><span class="n">triggered_input_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># --- Trigger Check --- Start</span>
+    <span class="k">if</span> <span class="n">triggered_input_id</span> <span class="o">!=</span> <span class="s2">&quot;dash-uploader&quot;</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Callback triggered by &#39;</span><span class="si">{</span><span class="n">triggered_input_id</span><span class="si">}</span><span class="s2">&#39;, not uploader. No processing.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">no_update</span><span class="p">,</span> <span class="n">no_update</span><span class="p">,</span> <span class="n">no_update</span>
+    <span class="c1"># --- Trigger Check --- End</span>
+
+    <span class="c1"># Initialize return values</span>
+    <span class="n">updated_baseline_store</span> <span class="o">=</span> <span class="n">store_baseline_params</span> <span class="ow">or</span> <span class="p">{}</span>
+    <span class="n">updated_all_samples_store</span> <span class="o">=</span> <span class="n">store_all_samples_data</span> <span class="ow">or</span> <span class="p">{}</span>
+    <span class="n">status_message</span> <span class="o">=</span> <span class="n">no_update</span>
+
+    <span class="c1"># --- Uploader Completion Check &amp; Input Validation --- Start</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_completed</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">filenames</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">upload_id</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Uploader triggered but not completed or missing filenames/ID.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">no_update</span><span class="p">,</span>
+            <span class="n">no_update</span><span class="p">,</span>
+            <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="s2">&quot;Upload incomplete or file info missing.&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">min_temp_val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">min_temp</span><span class="p">)</span> <span class="k">if</span> <span class="n">min_temp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+        <span class="n">max_temp_val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">max_temp</span><span class="p">)</span> <span class="k">if</span> <span class="n">max_temp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">min_temp_val</span> <span class="o">&gt;=</span> <span class="n">max_temp_val</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Min temperature must be less than Max temperature.&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">error_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Invalid temperature range input: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">no_update</span><span class="p">,</span> <span class="n">no_update</span><span class="p">,</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="n">error_msg</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;danger&quot;</span><span class="p">)</span>
+    <span class="c1"># --- Uploader Completion Check &amp; Input Validation --- End</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Process the most recently uploaded file</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">filenames</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">UPLOAD_FOLDER_ROOT</span><span class="p">,</span> <span class="n">upload_id</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processing file: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+            <span class="n">error_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Error: Uploaded file not found at </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">no_update</span><span class="p">,</span> <span class="n">no_update</span><span class="p">,</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="n">error_msg</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;danger&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Read file based on extension</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.csv&quot;</span><span class="p">):</span>
+            <span class="n">df_full</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">filename</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;.xls&quot;</span><span class="p">,</span> <span class="s2">&quot;.xlsx&quot;</span><span class="p">)):</span>
+            <span class="n">df_full</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">error_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Unsupported file type: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">no_update</span><span class="p">,</span> <span class="n">no_update</span><span class="p">,</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="n">error_msg</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Extract and Filter Samples</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Extracting samples from </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> (shape </span><span class="si">{</span><span class="n">df_full</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+        <span class="n">samples_extracted</span> <span class="o">=</span> <span class="n">extract_samples</span><span class="p">(</span><span class="n">df_full</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">samples_extracted</span><span class="p">:</span>
+            <span class="n">error_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Could not identify any valid sample data columns (e.g., T[ID]/ID pairs) in file: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">. Please check the file format.&quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">no_update</span><span class="p">,</span> <span class="n">no_update</span><span class="p">,</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="n">error_msg</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;danger&quot;</span><span class="p">)</span>
+
+        <span class="n">samples_filtered</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">initial_baseline_params_for_file</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">num_samples_in_file</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">sample_id</span><span class="p">,</span> <span class="n">df_sample</span> <span class="ow">in</span> <span class="n">samples_extracted</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># df_sample is already preprocessed (sorted, numeric) by extract_samples</span>
+            <span class="k">if</span> <span class="s2">&quot;Temperature&quot;</span> <span class="ow">in</span> <span class="n">df_sample</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">df_filtered</span> <span class="o">=</span> <span class="n">df_sample</span><span class="p">[</span>
+                    <span class="p">(</span><span class="n">df_sample</span><span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_temp_val</span><span class="p">)</span>
+                    <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_sample</span><span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">max_temp_val</span><span class="p">)</span>
+                <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">df_filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                    <span class="c1"># Convert df to list of dicts for storage</span>
+                    <span class="n">samples_filtered</span><span class="p">[</span><span class="n">sample_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_filtered</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s2">&quot;records&quot;</span><span class="p">)</span>
+                    <span class="n">num_samples_in_file</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;  Sample &#39;</span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">&#39; filtered: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_filtered</span><span class="p">)</span><span class="si">}</span><span class="s2"> points [</span><span class="si">{</span><span class="n">min_temp_val</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">max_temp_val</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C] stored.&quot;</span>
+                    <span class="p">)</span>
+
+                    <span class="c1"># Calculate default baseline params using the new core function</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="c1"># Get parameters from state for endpoint detection</span>
+                        <span class="c1"># Ensure defaults if states are None</span>
+                        <span class="n">lower_excl_val</span> <span class="o">=</span> <span class="p">(</span>
+                            <span class="nb">float</span><span class="p">(</span><span class="n">lower_exclusion</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">lower_exclusion</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                            <span class="k">else</span> <span class="mf">60.0</span>
+                        <span class="p">)</span>
+                        <span class="n">upper_excl_val</span> <span class="o">=</span> <span class="p">(</span>
+                            <span class="nb">float</span><span class="p">(</span><span class="n">upper_exclusion</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">upper_exclusion</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                            <span class="k">else</span> <span class="mf">80.0</span>
+                        <span class="p">)</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">point_sel_method_enum</span> <span class="o">=</span> <span class="n">EndpointSelectionMethod</span><span class="p">(</span>
+                                <span class="n">selection_method</span>
+                                <span class="ow">or</span> <span class="n">EndpointSelectionMethod</span><span class="o">.</span><span class="n">INNERMOST</span><span class="o">.</span><span class="n">value</span>
+                            <span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                                <span class="sa">f</span><span class="s2">&quot;Invalid point selection method &#39;</span><span class="si">{</span><span class="n">selection_method</span><span class="si">}</span><span class="s2">&#39;, defaulting to Innermost.&quot;</span>
+                            <span class="p">)</span>
+                            <span class="n">point_sel_method_enum</span> <span class="o">=</span> <span class="n">EndpointSelectionMethod</span><span class="o">.</span><span class="n">INNERMOST</span>
+
+                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Finding endpoints for &#39;</span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">&#39; with Excl: </span><span class="si">{</span><span class="n">lower_excl_val</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">upper_excl_val</span><span class="si">}</span><span class="s2">, Method: </span><span class="si">{</span><span class="n">point_sel_method_enum</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="p">)</span>
+                        <span class="n">auto_endpoints</span> <span class="o">=</span> <span class="n">find_spline_endpoints</span><span class="p">(</span>
+                            <span class="n">df</span><span class="o">=</span><span class="n">df_filtered</span><span class="p">,</span>  <span class="c1"># Pass the filtered dataframe</span>
+                            <span class="n">lower_exclusion_temp</span><span class="o">=</span><span class="n">lower_excl_val</span><span class="p">,</span>
+                            <span class="n">upper_exclusion_temp</span><span class="o">=</span><span class="n">upper_excl_val</span><span class="p">,</span>
+                            <span class="c1"># window_size=10, # Use default or make configurable?</span>
+                            <span class="c1"># spline_smooth_factor=None, # Use default</span>
+                            <span class="n">point_selection_method</span><span class="o">=</span><span class="n">point_sel_method_enum</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                        <span class="n">initial_baseline_params_for_file</span><span class="p">[</span><span class="n">sample_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                            <span class="s2">&quot;lower&quot;</span><span class="p">:</span> <span class="n">auto_endpoints</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;lower&quot;</span><span class="p">),</span>
+                            <span class="s2">&quot;upper&quot;</span><span class="p">:</span> <span class="n">auto_endpoints</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;upper&quot;</span><span class="p">),</span>
+                            <span class="s2">&quot;lower_source&quot;</span><span class="p">:</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;upper_source&quot;</span><span class="p">:</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;reviewed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                            <span class="s2">&quot;exclude&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="p">}</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;  Found auto params for &#39;</span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">&#39;: L=</span><span class="si">{</span><span class="n">auto_endpoints</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, U=</span><span class="si">{</span><span class="n">auto_endpoints</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;upper&#39;</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e_param</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Error finding auto endpoints for &#39;</span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e_param</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                            <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="p">)</span>
+                        <span class="c1"># Store None if detection fails</span>
+                        <span class="n">initial_baseline_params_for_file</span><span class="p">[</span><span class="n">sample_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                            <span class="s2">&quot;lower&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                            <span class="s2">&quot;upper&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                            <span class="s2">&quot;lower_source&quot;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;upper_source&quot;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;reviewed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                            <span class="s2">&quot;exclude&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="p">}</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;  Sample &#39;</span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">&#39; was empty after temperature filtering. Skipping.&quot;</span>
+                    <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Sample &#39;</span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">&#39; missing &#39;Temperature&#39; column after extraction. Skipping.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">samples_filtered</span><span class="p">:</span>
+            <span class="n">error_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;No samples remained after temperature filtering (</span><span class="si">{</span><span class="n">min_temp_val</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">max_temp_val</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C) in </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">no_update</span><span class="p">,</span> <span class="n">no_update</span><span class="p">,</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="n">error_msg</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">)</span>
+
+        <span class="c1"># --- Update Stores --- Start</span>
+        <span class="c1"># Make copies to avoid modifying state directly before returning</span>
+        <span class="n">current_baseline_params</span> <span class="o">=</span> <span class="p">(</span><span class="n">store_baseline_params</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">current_all_samples_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">store_all_samples_data</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="c1"># Store samples AND metadata under the filename key</span>
+        <span class="n">upload_metadata</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;min_temp&quot;</span><span class="p">:</span> <span class="n">min_temp</span><span class="p">,</span>
+            <span class="s2">&quot;max_temp&quot;</span><span class="p">:</span> <span class="n">max_temp</span><span class="p">,</span>
+            <span class="s2">&quot;lower_exclusion&quot;</span><span class="p">:</span> <span class="n">lower_exclusion</span><span class="p">,</span>
+            <span class="s2">&quot;upper_exclusion&quot;</span><span class="p">:</span> <span class="n">upper_exclusion</span><span class="p">,</span>
+            <span class="s2">&quot;selection_method&quot;</span><span class="p">:</span> <span class="n">selection_method</span><span class="p">,</span>
+            <span class="s2">&quot;original_filename&quot;</span><span class="p">:</span> <span class="n">filename</span><span class="p">,</span>  <span class="c1"># Store original name too</span>
+            <span class="s2">&quot;processed_at&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>  <span class="c1"># Add processing timestamp</span>
+        <span class="p">}</span>
+        <span class="n">current_baseline_params</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span> <span class="o">=</span> <span class="n">initial_baseline_params_for_file</span>
+        <span class="n">current_all_samples_data</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;samples&quot;</span><span class="p">:</span> <span class="n">samples_filtered</span><span class="p">,</span>
+            <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="n">upload_metadata</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Storing data and metadata for </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">upload_metadata</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">updated_baseline_store</span> <span class="o">=</span> <span class="n">current_baseline_params</span>
+        <span class="n">updated_all_samples_store</span> <span class="o">=</span> <span class="n">current_all_samples_data</span>
+        <span class="c1"># --- Update Stores --- End</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Successfully processed </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">num_samples_in_file</span><span class="si">}</span><span class="s2"> samples filtered.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">status_message</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Successfully processed </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">num_samples_in_file</span><span class="si">}</span><span class="s2"> samples found and filtered.&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;success&quot;</span><span class="p">,</span>
+            <span class="n">dismissable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">duration</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">except</span> <span class="n">pd</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">EmptyDataError</span><span class="p">:</span>
+        <span class="n">error_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Error: File </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> is empty.&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
+        <span class="n">status_message</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="n">error_msg</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;danger&quot;</span><span class="p">)</span>
+        <span class="n">updated_baseline_store</span> <span class="o">=</span> <span class="n">no_update</span>
+        <span class="n">updated_all_samples_store</span> <span class="o">=</span> <span class="n">no_update</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">error_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;An error occurred during processing of </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error_msg</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Log full traceback</span>
+        <span class="n">status_message</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="n">error_msg</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;danger&quot;</span><span class="p">)</span>
+        <span class="n">updated_baseline_store</span> <span class="o">=</span> <span class="n">no_update</span>
+        <span class="n">updated_all_samples_store</span> <span class="o">=</span> <span class="n">no_update</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="c1"># Clean up the uploaded file and folder if they exist</span>
+        <span class="c1"># Ensure cleanup happens even if processing fails mid-way</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="s2">&quot;upload_id&quot;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span>
+            <span class="ow">and</span> <span class="s2">&quot;filename&quot;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span>
+            <span class="ow">and</span> <span class="n">upload_id</span>
+            <span class="ow">and</span> <span class="n">filename</span>
+        <span class="p">):</span>
+            <span class="n">cleanup_upload_folder</span><span class="p">(</span><span class="n">upload_id</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">upload_id</span><span class="p">:</span>  <span class="c1"># If filename wasn&#39;t assigned due to early exit</span>
+            <span class="n">folder_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">UPLOAD_FOLDER_ROOT</span><span class="p">,</span> <span class="n">upload_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder_path</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder_path</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">folder_path</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Cleaned up empty upload folder (early exit case): </span><span class="si">{</span><span class="n">folder_path</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e_rmdir</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error removing directory </span><span class="si">{</span><span class="n">folder_path</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e_rmdir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">updated_baseline_store</span><span class="p">,</span>
+        <span class="n">updated_all_samples_store</span><span class="p">,</span>
+        <span class="n">status_message</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="build_raw_data_overview">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.upload_callbacks.build_raw_data_overview">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_raw_data_overview</span><span class="p">(</span>
+    <span class="n">all_samples_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">_baseline_params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">processed_datasets_store</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">dbc</span><span class="o">.</span><span class="n">ListGroupItem</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Builds the list group item display for the raw data overview.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        all_samples_data: The store containing raw data and metadata keyed by filename.</span>
+<span class="sd">        _baseline_params: The store containing initial baseline params (unused for status now).</span>
+<span class="sd">        processed_datasets_store: Store containing final processed data keyed by generated name.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of dbc.ListGroupItem components.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">all_samples_data</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">dbc</span><span class="o">.</span><span class="n">ListGroupItem</span><span class="p">(</span><span class="s2">&quot;No raw files uploaded yet.&quot;</span><span class="p">)]</span>
+
+    <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">processed_raw_files</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">processed_datasets_store</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">processed_datasets_store</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;source_raw_file&quot;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                <span class="n">processed_raw_files</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;source_raw_file&quot;</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">filename</span><span class="p">,</span> <span class="n">file_data</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">all_samples_data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Skipping invalid entry in all_samples_data for </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">file_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;metadata&quot;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">min_temp</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;min_temp&quot;</span><span class="p">,</span> <span class="s2">&quot;N/A&quot;</span><span class="p">)</span>
+        <span class="n">max_temp</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max_temp&quot;</span><span class="p">,</span> <span class="s2">&quot;N/A&quot;</span><span class="p">)</span>
+        <span class="n">lower_excl</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;lower_exclusion&quot;</span><span class="p">,</span> <span class="s2">&quot;N/A&quot;</span><span class="p">)</span>
+        <span class="n">upper_excl</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;upper_exclusion&quot;</span><span class="p">,</span> <span class="s2">&quot;N/A&quot;</span><span class="p">)</span>
+        <span class="n">sel_method</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;selection_method&quot;</span><span class="p">,</span> <span class="s2">&quot;N/A&quot;</span><span class="p">)</span>
+
+        <span class="n">is_processed</span> <span class="o">=</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">processed_raw_files</span>
+        <span class="n">status_badge</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Badge</span><span class="p">(</span>
+            <span class="s2">&quot;Processed&quot;</span> <span class="k">if</span> <span class="n">is_processed</span> <span class="k">else</span> <span class="s2">&quot;Not Processed&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;success&quot;</span> <span class="k">if</span> <span class="n">is_processed</span> <span class="k">else</span> <span class="s2">&quot;secondary&quot;</span><span class="p">,</span>
+            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;ms-2 align-self-center fs-6&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">review_button</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+            <span class="s2">&quot;Review Endpoints&quot;</span><span class="p">,</span>
+            <span class="nb">id</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;review-btn&quot;</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="n">filename</span><span class="p">},</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">,</span>
+            <span class="n">outline</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>
+            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;me-2&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">metadata_spans</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">Small</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Range: </span><span class="si">{</span><span class="n">min_temp</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">max_temp</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">,</span> <span class="n">className</span><span class="o">=</span><span class="s2">&quot;text-muted me-3&quot;</span><span class="p">),</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">Small</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Excl: </span><span class="si">{</span><span class="n">lower_excl</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">upper_excl</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">,</span> <span class="n">className</span><span class="o">=</span><span class="s2">&quot;text-muted me-3&quot;</span>
+            <span class="p">),</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">Small</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Method: </span><span class="si">{</span><span class="n">sel_method</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">className</span><span class="o">=</span><span class="s2">&quot;text-muted&quot;</span><span class="p">),</span>
+        <span class="p">]</span>
+        <span class="n">metadata_display</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">metadata_spans</span><span class="p">,</span> <span class="n">className</span><span class="o">=</span><span class="s2">&quot;mt-1&quot;</span><span class="p">)</span>
+
+        <span class="n">item_content</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+                    <span class="p">[</span>
+                        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                            <span class="n">html</span><span class="o">.</span><span class="n">Strong</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">className</span><span class="o">=</span><span class="s2">&quot;text-truncate&quot;</span>
+                        <span class="p">),</span>
+                        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">status_badge</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">),</span>
+                        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                            <span class="p">[</span><span class="n">review_button</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">className</span><span class="o">=</span><span class="s2">&quot;flex-shrink-0&quot;</span>
+                        <span class="p">),</span>
+                    <span class="p">],</span>
+                    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;d-flex align-items-center justify-content-between w-100&quot;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">metadata_display</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dbc</span><span class="o">.</span><span class="n">ListGroupItem</span><span class="p">(</span><span class="n">item_content</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">items</span> <span class="k">if</span> <span class="n">items</span> <span class="k">else</span> <span class="p">[</span><span class="n">dbc</span><span class="o">.</span><span class="n">ListGroupItem</span><span class="p">(</span><span class="s2">&quot;No valid raw files found.&quot;</span><span class="p">)]</span></div>
+
+
+
+<div class="viewcode-block" id="cleanup_upload_folder">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.upload_callbacks.cleanup_upload_folder">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">cleanup_upload_folder</span><span class="p">(</span><span class="n">upload_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Removes the specific uploaded file and its parent folder.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">upload_id</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">filename</span><span class="p">:</span>  <span class="c1"># Basic check</span>
+        <span class="k">return</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">UPLOAD_FOLDER_ROOT</span><span class="p">,</span> <span class="n">upload_id</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">folder_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">UPLOAD_FOLDER_ROOT</span><span class="p">,</span> <span class="n">upload_id</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cleaned up uploaded file: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check if folder is empty before removing</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder_path</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">folder_path</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cleaned up empty upload folder: </span><span class="si">{</span><span class="n">folder_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder_path</span><span class="p">):</span>
+            <span class="c1"># Folder might contain other files if multiple uploads happened quickly</span>
+            <span class="c1"># Or potentially debug files. Only log if not removing.</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Upload folder not empty, not removing: </span><span class="si">{</span><span class="n">folder_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error cleaning up upload folder </span><span class="si">{</span><span class="n">upload_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected error during upload cleanup: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># --- NEW Callback to Update Raw Data Overview UI ---</span>
+<div class="viewcode-block" id="update_raw_data_overview_ui">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.upload_callbacks.update_raw_data_overview_ui">[docs]</a>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;raw-data-overview-display&quot;</span><span class="p">,</span> <span class="s2">&quot;children&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;all-samples-data&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;baseline-params&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;processed-datasets-store&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_raw_data_overview_ui</span><span class="p">(</span>
+    <span class="n">all_samples_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">baseline_params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">processed_datasets_store</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">dbc</span><span class="o">.</span><span class="n">ListGroupItem</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Updates the list group display for raw files when data stores change.&quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Updating raw data overview UI due to store change.&quot;</span><span class="p">)</span>
+    <span class="c1"># Call the existing helper function, now passing the processed data store</span>
+    <span class="k">return</span> <span class="n">build_raw_data_overview</span><span class="p">(</span>
+        <span class="n">all_samples_data</span><span class="p">,</span> <span class="n">baseline_params</span><span class="p">,</span> <span class="n">processed_datasets_store</span>
+    <span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Chris Reger.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

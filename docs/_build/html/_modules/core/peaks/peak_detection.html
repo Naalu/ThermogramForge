@@ -1,0 +1,620 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>core.peaks.peak_detection &#8212; ThermogramForge 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/core/peaks/peak_detection';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">ThermogramForge</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributor Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Naalu/ThermogramForge/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributor Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Naalu/ThermogramForge/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">core.peaks.peak_detection</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for core.peaks.peak_detection</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Provides functions for detecting peaks in baseline-subtracted thermogram data.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pandas.api.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_numeric_dtype</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># Default temperature regions (min_temp, max_temp) for identifying specific peaks.</span>
+<span class="c1"># Used as the default value for the `regions` argument in `detect_thermogram_peaks`.</span>
+<span class="n">PEAK_REGIONS</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Peak_F&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">54</span><span class="p">),</span>
+    <span class="s2">&quot;Peak_1&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">66</span><span class="p">),</span>
+    <span class="s2">&quot;Peak_2&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">67</span><span class="p">,</span> <span class="mi">73</span><span class="p">),</span>
+    <span class="s2">&quot;Peak_3&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">73</span><span class="p">,</span> <span class="mi">81</span><span class="p">),</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_find_max_in_region</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">temp_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">:</span> <span class="nb">float</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds the temperature and height of the maximum dCp within a range.</span>
+
+<span class="sd">    Filters the DataFrame to the specified temperature range [temp_min, temp_max]</span>
+<span class="sd">    and returns the temperature and dCp value corresponding to the maximum</span>
+<span class="sd">    dCp value found within that range.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df: DataFrame containing numeric &#39;Temperature&#39; and &#39;dCp_subtracted&#39; columns.</span>
+<span class="sd">        temp_min: The minimum temperature (inclusive) of the search region.</span>
+<span class="sd">        temp_max: The maximum temperature (inclusive) of the search region.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A tuple (peak_temperature, peak_height) if a valid maximum is found,</span>
+<span class="sd">        otherwise None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># --- Input Validation --- Start</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="ow">or</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;_find_max_in_region: Input DataFrame is empty or invalid.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="s2">&quot;Temperature&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="ow">or</span> <span class="s2">&quot;dCp_subtracted&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;_find_max_in_region: DataFrame missing required columns.&quot;</span><span class="p">)</span>
+        <span class="c1"># Or raise ValueError?</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_numeric_dtype</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">is_numeric_dtype</span><span class="p">(</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s2">&quot;_find_max_in_region: Temperature or dCp_subtracted column is not numeric.&quot;</span>
+        <span class="p">)</span>
+        <span class="c1"># Or raise TypeError?</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">temp_min</span> <span class="o">&gt;</span> <span class="n">temp_max</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;_find_max_in_region: temp_min (</span><span class="si">{</span><span class="n">temp_min</span><span class="si">}</span><span class="s2">) &gt; temp_max (</span><span class="si">{</span><span class="n">temp_max</span><span class="si">}</span><span class="s2">).&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="c1"># --- Input Validation --- End</span>
+
+    <span class="c1"># Filter the DataFrame for the specified temperature range</span>
+    <span class="c1"># Using .between() is generally robust.</span>
+    <span class="n">region_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">,</span> <span class="n">inclusive</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)]</span>
+
+    <span class="k">if</span> <span class="n">region_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No data found in region </span><span class="si">{</span><span class="n">temp_min</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">temp_max</span><span class="si">}</span><span class="s2">°C.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Find index of max dCp_subtracted within the filtered region</span>
+        <span class="c1"># Ensure we handle cases where the max value itself might be NaN</span>
+        <span class="n">dcp_in_region</span> <span class="o">=</span> <span class="n">region_df</span><span class="p">[</span><span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">dcp_in_region</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All dCp values are NaN in region </span><span class="si">{</span><span class="n">temp_min</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">temp_max</span><span class="si">}</span><span class="s2">°C.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">max_idx</span> <span class="o">=</span> <span class="n">dcp_in_region</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+
+        <span class="c1"># idxmax can return NaN if all values are NaN (handled above), but check just in case</span>
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">max_idx</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Could not determine max index in region </span><span class="si">{</span><span class="n">temp_min</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">temp_max</span><span class="si">}</span><span class="s2">°C.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">peak_temp</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">region_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">max_idx</span><span class="p">,</span> <span class="s2">&quot;Temperature&quot;</span><span class="p">]</span>
+        <span class="n">peak_height</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">region_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">max_idx</span><span class="p">,</span> <span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Check if the identified peak values themselves are NaN</span>
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">peak_temp</span><span class="p">)</span> <span class="ow">or</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">peak_height</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;NaN value found for peak temp or height in region </span><span class="si">{</span><span class="n">temp_min</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">temp_max</span><span class="si">}</span><span class="s2">°C.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Optional: Check if peak height must be positive</span>
+        <span class="c1"># if peak_height &lt;= 0:</span>
+        <span class="c1">#     logger.debug(</span>
+        <span class="c1">#         f&quot;Max value in region {temp_min}-{temp_max}°C is not positive ({peak_height:.4f}). Treating as no peak.&quot;</span>
+        <span class="c1">#     )</span>
+        <span class="c1">#     return None</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Found max in region </span><span class="si">{</span><span class="n">temp_min</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">temp_max</span><span class="si">}</span><span class="s2">°C: T=</span><span class="si">{</span><span class="n">peak_temp</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, H=</span><span class="si">{</span><span class="n">peak_height</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">peak_temp</span><span class="p">,</span> <span class="n">peak_height</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Error finding max in region </span><span class="si">{</span><span class="n">temp_min</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">temp_max</span><span class="si">}</span><span class="s2">°C: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="detect_thermogram_peaks">
+<a class="viewcode-back" href="../../../api/core.html#core.peaks.detect_thermogram_peaks">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">detect_thermogram_peaks</span><span class="p">(</span>
+    <span class="n">df_processed</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">regions</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="n">PEAK_REGIONS</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detects thermogram peaks by finding the maximum within defined regions.</span>
+
+<span class="sd">    Iterates through predefined or user-specified temperature regions and finds the</span>
+<span class="sd">    point with the maximum baseline-subtracted dCp value within each region.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df_processed: DataFrame containing baseline-subtracted data with numeric</span>
+<span class="sd">                      &#39;Temperature&#39; and &#39;dCp_subtracted&#39; columns.</span>
+<span class="sd">        regions: A dictionary defining the peak search regions. Keys are peak names</span>
+<span class="sd">                 (str), and values are tuples of (min_temp, max_temp).</span>
+<span class="sd">                 Defaults to `PEAK_REGIONS` constant defined in this module.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary where keys are the region names (from the `regions` input)</span>
+<span class="sd">        and values are dictionaries containing the detected peak&#39;s temperature</span>
+<span class="sd">        (&#39;peak_temp&#39;) and height (&#39;peak_height&#39;). Values within the inner</span>
+<span class="sd">        dictionary will be None if no valid peak was found in that region.</span>
+<span class="sd">        Example: {&quot;Peak_1&quot;: {&quot;peak_temp&quot;: 65.1, &quot;peak_height&quot;: 1.23}, ...}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># --- Input Validation --- Start</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df_processed</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="ow">or</span> <span class="n">df_processed</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;detect_thermogram_peaks: Input DataFrame is invalid or empty.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return dict with None for all expected regions based on input `regions`</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;peak_temp&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;peak_height&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">regions</span><span class="p">}</span>
+
+    <span class="n">required_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">col</span> <span class="ow">in</span> <span class="n">df_processed</span><span class="o">.</span><span class="n">columns</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">required_cols</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;detect_thermogram_peaks: DataFrame missing required columns: </span><span class="si">{</span><span class="n">required_cols</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;peak_temp&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;peak_height&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">regions</span><span class="p">}</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_numeric_dtype</span><span class="p">(</span><span class="n">df_processed</span><span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">is_numeric_dtype</span><span class="p">(</span>
+        <span class="n">df_processed</span><span class="p">[</span><span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s2">&quot;detect_thermogram_peaks: Temperature or dCp_subtracted column is not numeric.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;peak_temp&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;peak_height&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">regions</span><span class="p">}</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">regions</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">regions</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s2">&quot;detect_thermogram_peaks: `regions` argument must be a non-empty dictionary.&quot;</span>
+        <span class="p">)</span>
+        <span class="c1"># Cannot determine output structure, return empty dict</span>
+        <span class="k">return</span> <span class="p">{}</span>
+    <span class="c1"># Further validation could check tuple structure and numeric types within regions</span>
+    <span class="c1"># --- Input Validation --- End</span>
+
+    <span class="c1"># Ensure data is sorted by temperature - important for consistency and potential future algorithms</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">df_processed</span><span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">is_monotonic_increasing</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Input DataFrame is not sorted by Temperature. Sorting...&quot;</span><span class="p">)</span>
+        <span class="c1"># Use .copy() to avoid SettingWithCopyWarning if df_processed is a slice</span>
+        <span class="n">df_processed</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">df_processed</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="p">)</span>
+
+    <span class="n">peaks_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detecting peaks in regions: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">regions</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Iterate through each defined region and find the maximum peak</span>
+    <span class="k">for</span> <span class="n">region_name</span><span class="p">,</span> <span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">)</span> <span class="ow">in</span> <span class="n">regions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># Use the helper function to find the max point in the current region</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_find_max_in_region</span><span class="p">(</span><span class="n">df_processed</span><span class="p">,</span> <span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">)</span>
+
+        <span class="c1"># Store the result (temperature and height) or None if no peak found</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">peak_temp</span><span class="p">,</span> <span class="n">peak_height</span> <span class="o">=</span> <span class="n">result</span>
+            <span class="n">peaks_data</span><span class="p">[</span><span class="n">region_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;peak_temp&quot;</span><span class="p">:</span> <span class="n">peak_temp</span><span class="p">,</span>
+                <span class="s2">&quot;peak_height&quot;</span><span class="p">:</span> <span class="n">peak_height</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">peaks_data</span><span class="p">[</span><span class="n">region_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;peak_temp&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;peak_height&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No valid peak found for region: </span><span class="si">{</span><span class="n">region_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Peak detection finished.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">peaks_data</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Chris Reger.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
