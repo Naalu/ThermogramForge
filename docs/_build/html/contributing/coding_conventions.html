@@ -47,7 +47,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'contributing/coding_conventions';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Running Checks/Tests" href="testing.html" />
+    <link rel="next" title="Running Checks &amp; Tests" href="testing.html" />
     <link rel="prev" title="Project Structure" href="project_structure.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -304,7 +304,7 @@
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project Structure</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Coding Conventions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testing.html">Running Checks/Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Running Checks &amp; Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow.html">Contribution Workflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="building_docs.html">Building Documentation</a></li>
 </ul>
@@ -368,8 +368,78 @@
                 <article class="bd-article">
                   
   <section id="coding-conventions">
-<h1>Coding Conventions<a class="headerlink" href="#coding-conventions" title="Link to this heading">#</a></h1>
-<p>(Content to be added)</p>
+<span id="contributing-coding-conventions"></span><h1>Coding Conventions<a class="headerlink" href="#coding-conventions" title="Link to this heading">#</a></h1>
+<p>To maintain code quality, consistency, and readability across the ThermogramForge project, please adhere to the following conventions when contributing:</p>
+<section id="code-style-and-formatting">
+<h2>Code Style and Formatting<a class="headerlink" href="#code-style-and-formatting" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>PEP 8</strong>: Follow the <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP 8 Style Guide for Python Code</a>.</p></li>
+<li><p><strong>Black</strong>: Code formatting is enforced using <a class="reference external" href="https://black.readthedocs.io/en/stable/">Black</a>. Ensure your code is formatted with Black before committing. The project configuration in <cite>pyproject.toml</cite> specifies Black settings. Running the pre-commit hooks (if set up) or manually running <code class="docutils literal notranslate"><span class="pre">black</span> <span class="pre">.</span></code> in the project root will format the code automatically.</p></li>
+<li><p><strong>Line Length</strong>: Adhere to the line length limit configured for Black (check <cite>pyproject.toml</cite>, typically 88 or 100 characters).</p></li>
+</ul>
+</section>
+<section id="linting">
+<h2>Linting<a class="headerlink" href="#linting" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Ruff</strong>: Code linting is performed using <a class="reference external" href="https://beta.ruff.rs/docs/">Ruff</a>. Ruff checks for a wide range of potential errors, style issues, and complexity problems. The specific rules enabled are configured in <cite>pyproject.toml</cite> under <cite>[tool.ruff]</cite>. Run <code class="docutils literal notranslate"><span class="pre">ruff</span> <span class="pre">check</span> <span class="pre">.</span></code> in the project root to check for linting errors. Pre-commit hooks (if set up) will also run Ruff. Address any reported linting issues before submitting contributions.</p></li>
+</ul>
+</section>
+<section id="docstrings">
+<h2>Docstrings<a class="headerlink" href="#docstrings" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Style</strong>: Use <a class="reference external" href="https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings">Google Style</a> docstrings for all modules, classes, functions, and methods.</p></li>
+<li><p><strong>Completeness</strong>: Provide clear and concise docstrings that explain the purpose, arguments, return values, and any raised exceptions for public APIs. Docstrings are used to generate the API documentation.</p></li>
+<li><p><strong>Sphinx Compatibility</strong>: Ensure docstrings are compatible with Sphinx for automatic documentation generation. Use reStructuredText (RST) syntax within docstrings where needed (e.g., for references or code examples).</p></li>
+</ul>
+</section>
+<section id="type-hinting">
+<h2>Type Hinting<a class="headerlink" href="#type-hinting" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>PEP 484</strong>: Use <a class="reference external" href="https://www.python.org/dev/peps/pep-0484/">type hints</a> for function signatures (arguments and return types) and variable annotations where appropriate. This improves code clarity and allows for static analysis.</p></li>
+<li><p><strong>Clarity</strong>: Aim for clear and accurate type hints. Use types from the <cite>typing</cite> module as needed (e.g., <cite>List</cite>, <cite>Dict</cite>, <cite>Optional</cite>, <cite>Tuple</cite>, <cite>Callable</cite>).</p></li>
+</ul>
+</section>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Organization</strong>: Group imports in the following order:
+1.  Standard library imports (e.g., <cite>os</cite>, <cite>sys</cite>).
+2.  Third-party library imports (e.g., <cite>pandas</cite>, <cite>plotly</cite>, <cite>dash</cite>).
+3.  Local application imports (e.g., <cite>from core.baseline import simple</cite>, <cite>from app.components import …</cite>).</p></li>
+<li><p><strong>Sorting</strong>: Within each group, imports should be sorted alphabetically. Ruff can help enforce this (<cite>I</cite> rules).</p></li>
+<li><p><strong>Absolute vs Relative</strong>: Prefer absolute imports (<cite>from app.utils import …</cite>) over relative imports (<cite>from ..utils import …</cite>) for better clarity, especially in deeper package structures.</p></li>
+</ul>
+</section>
+<section id="naming-conventions">
+<h2>Naming Conventions<a class="headerlink" href="#naming-conventions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Modules</strong>: <cite>lowercase_with_underscores.py</cite></p></li>
+<li><p><strong>Packages</strong>: <cite>lowercase_with_underscores</cite></p></li>
+<li><p><strong>Classes</strong>: <cite>CapWords</cite></p></li>
+<li><p><strong>Functions</strong>: <cite>lowercase_with_underscores()</cite></p></li>
+<li><p><strong>Methods</strong>: <cite>lowercase_with_underscores()</cite></p></li>
+<li><p><strong>Variables</strong>: <cite>lowercase_with_underscores</cite></p></li>
+<li><p><strong>Constants</strong>: <cite>UPPERCASE_WITH_UNDERSCORES</cite></p></li>
+</ul>
+</section>
+<section id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Use the standard Python <cite>logging</cite> module for application logging.</p></li>
+<li><p>Obtain logger instances via <cite>logging.getLogger(__name__)</cite>.</p></li>
+<li><p>Use appropriate log levels (DEBUG, INFO, WARNING, ERROR, CRITICAL).</p></li>
+<li><p>Provide informative log messages.</p></li>
+</ul>
+</section>
+<section id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>While tests are not yet fully implemented (see <a class="reference internal" href="testing.html#contributing-testing"><span class="std std-ref">Running Checks &amp; Tests</span></a>), aim to write code that is testable.</p></li>
+<li><p>Separate concerns: Keep core logic separate from UI logic where possible.</p></li>
+<li><p>Use dependency injection where it simplifies testing.</p></li>
+</ul>
+<p>By following these conventions, we can ensure the ThermogramForge codebase remains maintainable and accessible to all contributors.</p>
+</section>
 </section>
 
 
@@ -396,7 +466,7 @@
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Running Checks/Tests</p>
+        <p class="prev-next-title">Running Checks &amp; Tests</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -410,6 +480,25 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-style-and-formatting">Code Style and Formatting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linting">Linting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docstrings">Docstrings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#type-hinting">Type Hinting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naming-conventions">Naming Conventions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logging">Logging</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing">Testing</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 

@@ -48,7 +48,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Contributor Guide" href="../contributing/index.html" />
-    <link rel="prev" title="Metrics" href="metrics.html" />
+    <link rel="prev" title="Calculated Metrics" href="metrics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.1.0" />
@@ -305,8 +305,8 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="interface.html">Interface Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_formats.html">Data Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reviewing_samples.html">Reviewing Samples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviewing_samples.html">Reviewing Samples and Adjusting Endpoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Calculated Metrics</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Troubleshooting</a></li>
 </ul>
 </div>
@@ -369,8 +369,69 @@
                 <article class="bd-article">
                   
   <section id="troubleshooting">
-<h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">#</a></h1>
-<p>(Content to be added)</p>
+<span id="user-guide-troubleshooting"></span><h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">#</a></h1>
+<p>This section provides solutions to common issues you might encounter while using ThermogramForge.</p>
+<section id="installation-issues">
+<h2>Installation Issues<a class="headerlink" href="#installation-issues" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Command not found (``python``, ``pip``, ``git``):</strong> Ensure Python and Git are installed correctly and their executable paths are included in your system’s PATH environment variable. Refer to the <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a> guide.</p></li>
+<li><p><strong>Error during ``pip install -r requirements.txt``:</strong>
+*   <strong>Network Issues:</strong> Check your internet connection. If you are behind a firewall or proxy, pip might need specific configuration.
+*   <strong>Dependency Conflicts:</strong> If errors mention conflicting package versions, try creating a fresh virtual environment (<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">venv</span> <span class="pre">venv</span></code>, activate it) before running <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code>. Sometimes, older cached packages can cause issues. You might need to clear pip’s cache (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">cache</span> <span class="pre">purge</span></code>).
+*   <strong>Missing System Dependencies:</strong> Some Python packages might rely on system libraries (especially for plotting or numerical computation). Check the error messages for clues about missing C libraries or compilers and install them using your system’s package manager (e.g., <code class="docutils literal notranslate"><span class="pre">apt</span></code>, <code class="docutils literal notranslate"><span class="pre">brew</span></code>, <code class="docutils literal notranslate"><span class="pre">yum</span></code>).</p></li>
+</ul>
+</section>
+<section id="application-startup-issues">
+<h2>Application Startup Issues<a class="headerlink" href="#application-startup-issues" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>``Address already in use`` error:</strong> This usually means another process is already using the default port (8050).
+*   Stop any previous instances of ThermogramForge running in other terminals (use Ctrl+C).
+*   If you can’t find the process, you might need to identify and terminate the process using port 8050 (commands vary by OS, e.g., <code class="docutils literal notranslate"><span class="pre">lsof</span> <span class="pre">-i</span> <span class="pre">:8050</span></code> on macOS/Linux, <code class="docutils literal notranslate"><span class="pre">netstat</span> <span class="pre">-ano</span> <span class="pre">|</span> <span class="pre">findstr</span> <span class="pre">:8050</span></code> on Windows, then use <code class="docutils literal notranslate"><span class="pre">kill</span></code> or Task Manager).
+*   Alternatively, you can run the app on a different port: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">main.py</span> <span class="pre">--port</span> <span class="pre">8051</span></code> (Note: This requires modifying <code class="docutils literal notranslate"><span class="pre">main.py</span></code> to handle command-line arguments or directly changing the <code class="docutils literal notranslate"><span class="pre">app.run</span></code> call).</p></li>
+<li><p><strong>ModuleNotFoundError:</strong> Ensure you have activated the correct virtual environment where you installed the dependencies. Make sure you are running <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">main.py</span></code> from the root <code class="docutils literal notranslate"><span class="pre">ThermogramForge</span></code> directory.</p></li>
+</ul>
+</section>
+<section id="data-upload-issues">
+<h2>Data Upload Issues<a class="headerlink" href="#data-upload-issues" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>File Not Uploading:</strong> Check the file size (default limit might be around 20MB) and ensure the file type is supported (<code class="docutils literal notranslate"><span class="pre">.csv</span></code>, <code class="docutils literal notranslate"><span class="pre">.xls</span></code>, <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code>).</p></li>
+<li><p><strong>Error Message after Upload (“Could not identify any valid sample data columns…”):</strong>
+*   Verify your file structure matches the expected formats described in <a class="reference internal" href="data_formats.html"><span class="doc">Data Formats</span></a>.
+*   Check for consistent column naming, especially the “Temperature” column and the T[ID]/[ID] pattern for multi-sample files.
+*   Ensure column headers are present in the first row.
+*   Look for typos or special characters in column headers.</p></li>
+<li><p><strong>Error Message after Upload (“No samples remained after temperature filtering…”):</strong>
+*   Check the Min/Max Temperature values you entered in the upload modal. Ensure they encompass the actual temperature range in your data file.
+*   Verify the “Temperature” column in your file contains valid numeric data within the expected range.</p></li>
+</ul>
+</section>
+<section id="analysis-and-display-issues">
+<h2>Analysis and Display Issues<a class="headerlink" href="#analysis-and-display-issues" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Plots Not Appearing or Showing Errors:</strong>
+*   Ensure a dataset and then a specific sample are selected in the “Review Endpoints” tab.
+*   Check the browser’s developer console (usually F12) for any JavaScript errors that might indicate problems with plotting libraries or data processing.
+*   Ensure the selected sample data is valid (numeric Temperature and dCp).</p></li>
+<li><p><strong>Incorrect Baseline:</strong>
+*   The automatic baseline detection might struggle with very noisy data or unusual curve shapes. Use the manual endpoint adjustment feature described in <a class="reference internal" href="reviewing_samples.html"><span class="doc">Reviewing Samples and Adjusting Endpoints</span></a>.
+*   Consider adjusting the “Advanced Options” (Exclusion Temperatures, Point Selection Method) in the Upload Modal if automatic detection consistently fails for your data type.</p></li>
+<li><p><strong>Missing Metrics in Report:</strong>
+*   Ensure you selected a <em>processed</em> dataset in the Report Builder.
+*   Peak-related metrics (Tm, FWHM, etc.) depend on successful peak detection. If peaks are noisy, broad, or absent, these metrics might not be calculated. Check the baseline-subtracted plot for clear peak features.
+*   Verify that the required metrics were selected in the checklist before generating the report.</p></li>
+</ul>
+</section>
+<section id="getting-further-help">
+<h2>Getting Further Help<a class="headerlink" href="#getting-further-help" title="Link to this heading">#</a></h2>
+<p>If these tips don’t resolve your issue, consider opening an issue on the project’s GitHub repository, providing details about:</p>
+<ul class="simple">
+<li><p>The version of ThermogramForge you are using.</p></li>
+<li><p>Your operating system and Python version.</p></li>
+<li><p>The exact steps to reproduce the problem.</p></li>
+<li><p>Any error messages from the terminal or browser console.</p></li>
+<li><p>(If possible and non-sensitive) An example of the data file causing the issue.</p></li>
+</ul>
+</section>
 </section>
 
 
@@ -389,7 +450,7 @@
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Metrics</p>
+        <p class="prev-next-title">Calculated Metrics</p>
       </div>
     </a>
     <a class="right-next"
@@ -411,6 +472,22 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-issues">Installation Issues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#application-startup-issues">Application Startup Issues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-upload-issues">Data Upload Issues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-and-display-issues">Analysis and Display Issues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-further-help">Getting Further Help</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 

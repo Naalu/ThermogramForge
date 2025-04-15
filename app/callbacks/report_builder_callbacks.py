@@ -218,7 +218,6 @@ def handle_report_dataset_selection(
     metric_options = []
     metric_tooltips = []
     for key, label in available_metrics.items():
-        # label_id = f"metric-label-{key}"  # No longer target the main label
         icon_id = f"metric-tooltip-icon-{key}"  # ID for the icon
 
         # Create the label with text and an icon

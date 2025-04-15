@@ -20,9 +20,6 @@ from app.components.upload_processed_modal import create_upload_processed_modal
 logger = logging.getLogger(__name__)  # Add logger for consistency
 # --- Add logger --- End
 
-# Define AG Grid component functions if needed globally (or keep in assets)
-# dagfuncs = """
-#     // JavaScript functions for AG Grid renderers/formatters go here
 # """
 
 

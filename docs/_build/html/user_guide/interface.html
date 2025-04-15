@@ -305,8 +305,8 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Tutorial</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Interface Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_formats.html">Data Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reviewing_samples.html">Reviewing Samples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviewing_samples.html">Reviewing Samples and Adjusting Endpoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Calculated Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 </ul>
 </div>
@@ -369,8 +369,83 @@
                 <article class="bd-article">
                   
   <section id="interface-overview">
-<h1>Interface Overview<a class="headerlink" href="#interface-overview" title="Link to this heading">#</a></h1>
-<p>(Content to be added)</p>
+<span id="user-guide-interface"></span><h1>Interface Overview<a class="headerlink" href="#interface-overview" title="Link to this heading">#</a></h1>
+<p>ThermogramForge presents a tabbed interface to guide you through the data analysis workflow. Here’s an overview of the main components:</p>
+<section id="main-tabs">
+<h2>Main Tabs<a class="headerlink" href="#main-tabs" title="Link to this heading">#</a></h2>
+<p>The application is organized into three primary tabs:</p>
+<ol class="arabic simple">
+<li><p><strong>Data Overview Tab:</strong></p>
+<ul class="simple">
+<li><p><strong>Purpose:</strong> Provides a summary of all data currently loaded or generated within the application session.</p></li>
+<li><p><strong>Sections:</strong></p>
+<ul>
+<li><p><strong>Raw Thermogram Files:</strong> Lists the raw data files that have been uploaded. Includes a button to upload new raw data.</p></li>
+<li><p><strong>Processed Thermograms:</strong> Lists datasets that have been processed (e.g., after baseline review). Includes a button to upload previously processed data.</p></li>
+<li><p><strong>Reports Generated:</strong> Lists any analysis reports that have been generated during the session.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Review Endpoints Tab:</strong></p>
+<ul class="simple">
+<li><p><strong>Purpose:</strong> This is the main workspace for inspecting individual thermogram samples, reviewing automatically detected baseline endpoints, and making manual adjustments.</p></li>
+<li><p><strong>Workflow:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Select Dataset:</strong> Choose an uploaded <em>raw</em> dataset from the dropdown menu.</p></li>
+<li><p><strong>Sample Overview Grid:</strong> An AG Grid table appears, listing all samples within the selected dataset. It shows sample IDs, current lower/upper baseline endpoints (and their source: auto or manual), and checkboxes for review status and exclusion. Click a row to select a sample.</p></li>
+<li><p><strong>Control Panel:</strong> Displays the details and controls for the <em>currently selected sample</em> from the grid. Here you can:</p>
+<ul>
+<li><p>View the current lower and upper baseline endpoints.</p></li>
+<li><p>Click buttons (“Manually Adjust Lower/Upper Endpoint”) to enter selection mode on the plots.</p></li>
+<li><p>Mark the sample for exclusion from analysis.</p></li>
+<li><p>Discard any manual changes made to the current sample.</p></li>
+<li><p>Mark the sample as reviewed and automatically advance to the next sample in the grid.</p></li>
+<li><p>Navigate to the previous/next sample.</p></li>
+</ul>
+</li>
+<li><p><strong>Plot Area:</strong> Shows visualizations for the selected sample. Tabs allow switching between:</p>
+<ul>
+<li><p><strong>Baseline Subtracted:</strong> Shows the dCp data after baseline subtraction, along with the calculated baseline itself. Vertical lines indicate the currently selected endpoints. This is the primary plot for adjusting endpoints.</p></li>
+<li><p><strong>Raw Thermogram:</strong> Shows the original, unprocessed dCp vs. Temperature data.</p></li>
+</ul>
+</li>
+<li><p><strong>Save Processed Data:</strong> Once satisfied with the endpoint reviews for the dataset, use the “Save Processed Data” button (located above the grid) to save the results. This processed dataset will then appear in the “Processed Thermograms” list on the Data Overview tab and become available for report generation.</p></li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><strong>Report Builder Tab:</strong></p>
+<ul class="simple">
+<li><p><strong>Purpose:</strong> Allows you to generate summary reports containing calculated metrics for <em>processed</em> datasets.</p></li>
+<li><p><strong>Workflow:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Select Dataset:</strong> Choose a <em>processed</em> dataset (one that has been reviewed and saved) from the dropdown.</p></li>
+<li><p><strong>Report Configuration:</strong> Set the desired name for the report file and choose the output format (CSV or Excel).</p></li>
+<li><p><strong>Select Metrics:</strong> Choose which calculated metrics (e.g., Tm, Onset) to include in the report using the checklist. Tooltips provide descriptions for each metric. Buttons allow selecting/clearing/resetting the metric selection.</p></li>
+<li><p><strong>Report Preview:</strong> A table shows a preview of the report based on the selected dataset and metrics.</p></li>
+<li><p><strong>Generate Report:</strong> Click the “Generate Report” button to create and download the report file. The generated report will also be listed on the Data Overview tab.</p></li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="modals">
+<h2>Modals<a class="headerlink" href="#modals" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Upload Raw Data Modal:</strong> Accessed via buttons on the “Data Overview” and “Review Endpoints” tabs. Allows uploading new <code class="docutils literal notranslate"><span class="pre">.csv</span></code> or <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code> files containing raw thermogram data. Includes options for setting initial temperature filtering ranges and advanced parameters for automatic endpoint detection.</p></li>
+<li><p><strong>Upload Processed Data Modal:</strong> Accessed via a button on the “Data Overview” tab. Allows uploading <code class="docutils literal notranslate"><span class="pre">.json</span></code> files containing previously processed and saved ThermogramForge datasets.</p></li>
+</ul>
+</section>
+<section id="navigation-tips">
+<h2>Navigation Tips<a class="headerlink" href="#navigation-tips" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Use the main tabs to switch between different stages of the workflow.</p></li>
+<li><p>On the “Review Endpoints” tab, selecting a dataset populates the grid, and selecting a sample in the grid activates the control panel and updates the plots.</p></li>
+<li><p>On the “Report Builder” tab, selecting a processed dataset enables the configuration and preview sections.</p></li>
+</ul>
+</section>
 </section>
 
 
@@ -411,6 +486,20 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#main-tabs">Main Tabs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modals">Modals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#navigation-tips">Navigation Tips</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 

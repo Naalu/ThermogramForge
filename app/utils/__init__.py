@@ -18,13 +18,10 @@ from .visualization import (
 )
 
 __all__ = [
-    # data_processing
     "preprocess_thermogram_data",
     "extract_samples",
     "interpolate_thermogram",
-    # layout_checker
     "find_duplicate_ids",
-    # visualization
     "create_thermogram_figure",
     "create_data_preview",
     "create_baseline_figure",

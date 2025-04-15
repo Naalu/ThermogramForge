@@ -19,11 +19,12 @@ version = "0.1.0"
 # -- General configuration ---------------------------------------------------
 extensions = [
     "sphinx.ext.autodoc",  # Core library for html generation from docstrings
-    "sphinx.ext.autosummary",  # Create neat summary tables
+    # "sphinx.ext.autosummary",  # Create neat summary tables
     "sphinx.ext.intersphinx",  # Link to other projects' docs
     "sphinx.ext.viewcode",  # Add links to source code
     "sphinx_copybutton",  # Add copy button to code blocks
-    # 'sphinx.ext.napoleon',     # Support for NumPy and Google style docstrings (Uncomment if needed)
+    "sphinx.ext.napoleon",  # Support for NumPy and Google style docstrings
+    "sphinx_autodoc_typehints",  # Automatically document typehints
     # 'myst_parser',           # Support for Markdown (Uncomment if needed)
 ]
 
@@ -86,10 +87,10 @@ intersphinx_mapping = {
 
 # -- Options for autodoc extension -------------------------------------------
 autodoc_member_order = "bysource"  # Keep source order
-autosummary_generate = True  # Turn on sphinx.ext.autosummary
+# autosummary_generate = True  # Turn on sphinx.ext.autosummary
 
 # -- Options for Napoleon extension (if used) --------------------------------
-# napoleon_google_docstring = True
+napoleon_google_docstring = True
 # napoleon_numpy_docstring = True
 # napoleon_include_init_with_doc = False
 # napoleon_include_private_with_doc = False

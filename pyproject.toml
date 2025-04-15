@@ -40,6 +40,16 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+docs = [
+    "sphinx",
+    "pydata-sphinx-theme",
+    "sphinx-copybutton",
+    "sphinx-autodoc-typehints",
+    # Add other docs deps here if needed, e.g.:
+    # "sphinx.ext.napoleon",
+    # "myst-parser",
+]
+
 dev = [
     "black>=25.1.0",        # Code formatting
     "ruff>=0.9.10",         # Linting

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Running Checks/Tests &#8212; ThermogramForge 0.1.0 documentation</title>
+    <title>Running Checks &amp; Tests &#8212; ThermogramForge 0.1.0 documentation</title>
   
   
   
@@ -304,7 +304,7 @@
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project Structure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="coding_conventions.html">Coding Conventions</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Running Checks/Tests</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Running Checks &amp; Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow.html">Contribution Workflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="building_docs.html">Building Documentation</a></li>
 </ul>
@@ -350,7 +350,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Contributor Guide</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Running Checks/Tests</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Running Checks &amp; Tests</span></li>
   </ul>
 </nav>
 </div>
@@ -368,8 +368,42 @@
                 <article class="bd-article">
                   
   <section id="running-checks-tests">
-<h1>Running Checks/Tests<a class="headerlink" href="#running-checks-tests" title="Link to this heading">#</a></h1>
-<p>(Content to be added)</p>
+<span id="contributing-testing"></span><h1>Running Checks &amp; Tests<a class="headerlink" href="#running-checks-tests" title="Link to this heading">#</a></h1>
+<p>Before submitting contributions, please ensure your changes pass the project’s quality checks. While automated testing is planned, the current checks focus on code style, formatting, and linting.</p>
+<section id="formatting-and-linting-checks">
+<h2>Formatting and Linting Checks<a class="headerlink" href="#formatting-and-linting-checks" title="Link to this heading">#</a></h2>
+<p>These checks ensure code consistency and help catch potential errors early. They are configured in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> and enforced by <a class="reference external" href="https://black.readthedocs.io/en/stable/">Black</a> and <a class="reference external" href="https://beta.ruff.rs/docs/">Ruff</a>.</p>
+<ul>
+<li><p><strong>Run Black:</strong> To automatically format your code according to the project style:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>black<span class="w"> </span>.
+</pre></div>
+</div>
+</li>
+<li><p><strong>Run Ruff:</strong> To check for linting errors and style issues:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ruff<span class="w"> </span>check<span class="w"> </span>.
+</pre></div>
+</div>
+</li>
+</ul>
+<p>It’s recommended to run these checks locally before committing. If pre-commit hooks are set up (see <a class="reference internal" href="getting_started.html#contributing-getting-started"><span class="std std-ref">Getting Started</span></a>), these checks might run automatically.</p>
+</section>
+<section id="automated-testing-planned">
+<h2>Automated Testing (Planned)<a class="headerlink" href="#automated-testing-planned" title="Link to this heading">#</a></h2>
+<p>The project is configured to use <a class="reference external" href="https://docs.pytest.org/">pytest</a> for automated testing, along with <a class="reference external" href="https://pytest-cov.readthedocs.io/">pytest-cov</a> for measuring test coverage. However, the test suite is not yet implemented.</p>
+<ul>
+<li><p><strong>Test Location:</strong> Tests should be placed in the <code class="docutils literal notranslate"><span class="pre">/tests</span></code> directory in the project root. This directory needs to be created.</p></li>
+<li><p><strong>Running Tests (Future):</strong> Once tests are added, they can be run using the following command from the project root:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest
+</pre></div>
+</div>
+<p>To run tests with coverage reporting:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>--cov<span class="o">=</span>app<span class="w"> </span>--cov<span class="o">=</span>core<span class="w"> </span>--cov-report<span class="o">=</span>term-missing
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Contributions that include adding tests for existing or new functionality are highly welcome! Please follow standard <cite>pytest</cite> conventions when writing tests.</p>
+</section>
 </section>
 
 
@@ -410,6 +444,19 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-and-linting-checks">Formatting and Linting Checks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-testing-planned">Automated Testing (Planned)</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 

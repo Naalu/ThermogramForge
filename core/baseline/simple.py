@@ -15,20 +15,20 @@ def simple_baseline_subtraction(
     original dCp data.
 
     Args:
-        data: DataFrame containing at least 'Temperature' and 'dCp' columns.
-              'Temperature' and 'dCp' must be numeric.
-        lower_temp: The lower temperature boundary for baseline calculation.
-        upper_temp: The upper temperature boundary for baseline calculation.
+        data (pd.DataFrame): DataFrame containing at least 'Temperature' and 'dCp' columns.
+            'Temperature' and 'dCp' must be numeric.
+        lower_temp (float): The lower temperature boundary for baseline calculation.
+        upper_temp (float): The upper temperature boundary for baseline calculation.
 
     Returns:
-        A new DataFrame with two additional columns:
-        'dCp_baseline': The calculated linear baseline value for each point.
-        'dCp_subtracted': The original 'dCp' value minus the 'dCp_baseline'.
+        pd.DataFrame: A new DataFrame with two additional columns:
+            'dCp_baseline': The calculated linear baseline value for each point.
+            'dCp_subtracted': The original 'dCp' value minus the 'dCp_baseline'.
 
     Raises:
         ValueError: If 'Temperature' or 'dCp' columns are missing, not numeric,
-                    or if the lower/upper temperatures are invalid or result
-                    in division by zero.
+            or if the lower/upper temperatures are invalid or result
+            in division by zero.
     """
     if not isinstance(data, pd.DataFrame):
         raise ValueError("Input 'data' must be a pandas DataFrame.")

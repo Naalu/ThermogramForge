@@ -1,4 +1,60 @@
 Installation
 ============
 
-(Content to be added) 
+This section guides you through installing ThermogramForge on your local machine. It assumes you have Python (>= 3.8) and `git` installed.
+
+Prerequisites
+-------------
+
+*   **Python:** Version 3.8 or higher is recommended. You can download Python from [python.org](https://www.python.org/).
+*   **Git:** Required for cloning the repository. You can download Git from [git-scm.com](https://git-scm.com/).
+*   **Pip:** Python's package installer, usually included with Python.
+
+Steps
+-----
+
+1.  **Clone the Repository:**
+
+    Open your terminal or command prompt and run the following command to clone the project repository:
+
+    .. code-block:: bash
+
+        git clone https://github.com/Naalu/ThermogramForge.git
+        cd ThermogramForge
+
+2.  **Create a Virtual Environment (Recommended):**
+
+    It's highly recommended to use a virtual environment to manage project dependencies separately.
+
+    .. code-block:: bash
+
+        python -m venv venv
+
+3.  **Activate the Virtual Environment:**
+
+    *   On **macOS and Linux**:
+
+        .. code-block:: bash
+
+            source venv/bin/activate
+
+    *   On **Windows**:
+
+        .. code-block:: bash
+
+            venv\Scripts\activate
+
+    Your terminal prompt should change to indicate the active environment (e.g., `(venv)`).
+
+4.  **Install Dependencies:**
+
+    Install all the required Python packages defined in ``pyproject.toml``:
+
+    .. code-block:: bash
+
+        pip install . # Installs the package and its dependencies
+
+Next Steps
+----------
+
+With ThermogramForge installed, you can now proceed to the :doc:`quickstart` guide to launch the application and begin analyzing data. 

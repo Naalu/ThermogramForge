@@ -47,7 +47,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/data_formats';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Reviewing Samples" href="reviewing_samples.html" />
+    <link rel="next" title="Reviewing Samples and Adjusting Endpoints" href="reviewing_samples.html" />
     <link rel="prev" title="Interface Overview" href="interface.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -305,8 +305,8 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="interface.html">Interface Overview</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reviewing_samples.html">Reviewing Samples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviewing_samples.html">Reviewing Samples and Adjusting Endpoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Calculated Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 </ul>
 </div>
@@ -369,8 +369,48 @@
                 <article class="bd-article">
                   
   <section id="data-formats">
-<h1>Data Formats<a class="headerlink" href="#data-formats" title="Link to this heading">#</a></h1>
-<p>(Content to be added)</p>
+<span id="user-guide-data-formats"></span><h1>Data Formats<a class="headerlink" href="#data-formats" title="Link to this heading">#</a></h1>
+<p>ThermogramForge expects specific file formats and data structures for successful analysis. This section outlines the requirements for your input data.</p>
+<section id="supported-file-types">
+<h2>Supported File Types<a class="headerlink" href="#supported-file-types" title="Link to this heading">#</a></h2>
+<p>The application currently supports the following file formats for uploading thermogram data:</p>
+<ul class="simple">
+<li><p><strong>CSV (Comma Separated Values):</strong> <code class="docutils literal notranslate"><span class="pre">.csv</span></code> files</p></li>
+<li><p><strong>Excel Spreadsheets:</strong> <code class="docutils literal notranslate"><span class="pre">.xls</span></code> and <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code> files</p></li>
+</ul>
+</section>
+<section id="data-structure-and-required-columns">
+<h2>Data Structure and Required Columns<a class="headerlink" href="#data-structure-and-required-columns" title="Link to this heading">#</a></h2>
+<p>ThermogramForge can handle data organized in two main ways:</p>
+<ol class="arabic">
+<li><p><strong>Single Sample per File:</strong>
+Each file contains data for only one thermogram sample. The file must include at least two columns:
+*   <strong>Temperature:</strong> A column containing the temperature readings (e.g., in Celsius or Kelvin). The exact column header should ideally be “Temperature”.
+*   <strong>Differential Heat Capacity (dCp):</strong> A column containing the corresponding heat capacity measurements. The specific header for this column is less critical as long as it’s clearly identifiable.</p></li>
+<li><p><strong>Multiple Samples per File:</strong>
+A single file can contain data for multiple samples. In this case, the data should be organized with pairs of columns for each sample:
+*   <strong>Temperature Column (e.g., “T1”, “T2”):</strong> A temperature column for each sample, often denoted with a prefix/suffix indicating the sample ID (e.g., “T[SampleID]”).
+*   <strong>dCp Column (e.g., “1”, “2”):</strong> A corresponding heat capacity column for each sample, often identified by the sample ID itself (e.g., “[SampleID]”).</p>
+<p>The application attempts to automatically detect these “T[ID]/[ID]” pairs. For example, columns named “T_SampleA” and “SampleA” would be treated as the temperature and dCp data for “SampleA”. Ensure your column naming follows a consistent pattern for reliable detection.</p>
+</li>
+</ol>
+<p><strong>Important Considerations:</strong></p>
+<ul class="simple">
+<li><p><strong>Temperature Column:</strong> The presence of a column identifiable as “Temperature” is crucial, especially for applying temperature range filters during the upload process.</p></li>
+<li><p><strong>Column Headers:</strong> Ensure your files have clear and consistent column headers on the first row.</p></li>
+<li><p><strong>Data Integrity:</strong> Data should be numeric and free of non-numeric characters within the data rows for Temperature and dCp columns. Missing values might be handled, but extensive gaps can affect analysis results.</p></li>
+</ul>
+</section>
+<section id="example-format-multiple-samples-in-csv">
+<h2>Example Format (Multiple Samples in CSV):<a class="headerlink" href="#example-format-multiple-samples-in-csv" title="Link to this heading">#</a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>T1,1,T2,2,T3,3
+25.0,0.1,25.1,0.5,25.0,0.8
+25.5,0.12,25.6,0.55,25.5,0.82
+26.0,0.15,26.1,0.6,26.0,0.85
+...
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -397,7 +437,7 @@
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Reviewing Samples</p>
+        <p class="prev-next-title">Reviewing Samples and Adjusting Endpoints</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -411,6 +451,20 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-file-types">Supported File Types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-structure-and-required-columns">Data Structure and Required Columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-format-multiple-samples-in-csv">Example Format (Multiple Samples in CSV):</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 

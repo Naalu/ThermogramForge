@@ -305,8 +305,8 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Quickstart Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="interface.html">Interface Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_formats.html">Data Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reviewing_samples.html">Reviewing Samples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviewing_samples.html">Reviewing Samples and Adjusting Endpoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Calculated Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 </ul>
 </div>
@@ -370,7 +370,55 @@
                   
   <section id="quickstart-tutorial">
 <h1>Quickstart Tutorial<a class="headerlink" href="#quickstart-tutorial" title="Link to this heading">#</a></h1>
-<p>(Content to be added)</p>
+<p>This guide provides a quick walkthrough to get you started with ThermogramForge after you have completed the <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a>.</p>
+<ol class="arabic">
+<li><p><strong>Navigate to the Project Directory:</strong></p>
+<p>Make sure you are in the <cite>ThermogramForge</cite> directory where you cloned the repository.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>path/to/ThermogramForge
+</pre></div>
+</div>
+</li>
+<li><p><strong>Activate Virtual Environment (if applicable):</strong></p>
+<p>If you followed the recommended installation steps, activate your virtual environment:</p>
+<ul>
+<li><p>On <strong>macOS and Linux</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>venv/bin/activate
+</pre></div>
+</div>
+</li>
+<li><p>On <strong>Windows</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Run the Application:</strong></p>
+<p>Start the Dash application by running <cite>main.py</cite>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>main.py
+</pre></div>
+</div>
+<p>The application will start, and you’ll see output in your terminal indicating the server is running, typically on <cite>http://127.0.0.1:8050/</cite>.</p>
+</li>
+<li><p><strong>Access the Application:</strong></p>
+<p>Open your web browser and navigate to the address shown in the terminal (usually <cite>http://127.0.0.1:8050/</cite>).</p>
+</li>
+<li><p><strong>Upload Data:</strong></p>
+<p>Use the upload component in the application interface to select and upload your thermogram data files. Refer to the <a class="reference internal" href="data_formats.html"><span class="doc">Data Formats</span></a> section for details on supported file types and structures.</p>
+</li>
+<li><p><strong>Explore and Analyze:</strong></p>
+<p>Once data is uploaded, you can:
+*   View raw and processed thermograms.
+*   Adjust baseline correction parameters.
+*   Compare multiple samples.
+*   Explore the interactive plots and tables.</p>
+<p>For a detailed overview of the interface elements, see the <a class="reference internal" href="interface.html"><span class="doc">Interface Overview</span></a> guide.</p>
+</li>
+</ol>
+<section id="further-steps">
+<h2>Further Steps<a class="headerlink" href="#further-steps" title="Link to this heading">#</a></h2>
+<p>This quickstart covers the basic steps. Explore the other sections of the User Guide for more in-depth information on features like baseline correction, normalization, and data comparison.</p>
+</section>
 </section>
 
 
@@ -411,6 +459,18 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-steps">Further Steps</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 

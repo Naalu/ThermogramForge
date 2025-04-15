@@ -10,5 +10,3 @@ from .main_layout import register_layout
 __all__ = [
     "register_layout",
 ]
-
-# Removed the unused init_layouts function

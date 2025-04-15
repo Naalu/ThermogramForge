@@ -370,6 +370,8 @@
 <span class="c1"># &quot;&quot;&quot;</span>
 
 
+<div class="viewcode-block" id="create_layout">
+<a class="viewcode-back" href="../../../api/app.html#app.layouts.main_layout.create_layout">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">create_layout</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Container</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates the main layout container with all UI elements.</span>
 
@@ -1358,11 +1360,12 @@
         <span class="n">className</span><span class="o">=</span><span class="s2">&quot;vh-100 d-flex flex-column p-0&quot;</span><span class="p">,</span>
         <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;overflow&quot;</span><span class="p">:</span> <span class="s2">&quot;hidden&quot;</span><span class="p">},</span>  <span class="c1"># Prevent scrolling on the main container itself</span>
     <span class="p">)</span>
-    <span class="k">return</span> <span class="n">layout</span>
+    <span class="k">return</span> <span class="n">layout</span></div>
+
 
 
 <div class="viewcode-block" id="register_layout">
-<a class="viewcode-back" href="../../../api/app.html#app.layouts.register_layout">[docs]</a>
+<a class="viewcode-back" href="../../../api/app.html#app.layouts.main_layout.register_layout">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">register_layout</span><span class="p">(</span><span class="n">app</span><span class="p">:</span> <span class="n">Dash</span><span class="p">):</span>  <span class="c1"># Add type hint for app</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Registers the layout with the Dash app instance.</span>
 

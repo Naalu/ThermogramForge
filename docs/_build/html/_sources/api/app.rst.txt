@@ -1,49 +1,88 @@
-App Package (`app`)
-===================
+.. _api_app:
 
-This part of the API reference covers the Dash application layout, callbacks, components, and utilities.
+``app`` Package
+===============
 
-.. autosummary::
-   :toctree: _autosummary
-   :recursive:
+This section covers the modules within the ``app`` package, which handles the web application's frontend, layout, callbacks, and utilities.
 
-   app.app
-   app.layouts
-   app.components
-   app.callbacks
-   app.utils
-
-Detailed Modules
+Main Application
 ----------------
-
-Layouts (`app.layouts`)
------------------------
-.. automodule:: app.layouts
+.. automodule:: app.app
    :members:
    :undoc-members:
    :show-inheritance:
-   :no-index:
 
-Components (`app.components`)
------------------------------
-.. automodule:: app.components
+Layout
+------
+.. automodule:: app.layouts.main_layout
    :members:
    :undoc-members:
    :show-inheritance:
-   :no-index:
 
-Callbacks (`app.callbacks`)
----------------------------
+Callbacks
+---------
 .. automodule:: app.callbacks
    :members:
    :undoc-members:
-   :show-inheritance:
-   :no-index:
 
-Utilities (`app.utils`)
------------------------
-.. automodule:: app.utils
+.. automodule:: app.callbacks.baseline_callbacks
+   :members:
+   :undoc-members:
+
+.. automodule:: app.callbacks.control_panel_callbacks
+   :members:
+   :undoc-members:
+
+.. automodule:: app.callbacks.processed_upload_callbacks
+   :members:
+   :undoc-members:
+
+.. automodule:: app.callbacks.report_builder_callbacks
+   :members:
+   :undoc-members:
+
+.. automodule:: app.callbacks.upload_callbacks
+   :members:
+   :undoc-members:
+
+.. automodule:: app.callbacks.visualization_callbacks
+   :members:
+   :undoc-members:
+
+Components
+----------
+.. automodule:: app.components
+   :members:
+   :undoc-members:
+
+.. automodule:: app.components.renderers
    :members:
    :undoc-members:
    :show-inheritance:
-   :no-index: 
+
+.. automodule:: app.components.upload_processed_modal
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Utilities
+---------
+.. automodule:: app.utils
+   :members:
+   :undoc-members:
+
+.. automodule:: app.utils.baseline_utils
+   :members:
+   :undoc-members:
+
+.. automodule:: app.utils.data_processing
+   :members:
+   :undoc-members:
+
+.. automodule:: app.utils.layout_checker
+   :members:
+   :undoc-members:
+
+.. automodule:: app.utils.visualization
+   :members:
+   :undoc-members: 

@@ -1,15 +1,9 @@
+.. _api_core:
+
 Core Package (`core`)
 =====================
 
 This part of the API reference covers the core backend logic for thermogram processing.
-
-.. autosummary::
-   :toctree: _autosummary
-   :recursive:
-
-   core.baseline
-   core.metrics
-   core.peaks
 
 Detailed Modules
 ----------------
@@ -36,4 +30,30 @@ Peaks (`core.peaks`)
    :members:
    :undoc-members:
    :show-inheritance:
-   :no-index: 
+   :no-index:
+
+Baseline Analysis
+-----------------
+.. automodule:: core.baseline.simple
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: core.baseline.advanced
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Metric Calculation
+------------------
+.. automodule:: core.metrics.metric_calculation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Peak Detection
+--------------
+.. automodule:: core.peaks.peak_detection
+   :members:
+   :undoc-members:
+   :show-inheritance: 

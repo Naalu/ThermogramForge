@@ -305,8 +305,8 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="interface.html">Interface Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_formats.html">Data Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reviewing_samples.html">Reviewing Samples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviewing_samples.html">Reviewing Samples and Adjusting Endpoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Calculated Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 </ul>
 </div>
@@ -370,7 +370,58 @@
                   
   <section id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h1>
-<p>(Content to be added)</p>
+<p>This section guides you through installing ThermogramForge on your local machine. It assumes you have Python (&gt;= 3.8) and <cite>git</cite> installed.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Python:</strong> Version 3.8 or higher is recommended. You can download Python from [python.org](<a class="reference external" href="https://www.python.org/">https://www.python.org/</a>).</p></li>
+<li><p><strong>Git:</strong> Required for cloning the repository. You can download Git from [git-scm.com](<a class="reference external" href="https://git-scm.com/">https://git-scm.com/</a>).</p></li>
+<li><p><strong>Pip:</strong> Python’s package installer, usually included with Python.</p></li>
+</ul>
+</section>
+<section id="steps">
+<h2>Steps<a class="headerlink" href="#steps" title="Link to this heading">#</a></h2>
+<ol class="arabic">
+<li><p><strong>Clone the Repository:</strong></p>
+<p>Open your terminal or command prompt and run the following command to clone the project repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Naalu/ThermogramForge.git
+<span class="nb">cd</span><span class="w"> </span>ThermogramForge
+</pre></div>
+</div>
+</li>
+<li><p><strong>Create a Virtual Environment (Recommended):</strong></p>
+<p>It’s highly recommended to use a virtual environment to manage project dependencies separately.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+</pre></div>
+</div>
+</li>
+<li><p><strong>Activate the Virtual Environment:</strong></p>
+<ul>
+<li><p>On <strong>macOS and Linux</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>venv/bin/activate
+</pre></div>
+</div>
+</li>
+<li><p>On <strong>Windows</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Your terminal prompt should change to indicate the active environment (e.g., <cite>(venv)</cite>).</p>
+</li>
+<li><p><strong>Install Dependencies:</strong></p>
+<p>Install all the required Python packages listed in <cite>requirements.txt</cite>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<p>With ThermogramForge installed, you can now proceed to the <a class="reference internal" href="quickstart.html"><span class="doc">Quickstart Tutorial</span></a> guide to launch the application and begin analyzing data.</p>
+</section>
 </section>
 
 
@@ -411,6 +462,20 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#steps">Steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 

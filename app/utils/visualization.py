@@ -20,12 +20,14 @@ def create_thermogram_figure(
     """Creates a simple thermogram visualization.
 
     Args:
-        df: DataFrame containing thermogram data with 'Temperature' and 'dCp' columns.
-            If None or empty, an empty figure with a message is returned.
-        title: The title for the plot. Defaults to "Thermogram Analysis".
+        df (Optional[pd.DataFrame]): DataFrame containing thermogram data with
+            'Temperature' and 'dCp' columns. If None or empty, an empty figure
+            with a message is returned.
+
+        title (str): The title for the plot. Defaults to "Thermogram Analysis".
 
     Returns:
-        A Plotly Figure object representing the thermogram.
+        go.Figure: A Plotly Figure object representing the thermogram.
     """
     fig = go.Figure()
 
@@ -119,17 +121,18 @@ def create_baseline_figure(
     """Creates a figure showing baseline subtraction with two subplots.
 
     Args:
-        df: Original DataFrame with 'Temperature' and 'dCp' columns.
-        baseline_df: DataFrame with baseline-subtracted data, expecting
-                     'Temperature', 'dCp_baseline', and 'dCp_subtracted' columns.
-        title: The title for the plot.
-        endpoints: Tuple of (lower_temp, upper_temp) for baseline endpoints.
-                   If None, vertical lines are not drawn.
+        df (Optional[pd.DataFrame]): Original DataFrame with 'Temperature' and 'dCp' columns.
+        baseline_df (Optional[pd.DataFrame]): DataFrame with baseline-subtracted data,
+            expecting 'Temperature', 'dCp_baseline', and 'dCp_subtracted' columns.
+        title (str): The title for the plot.
+        endpoints (Optional[Tuple[float, float]]): Tuple of (lower_temp, upper_temp)
+            for baseline endpoints. If None, vertical lines are not drawn.
 
     Returns:
-        A Plotly Figure object with two subplots: raw data + baseline, and
-        baseline-subtracted data. Returns an empty figure with a message on error
-        or if input data is invalid.
+        go.Figure: A Plotly Figure object with two subplots: raw data + baseline,
+            and baseline-subtracted data. Returns an empty figure with a message
+            on error or if input data is invalid.
+
     """
     fig = sp.make_subplots(
         rows=2,
@@ -319,6 +322,7 @@ def create_data_preview(df: Optional[pd.DataFrame], max_rows: int = 10) -> html.
     Args:
         df: DataFrame to preview. Expects 'Temperature' and 'dCp' columns
             for the summary section. If None or empty, shows a message.
+
         max_rows: Maximum number of rows to show in the preview table.
                   Defaults to 10.
 
@@ -397,17 +401,20 @@ def create_comparison_figure(
     """Creates a comparison figure of multiple thermogram samples.
 
     Args:
-        samples: Dictionary where keys are sample_ids (str) and values are
-                 DataFrames. Each DataFrame should contain 'Temperature' and 'dCp'.
-                 If mode is 'baseline', it should also contain 'dCp_subtracted'.
-                 If None or empty, returns an empty figure with a message.
-        mode: Comparison mode. Options: 'raw', 'baseline', 'normalized'.
-              Defaults to 'raw'.
-        title: The title for the plot. Defaults to "Thermogram Comparison".
+        samples (Optional[Dict[str, Optional[pd.DataFrame]]]): Dictionary where keys
+            are sample_ids (str) and values are DataFrames. Each DataFrame should
+            contain 'Temperature' and 'dCp'. If mode is 'baseline', it should also
+            contain 'dCp_subtracted'. If None or empty, returns an empty figure
+            with a message.
+
+        mode (str): Comparison mode. Options: 'raw', 'baseline', 'normalized'.
+            Defaults to 'raw'.
+
+        title (str): The title for the plot. Defaults to "Thermogram Comparison".
 
     Returns:
-        A Plotly Figure object comparing the samples. Returns an empty figure
-        with a message if input is invalid or no valid samples are found.
+        go.Figure: A Plotly Figure object comparing the samples. Returns an empty
+            figure with a message if input is invalid or no valid samples are found.
     """
     fig = go.Figure()
 

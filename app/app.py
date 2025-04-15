@@ -14,7 +14,7 @@ import dash_uploader as du
 # Create the Dash app instance first
 app: dash.Dash = dash.Dash(
     __name__,
-    external_stylesheets=[dbc.themes.BOOTSTRAP],
+    external_stylesheets=[dbc.themes.MATERIA, dbzc.icons.FONT_AWESOME],
     title="ThermogramForge v1.0",
     suppress_callback_exceptions=True,
 )

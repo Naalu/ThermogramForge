@@ -476,7 +476,6 @@
 <span class="sd">        df (Optional[pd.DataFrame]): Original DataFrame with &#39;Temperature&#39; and &#39;dCp&#39; columns.</span>
 <span class="sd">        baseline_df (Optional[pd.DataFrame]): DataFrame with baseline-subtracted data,</span>
 <span class="sd">            expecting &#39;Temperature&#39;, &#39;dCp_baseline&#39;, and &#39;dCp_subtracted&#39; columns.</span>
-
 <span class="sd">        title (str): The title for the plot.</span>
 <span class="sd">        endpoints (Optional[Tuple[float, float]]): Tuple of (lower_temp, upper_temp)</span>
 <span class="sd">            for baseline endpoints. If None, vertical lines are not drawn.</span>
@@ -485,6 +484,7 @@
 <span class="sd">        go.Figure: A Plotly Figure object with two subplots: raw data + baseline,</span>
 <span class="sd">            and baseline-subtracted data. Returns an empty figure with a message</span>
 <span class="sd">            on error or if input data is invalid.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">make_subplots</span><span class="p">(</span>
         <span class="n">rows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>

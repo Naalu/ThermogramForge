@@ -122,27 +122,29 @@ def find_spline_endpoints(
     stable baseline regions.
 
     Args:
-        df: DataFrame containing 'Temperature' and 'dCp' columns.
-        lower_exclusion_temp: Lower temperature bound of the transition region to exclude
-                                from baseline endpoint consideration.
-        upper_exclusion_temp: Upper temperature bound of the transition region to exclude.
-        window_size: Number of data points to use in the rolling variance window.
-                     Must be a positive integer.
-        spline_smooth_factor: Smoothing factor `s` passed to `_fit_smoothing_spline`
-                              for the initial data smoothing. If None, smoothing is
-                              determined automatically by the spline fitter.
-        point_selection_method: Method from `EndpointSelectionMethod` enum used to
-                                select a single endpoint if multiple points share the
-                                minimum variance (`INNERMOST`, `OUTERMOST`, `MIDDLE`).
+        df (pd.DataFrame): DataFrame containing 'Temperature' and 'dCp' columns.
+        lower_exclusion_temp (float): Lower temperature bound of the transition region
+            to exclude from baseline endpoint consideration.
+        upper_exclusion_temp (float): Upper temperature bound of the transition region
+            to exclude.
+        window_size (int): Number of data points to use in the rolling variance window.
+            Must be a positive integer.
+        spline_smooth_factor (Optional[float]): Smoothing factor `s` passed to
+            `_fit_smoothing_spline` for the initial data smoothing. If None,
+            smoothing is determined automatically by the spline fitter.
+        point_selection_method (EndpointSelectionMethod): Method from
+            `EndpointSelectionMethod` enum used to select a single endpoint if
+            multiple points share the minimum variance (`INNERMOST`, `OUTERMOST`,
+            `MIDDLE`). Defaults to `EndpointSelectionMethod.INNERMOST`.
 
     Returns:
-        A dictionary containing the identified endpoint temperatures:
-        {'lower': float | None, 'upper': float | None}.
-        Returns None for an endpoint if it cannot be reliably determined.
+        Dict[str, Optional[float]]: A dictionary containing the identified endpoint
+            temperatures: {'lower': float | None, 'upper': float | None}.
+            Returns None for an endpoint if it cannot be reliably determined.
 
     Raises:
         ValueError: If input DataFrame is invalid, exclusion temperatures are illogical,
-                    or window_size is non-positive.
+            or window_size is non-positive.
     """
     logger.info(
         f"Finding spline endpoints. Exclusion: {lower_exclusion_temp:.2f}-"
@@ -287,32 +289,28 @@ def subtract_spline_baseline(
     spline_smooth_factor: Optional[float] = None,
     k: int = 3,
 ) -> Optional[pd.DataFrame]:
-    """Fits splines to baseline regions and subtracts the combined baseline.
+    """Subtracts a spline-based baseline from thermogram data.
 
-    This function defines two baseline regions based on the provided endpoints.
-    It fits separate smoothing splines to the data points within each region.
-    A combined baseline is constructed using these splines and linear interpolation
-    between them across the transition region. This combined baseline is then
-    subtracted from the original dCp data.
+    Fits a spline only to the data points within the identified baseline regions
+    (below lower_endpoint and above upper_endpoint) and subtracts the predicted
+    spline values from the original dCp across the entire temperature range.
 
     Args:
-        df: DataFrame containing at least 'Temperature' and 'dCp' columns.
-        lower_endpoint: The temperature defining the upper limit of the lower
-                        baseline region and the start of the transition.
-        upper_endpoint: The temperature defining the lower limit of the upper
-                        baseline region and the end of the transition.
-        spline_smooth_factor: Smoothing factor `s` passed to `_fit_smoothing_spline`
-                              for fitting the baseline splines. If None, smoothing
-                              is determined automatically by the spline fitter.
-        k: Degree of the smoothing splines for the baseline regions (default 3).
+        df (pd.DataFrame): DataFrame containing 'Temperature' and 'dCp' columns.
+        lower_endpoint (float): The upper temperature bound of the lower baseline region.
+        upper_endpoint (float): The lower temperature bound of the upper baseline region.
+        spline_smooth_factor (Optional[float]): Smoothing factor `s` for the baseline
+            spline fit. If None, determined automatically.
+        k (int): Degree of the baseline spline. Defaults to 3.
 
     Returns:
-        A new DataFrame containing 'Temperature' and 'dCp_subtracted' columns,
-        representing the baseline-subtracted data. Returns None if baseline
-        subtraction fails (e.g., invalid inputs, spline fitting issues).
+        Optional[pd.DataFrame]: A new DataFrame with added columns 'dCp_baseline'
+            (predicted baseline values) and 'dCp_subtracted' (dCp - baseline).
+            Returns None if baseline fitting or subtraction fails.
 
     Raises:
-        ValueError: If input DataFrame is invalid or endpoints are illogical.
+        ValueError: If input DataFrame is invalid, endpoints are illogical, or k is
+                    outside the valid range [1, 5].
     """
     logger.info(
         f"Subtracting spline baseline. Endpoints: {lower_endpoint:.2f} - "
@@ -329,6 +327,8 @@ def subtract_spline_baseline(
         raise ValueError("'Temperature' and 'dCp' columns must be numeric.")
     if lower_endpoint >= upper_endpoint:
         raise ValueError("Lower endpoint temperature must be less than upper endpoint.")
+    if k < 1 or k > 5:
+        raise ValueError("k must be between 1 and 5 inclusive.")
     # --- Input Validation --- END
 
     temp_all: np.ndarray = df["Temperature"].values

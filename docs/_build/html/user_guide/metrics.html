@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Metrics &#8212; ThermogramForge 0.1.0 documentation</title>
+    <title>Calculated Metrics &#8212; ThermogramForge 0.1.0 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Troubleshooting" href="troubleshooting.html" />
-    <link rel="prev" title="Reviewing Samples" href="reviewing_samples.html" />
+    <link rel="prev" title="Reviewing Samples and Adjusting Endpoints" href="reviewing_samples.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.1.0" />
@@ -305,8 +305,8 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="interface.html">Interface Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_formats.html">Data Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reviewing_samples.html">Reviewing Samples</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviewing_samples.html">Reviewing Samples and Adjusting Endpoints</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Calculated Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 </ul>
 </div>
@@ -351,7 +351,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Metrics</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Calculated Metrics</span></li>
   </ul>
 </nav>
 </div>
@@ -368,9 +368,48 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="metrics">
-<h1>Metrics<a class="headerlink" href="#metrics" title="Link to this heading">#</a></h1>
-<p>(Content to be added)</p>
+  <section id="calculated-metrics">
+<span id="user-guide-metrics"></span><h1>Calculated Metrics<a class="headerlink" href="#calculated-metrics" title="Link to this heading">#</a></h1>
+<p>ThermogramForge calculates several metrics from the processed (baseline-subtracted) thermogram data. These metrics can be selected for inclusion in generated reports via the “Report Builder” tab.</p>
+<section id="available-metrics">
+<h2>Available Metrics<a class="headerlink" href="#available-metrics" title="Link to this heading">#</a></h2>
+<p>The following metrics are available for reporting:</p>
+<ul class="simple">
+<li><p><strong>TPeak_F (°C):</strong> Temperature of the peak corresponding to the Fibrinogen temperature region (typically 47-60°C). Requires peak detection to be successful in this region.</p></li>
+<li><p><strong>TPeak_1 (°C):</strong> Temperature of the first major detected peak.</p></li>
+<li><p><strong>TPeak_2 (°C):</strong> Temperature of the second major detected peak (if present).</p></li>
+<li><p><strong>TPeak_3 (°C):</strong> Temperature of the third major detected peak (if present).</p></li>
+<li><p><strong>TMax (°C):</strong> Temperature corresponding to the maximum observed dCp value across the entire curve.</p></li>
+<li><p><strong>TMin (°C):</strong> Temperature corresponding to the minimum observed dCp value across the entire curve.</p></li>
+<li><p><strong>Area:</strong> Total area under the baseline-subtracted curve, calculated using the trapezoidal rule. Units depend on the dCp units (e.g., kcal/mol/°C * °C -&gt; kcal/mol).</p></li>
+<li><p><strong>TFM (°C):</strong> Temperature of the First Moment. This is a measure of the “center of mass” of the curve, calculated as the weighted average of temperature by the dCp values.</p></li>
+<li><p><strong>FWHM (°C):</strong> Full Width at Half Maximum. The width of the primary peak (usually TPeak_1 if present) measured at half of its maximum height above the baseline. Provides an indication of the transition’s sharpness.</p></li>
+<li><p><strong>TV12 (°C):</strong> Temperature of the valley (minimum dCp) located between TPeak_1 and TPeak_2, if both peaks are present.</p></li>
+<li><p><strong>V12:</strong> Height (dCp value) of the valley located between TPeak_1 and TPeak_2, if both peaks are present.</p></li>
+</ul>
+</section>
+<section id="default-selection">
+<h2>Default Selection<a class="headerlink" href="#default-selection" title="Link to this heading">#</a></h2>
+<p>By default, the following metrics are pre-selected in the Report Builder:</p>
+<ul class="simple">
+<li><p>TPeak_1</p></li>
+<li><p>TPeak_2</p></li>
+<li><p>TPeak_3</p></li>
+<li><p>Area</p></li>
+<li><p>FWHM</p></li>
+<li><p>TFM</p></li>
+</ul>
+<p>You can modify this selection using the checklist and control buttons (“Select All”, “Clear All”, “Reset Selection”) in the Report Builder tab before generating a report.</p>
+</section>
+<section id="notes-on-calculation">
+<h2>Notes on Calculation<a class="headerlink" href="#notes-on-calculation" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>All metrics are calculated using the <strong>baseline-subtracted</strong> dCp data.</p></li>
+<li><p>Peak-related metrics (TPeak_*, FWHM, TV12, V12) depend on the success and results of the underlying peak detection algorithm (<code class="docutils literal notranslate"><span class="pre">scipy.signal.find_peaks</span></code> and region-specific logic). If peaks are not detected or are ambiguous, the corresponding metrics may be missing or <code class="docutils literal notranslate"><span class="pre">NaN</span></code> (Not a Number).</p></li>
+<li><p>Area and TFM are calculated across the entire temperature range defined by the baseline endpoints.</p></li>
+<li><p>Ensure your data quality and baseline correction are adequate for meaningful metric calculation. Poor baseline subtraction can significantly affect results.</p></li>
+</ul>
+</section>
 </section>
 
 
@@ -389,7 +428,7 @@
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Reviewing Samples</p>
+        <p class="prev-next-title">Reviewing Samples and Adjusting Endpoints</p>
       </div>
     </a>
     <a class="right-next"
@@ -411,6 +450,20 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#available-metrics">Available Metrics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#default-selection">Default Selection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-on-calculation">Notes on Calculation</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 

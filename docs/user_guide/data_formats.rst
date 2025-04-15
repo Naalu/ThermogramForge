@@ -1,4 +1,60 @@
+.. _user_guide_data_formats:
+
 Data Formats
 ============
 
-(Content to be added) 
+ThermogramForge expects specific file formats and data structures for successful analysis. This section outlines the requirements for your input data.
+
+Supported File Types
+--------------------
+
+The application currently supports the following file formats for uploading thermogram data:
+
+*   **CSV (Comma Separated Values):** ``.csv`` files
+*   **Excel Spreadsheets:** ``.xls`` and ``.xlsx`` files
+
+Data Structure and Required Columns
+-----------------------------------
+
+ThermogramForge can handle data organized in two main ways:
+
+1.  **Single Sample per File:**
+    Each file contains data for only one thermogram sample. The file must include at least two columns:
+    *   **Temperature:** A column containing the temperature readings (e.g., in Celsius or Kelvin). The exact column header should ideally be "Temperature".
+    *   **Differential Heat Capacity (dCp):** A column containing the corresponding heat capacity measurements. The specific header for this column is less critical as long as it's clearly identifiable.
+
+    Example Format (Single Sample in CSV):
+    --------------------------------------
+
+    .. code-block:: text
+
+       Temperature,dCp
+       25.0,0.1
+       25.5,0.12
+       26.0,0.15
+       ...
+
+2.  **Multiple Samples per File:**
+    A single file can contain data for multiple samples. In this case, the data should be organized with pairs of columns for each sample:
+    *   **Temperature Column (e.g., "T1", "T2"):** A temperature column for each sample, often denoted with a prefix/suffix indicating the sample ID (e.g., "T[SampleID]").
+    *   **dCp Column (e.g., "1", "2"):** A corresponding heat capacity column for each sample, often identified by the sample ID itself (e.g., "[SampleID]").
+
+    The application attempts to automatically detect these "T[ID]/[ID]" pairs. For example, columns named "T_SampleA" and "SampleA" would be treated as the temperature and dCp data for "SampleA". Ensure your column naming follows a consistent pattern for reliable detection.
+
+**Important Considerations:**
+
+*   **Temperature Column:** The presence of a column identifiable as "Temperature" is crucial, especially for applying temperature range filters during the upload process.
+*   **Column Headers:** Ensure your files have clear and consistent column headers on the first row.
+*   **Data Integrity:** Data should be numeric and free of non-numeric characters within the data rows for Temperature and dCp columns. Missing values might be handled, but extensive gaps can affect analysis results.
+*   **Other Columns:** Columns not matching the expected Temperature/dCp patterns are generally ignored during processing.
+
+Example Format (Multiple Samples in CSV):
+-----------------------------------------
+
+.. code-block:: text
+
+   T1,1,T2,2,T3,3
+   25.0,0.1,25.1,0.5,25.0,0.8
+   25.5,0.12,25.6,0.55,25.5,0.82
+   26.0,0.15,26.1,0.6,26.0,0.85
+   ... 

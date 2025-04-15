@@ -105,7 +105,3 @@ def calculate_linear_baseline(
         )
         # Fallback to horizontal baseline at the lower point as a safety measure
         return 0.0, lower_val
-
-
-# Removed redundant simple_baseline_subtraction function.
-# The canonical version now resides in core/baseline/simple.py

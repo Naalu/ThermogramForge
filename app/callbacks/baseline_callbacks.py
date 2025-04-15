@@ -2,10 +2,12 @@
 Callbacks related to baseline parameter selection, adjustment, and application.
 
 This module includes:
-- Callbacks to handle user interaction for selecting/adjusting baseline endpoints:
-    - Clicking the thermogram plot (`handle_endpoint_click_ag`).
-    - Directly editing flags (Reviewed, Exclude) in the AG Grid (`update_flags_from_grid`).
-- UI helper callbacks (e.g., toggling advanced options).
+
+* Callbacks to handle user interaction for selecting/adjusting baseline endpoints:
+
+  * Clicking the thermogram plot (`handle_endpoint_click_ag`).
+  * Directly editing flags (Reviewed, Exclude) in the AG Grid (`update_flags_from_grid`).
+* UI helper callbacks (e.g., toggling advanced options).
 """
 
 import logging

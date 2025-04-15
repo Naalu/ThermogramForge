@@ -1,0 +1,1606 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app.callbacks.report_builder_callbacks &#8212; ThermogramForge 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/app/callbacks/report_builder_callbacks';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">ThermogramForge</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributor Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Naalu/ThermogramForge/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributor Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Naalu/ThermogramForge/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../callbacks.html" class="nav-link">app.callbacks</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">app.callbacks.report_builder_callbacks</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for app.callbacks.report_builder_callbacks</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Callbacks for the Report Builder tab.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">dash_bootstrap_components</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dbc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dash</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ALL</span><span class="p">,</span>
+    <span class="n">Input</span><span class="p">,</span>
+    <span class="n">Output</span><span class="p">,</span>
+    <span class="n">State</span><span class="p">,</span>
+    <span class="n">callback</span><span class="p">,</span>
+    <span class="n">callback_context</span><span class="p">,</span>
+    <span class="n">dash_table</span><span class="p">,</span>
+    <span class="n">dcc</span><span class="p">,</span>
+    <span class="n">html</span><span class="p">,</span>
+    <span class="n">no_update</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dash.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreventUpdate</span>
+
+<span class="c1"># Import core processing functions</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">app.utils.data_processing</span><span class="w"> </span><span class="kn">import</span> <span class="n">interpolate_thermogram</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.baseline.advanced</span><span class="w"> </span><span class="kn">import</span> <span class="n">subtract_spline_baseline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.metrics.metric_calculation</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_thermogram_metrics</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.peaks.peak_detection</span><span class="w"> </span><span class="kn">import</span> <span class="n">detect_thermogram_peaks</span>
+
+<span class="c1"># Assuming core functions are importable</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="c1"># --- Callback to Switch to Report Tab &amp; Select Dataset --- Start</span>
+<div class="viewcode-block" id="switch_to_report_builder_tab">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.report_builder_callbacks.switch_to_report_builder_tab">[docs]</a>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;main-tabs&quot;</span><span class="p">,</span> <span class="s2">&quot;active_tab&quot;</span><span class="p">,</span> <span class="n">allow_duplicate</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;report-dataset-selector&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">({</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;go-to-report-builder-btn&quot;</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="n">ALL</span><span class="p">},</span> <span class="s2">&quot;n_clicks&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">switch_to_report_builder_tab</span><span class="p">(</span><span class="n">n_clicks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Switches to the Report Builder tab and selects the dataset when</span>
+<span class="sd">    the &#39;Generate Report&#39; button is clicked on the Data Overview page.&quot;&quot;&quot;</span>
+    <span class="n">ctx</span> <span class="o">=</span> <span class="n">callback_context</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span><span class="o">.</span><span class="n">triggered_id</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">n_clicks</span> <span class="k">if</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span>
+
+    <span class="n">dataset_id</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">triggered_id</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">dataset_id</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Could not get dataset_id from report builder trigger button.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Switching to Report Builder tab for dataset: </span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;tab-report-builder&quot;</span><span class="p">,</span> <span class="n">dataset_id</span></div>
+
+
+
+<span class="c1"># --- Callback to Switch to Report Tab &amp; Select Dataset --- End</span>
+
+
+<span class="c1"># --- Callback to Populate Dataset Selector --- Start</span>
+<div class="viewcode-block" id="populate_report_dataset_selector">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.report_builder_callbacks.populate_report_dataset_selector">[docs]</a>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;report-dataset-selector&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;processed-datasets-store&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">populate_report_dataset_selector</span><span class="p">(</span>
+    <span class="n">processed_datasets</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Populates the dataset selector dropdown for the Report Builder.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">processed_datasets</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="n">options</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="n">dataset_id</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">dataset_id</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">dataset_id</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">processed_datasets</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="p">]</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Populating report dataset selector with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">options</span><span class="p">)</span><span class="si">}</span><span class="s2"> options.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">options</span></div>
+
+
+
+<span class="c1"># --- Callback to Populate Dataset Selector --- End</span>
+
+
+<span class="c1"># --- Callback to Show/Hide Content, Populate Metrics, Trigger Calculation --- Start</span>
+<div class="viewcode-block" id="handle_report_dataset_selection">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.report_builder_callbacks.handle_report_dataset_selection">[docs]</a>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;report-builder-content&quot;</span><span class="p">,</span> <span class="s2">&quot;style&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;report-selector-message&quot;</span><span class="p">,</span> <span class="s2">&quot;is_open&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;report-selector-message&quot;</span><span class="p">,</span> <span class="s2">&quot;children&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;report-metric-selector&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;report-metric-selector&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;report-metric-tooltips-div&quot;</span><span class="p">,</span> <span class="s2">&quot;children&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;report-calculated-metrics-temp&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">allow_duplicate</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;report-preview-table-div&quot;</span><span class="p">,</span> <span class="s2">&quot;children&quot;</span><span class="p">,</span> <span class="n">allow_duplicate</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;generate-report-button&quot;</span><span class="p">,</span> <span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="n">allow_duplicate</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;report-name-input&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;report-dataset-selector&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;generated-reports-store&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">handle_report_dataset_selection</span><span class="p">(</span>
+    <span class="n">selected_dataset_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">existing_reports</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="nb">bool</span><span class="p">,</span>
+    <span class="nb">str</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">List</span><span class="p">[</span><span class="n">dbc</span><span class="o">.</span><span class="n">Tooltip</span><span class="p">],</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="nb">bool</span><span class="p">,</span>
+    <span class="nb">str</span><span class="p">,</span>
+<span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shows the report builder content when a dataset is selected,</span>
+<span class="sd">    populates available metrics with tooltips, triggers calculation,</span>
+<span class="sd">    and sets a unique default report name.&quot;&quot;&quot;</span>
+    <span class="n">existing_reports</span> <span class="o">=</span> <span class="n">existing_reports</span> <span class="ow">or</span> <span class="p">{}</span>
+
+    <span class="c1"># --- Generate Set of Existing Report Basenames --- Start</span>
+    <span class="n">existing_report_basenames</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">report_meta</span> <span class="ow">in</span> <span class="n">existing_reports</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">report_meta</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;report_filename&quot;</span> <span class="ow">in</span> <span class="n">report_meta</span><span class="p">:</span>
+            <span class="n">basename</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">report_meta</span><span class="p">[</span><span class="s2">&quot;report_filename&quot;</span><span class="p">])</span>
+            <span class="n">existing_report_basenames</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">basename</span><span class="p">)</span>
+    <span class="c1"># --- Generate Set of Existing Report Basenames --- End</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">selected_dataset_id</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;No dataset selected for report. Hiding content.&quot;</span><span class="p">)</span>
+        <span class="c1"># Hide content, clear message, reset metrics/preview/button/temp_store/tooltips/name</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="p">{</span><span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">},</span>
+            <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span>  <span class="c1"># Message closed and cleared</span>
+            <span class="p">[],</span>
+            <span class="p">[],</span>  <span class="c1"># Metrics checklist empty</span>
+            <span class="p">[],</span>  <span class="c1"># Clear tooltips</span>
+            <span class="p">{</span><span class="s2">&quot;clear&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>  <span class="c1"># Clear the temp store</span>
+            <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Clear preview</span>
+            <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Disable generate button</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span>  <span class="c1"># Clear report name input</span>
+        <span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset &#39;</span><span class="si">{</span><span class="n">selected_dataset_id</span><span class="si">}</span><span class="s2">&#39; selected for report.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># --- Generate Unique Default Report Name --- Start</span>
+    <span class="n">base_name</span> <span class="o">=</span> <span class="s2">&quot;New_Report&quot;</span>
+    <span class="n">unique_report_name</span> <span class="o">=</span> <span class="n">base_name</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">unique_report_name</span> <span class="ow">in</span> <span class="n">existing_report_basenames</span><span class="p">:</span>
+        <span class="n">unique_report_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">counter</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting default report name to: </span><span class="si">{</span><span class="n">unique_report_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># --- Generate Unique Default Report Name --- End</span>
+
+    <span class="c1"># Define available metrics (Keys should match output of calculate_thermogram_metrics)</span>
+    <span class="c1"># Moved definition here to be reused for tooltips</span>
+    <span class="n">available_metrics</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;Peak_F&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak F Height&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TPeak_F&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak F Temp (°C)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Peak_1&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 1 Height&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TPeak_1&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 1 Temp (°C)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Peak_2&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 2 Height&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TPeak_2&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 2 Temp (°C)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Peak_3&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 3 Height&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TPeak_3&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 3 Temp (°C)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Peak1_Peak2_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 1 / Peak 2 Ratio&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Peak1_Peak3_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 1 / Peak 3 Ratio&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Peak2_Peak3_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 2 / Peak 3 Ratio&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;V1.2&quot;</span><span class="p">:</span> <span class="s2">&quot;Valley 1-2 Height&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TV1.2&quot;</span><span class="p">:</span> <span class="s2">&quot;Valley 1-2 Temp (°C)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;V1.2_Peak1_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;V1.2 / Peak 1 Ratio&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;V1.2_Peak2_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;V1.2 / Peak 2 Ratio&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;V1.2_Peak3_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;V1.2 / Peak 3 Ratio&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Max&quot;</span><span class="p">:</span> <span class="s2">&quot;Max Height&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TMax&quot;</span><span class="p">:</span> <span class="s2">&quot;Temp at Max Height (°C)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Min&quot;</span><span class="p">:</span> <span class="s2">&quot;Min Height&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TMin&quot;</span><span class="p">:</span> <span class="s2">&quot;Temp at Min Height (°C)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Median&quot;</span><span class="p">:</span> <span class="s2">&quot;Median Height&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Area&quot;</span><span class="p">:</span> <span class="s2">&quot;Area Under Curve&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TFM&quot;</span><span class="p">:</span> <span class="s2">&quot;First Moment Temp (TFM) (°C)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;FWHM&quot;</span><span class="p">:</span> <span class="s2">&quot;Full Width at Half Max (FWHM) (°C)&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Define tooltips for each metric</span>
+    <span class="n">metric_tooltips_text</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;Peak_F&quot;</span><span class="p">:</span> <span class="s2">&quot;Height of peak corresponding to Fibrinogen temperature region (47 - 60 C).&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TPeak_F&quot;</span><span class="p">:</span> <span class="s2">&quot;Temperature of peak corresponding to Fibrinogen temperature region (47 - 60 C).&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Peak_1&quot;</span><span class="p">:</span> <span class="s2">&quot;Height of peak corresponding to Peak 1 temperature region (60 - 66 C).&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TPeak_1&quot;</span><span class="p">:</span> <span class="s2">&quot;Temperature of peak corresponding to Peak 1.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Peak_2&quot;</span><span class="p">:</span> <span class="s2">&quot;Height of peak corresponding to Peak 2 temperature region (67 - 73 C).&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TPeak_2&quot;</span><span class="p">:</span> <span class="s2">&quot;Temperature of peak corresponding to Peak 2.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Peak_3&quot;</span><span class="p">:</span> <span class="s2">&quot;Height of peak corresponding to Peak 3 temperature region (73 - 81 C).&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TPeak_3&quot;</span><span class="p">:</span> <span class="s2">&quot;Temperature of peak corresponding to Peak 3.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Peak1_Peak2_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 1 to Peak 2 ratio.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Peak1_Peak3_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 1 to Peak 3 ratio.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Peak2_Peak3_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 2 to Peak 3 ratio.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;V1.2&quot;</span><span class="p">:</span> <span class="s2">&quot;Valley (minimum amplitude) between Peak 1 and Peak 2 (inclusive).&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TV1.2&quot;</span><span class="p">:</span> <span class="s2">&quot;Temperature of Valley between Peak 1 and Peak 2 (inclusive).&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;V1.2_Peak1_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;Ratio of Valley between Peak 1 and Peak 2 to the amplitude of Peak 1.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;V1.2_Peak2_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;Ratio of Valley between Peak 1 and Peak 2 to the amplitude of Peak 2.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;V1.2_Peak3_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;Ratio of Valley between Peak 1 and Peak 2 to the amplitude of Peak 3.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Max&quot;</span><span class="p">:</span> <span class="s2">&quot;Maximum observed excess heat capacity.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TMax&quot;</span><span class="p">:</span> <span class="s2">&quot;Temperature corresponding to maximum height.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Min&quot;</span><span class="p">:</span> <span class="s2">&quot;Minimum observed excess heat capacity.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TMin&quot;</span><span class="p">:</span> <span class="s2">&quot;Temperature corresponding to minimum observed excess heat capacity.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Median&quot;</span><span class="p">:</span> <span class="s2">&quot;Median observed excess heat capacity.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Area&quot;</span><span class="p">:</span> <span class="s2">&quot;Total area under the thermogram signature.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TFM&quot;</span><span class="p">:</span> <span class="s2">&quot;Temperature corresponding to the first moment.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;FWHM&quot;</span><span class="p">:</span> <span class="s2">&quot;Full width at half max.&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="n">metric_options</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">metric_tooltips</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">available_metrics</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">icon_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;metric-tooltip-icon-</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># ID for the icon</span>
+
+        <span class="c1"># Create the label with text and an icon</span>
+        <span class="n">option_label</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">label</span><span class="p">,</span>  <span class="c1"># The metric name</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Sup</span><span class="p">(</span>  <span class="c1"># Superscript for small text</span>
+                    <span class="n">html</span><span class="o">.</span><span class="n">Abbr</span><span class="p">(</span>
+                        <span class="s2">&quot; (?) &quot;</span><span class="p">,</span>  <span class="c1"># Icon text</span>
+                        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>  <span class="c1"># Tooltip will provide info</span>
+                        <span class="nb">id</span><span class="o">=</span><span class="n">icon_id</span><span class="p">,</span>
+                        <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                            <span class="s2">&quot;cursor&quot;</span><span class="p">:</span> <span class="s2">&quot;pointer&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;textDecoration&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+                        <span class="p">},</span>  <span class="c1"># Style icon</span>
+                    <span class="p">),</span>
+                    <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;marginLeft&quot;</span><span class="p">:</span> <span class="s2">&quot;5px&quot;</span><span class="p">},</span>  <span class="c1"># Space between label and icon</span>
+                <span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="n">metric_options</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="n">option_label</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">key</span><span class="p">})</span>
+
+        <span class="n">tooltip_text</span> <span class="o">=</span> <span class="n">metric_tooltips_text</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;No description available.&quot;</span><span class="p">)</span>
+        <span class="c1"># Format tooltip content (already done)</span>
+        <span class="n">tooltip_content</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Strong</span><span class="p">(</span><span class="n">label</span><span class="p">),</span>  <span class="c1"># Use the friendly label as title</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Br</span><span class="p">(),</span>
+                <span class="n">tooltip_text</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">metric_tooltips</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">dbc</span><span class="o">.</span><span class="n">Tooltip</span><span class="p">(</span>
+                <span class="n">tooltip_content</span><span class="p">,</span>  <span class="c1"># Use formatted content</span>
+                <span class="n">target</span><span class="o">=</span><span class="n">icon_id</span><span class="p">,</span>  <span class="c1"># Target the ICON ID</span>
+                <span class="n">placement</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span>
+                <span class="n">delay</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;show&quot;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s2">&quot;hide&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">},</span>  <span class="c1"># Add delay</span>
+                <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;maxWidth&quot;</span><span class="p">:</span> <span class="s2">&quot;300px&quot;</span><span class="p">},</span>  <span class="c1"># Optional: constrain width</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Sensible default selections</span>
+    <span class="n">default_selected_metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TPeak_1&quot;</span><span class="p">,</span> <span class="s2">&quot;TPeak_2&quot;</span><span class="p">,</span> <span class="s2">&quot;TPeak_3&quot;</span><span class="p">,</span> <span class="s2">&quot;Area&quot;</span><span class="p">,</span> <span class="s2">&quot;FWHM&quot;</span><span class="p">,</span> <span class="s2">&quot;TFM&quot;</span><span class="p">]</span>
+    <span class="c1"># Filter defaults to ensure they exist in options (in case list changes)</span>
+    <span class="n">default_selected_metrics</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">default_selected_metrics</span> <span class="k">if</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">available_metrics</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Trigger data calculation</span>
+    <span class="n">trigger_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;trigger&quot;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="s2">&quot;dataset_id&quot;</span><span class="p">:</span> <span class="n">selected_dataset_id</span><span class="p">}</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="p">{</span><span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;block&quot;</span><span class="p">},</span>  <span class="c1"># Show content</span>
+        <span class="kc">True</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;Calculating metrics for: </span><span class="si">{</span><span class="n">selected_dataset_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>  <span class="c1"># Show message</span>
+        <span class="n">metric_options</span><span class="p">,</span>
+        <span class="n">default_selected_metrics</span><span class="p">,</span>
+        <span class="n">metric_tooltips</span><span class="p">,</span>  <span class="c1"># &lt;-- ADD tooltips to return tuple</span>
+        <span class="n">trigger_data</span><span class="p">,</span>  <span class="c1"># Trigger calculation</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Em</span><span class="p">(</span><span class="s2">&quot;Calculating metrics...&quot;</span><span class="p">),</span>  <span class="c1"># Placeholder for preview</span>
+        <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Disable generate button until preview is ready</span>
+        <span class="n">unique_report_name</span><span class="p">,</span>  <span class="c1"># &lt;-- ADDED default report name</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="c1"># --- Callback to Show/Hide Content, Populate Metrics, Trigger Calculation --- End</span>
+
+
+<span class="c1"># --- Helper to Generate Processed Data for Saved Review Datasets --- Start</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_processed_data_for_saved_review</span><span class="p">(</span>
+    <span class="n">dataset_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">dataset_info</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">all_samples_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates a processed (baseline-subtracted, interpolated) DataFrame</span>
+<span class="sd">    for datasets saved via the &#39;Save Processed Data&#39; button.</span>
+
+<span class="sd">    Handles interpolation to a common grid like the download function.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dataset_id: The ID of the processed dataset.</span>
+<span class="sd">        dataset_info: The metadata for this dataset from processed-datasets-store.</span>
+<span class="sd">        all_samples_data: The main store containing raw data.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A DataFrame with columns [&#39;SampleID&#39;, &#39;Temperature&#39;, &#39;dCp_subtracted&#39;],</span>
+<span class="sd">        or None if data generation fails.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generating processed data for saved dataset: </span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">baseline_parameters</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;baseline_parameters&quot;</span><span class="p">)</span>
+    <span class="n">source_raw_file</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source_raw_file&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">baseline_parameters</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">source_raw_file</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing baseline params or source file for &#39;</span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">all_samples_data</span> <span class="ow">or</span> <span class="n">source_raw_file</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_samples_data</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Source raw data &#39;</span><span class="si">{</span><span class="n">source_raw_file</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">raw_file_data</span> <span class="o">=</span> <span class="n">all_samples_data</span><span class="p">[</span><span class="n">source_raw_file</span><span class="p">]</span>
+    <span class="n">raw_samples_dict</span> <span class="o">=</span> <span class="n">raw_file_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;samples&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">raw_samples_dict</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;samples&#39; key missing in raw data for &#39;</span><span class="si">{</span><span class="n">source_raw_file</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># --- Determine Common Temp Grid (like download) --- Start</span>
+    <span class="n">min_temp_overall</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+    <span class="n">max_temp_overall</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+    <span class="n">valid_sample_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">sample_id</span><span class="p">,</span> <span class="n">params</span> <span class="ow">in</span> <span class="n">baseline_parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">raw_data_list</span> <span class="o">=</span> <span class="n">raw_samples_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sample_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">raw_data_list</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">df_raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">raw_data_list</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">df_raw</span><span class="o">.</span><span class="n">empty</span> <span class="ow">or</span> <span class="s2">&quot;Temperature&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df_raw</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">current_min</span> <span class="o">=</span> <span class="n">df_raw</span><span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+            <span class="n">current_max</span> <span class="o">=</span> <span class="n">df_raw</span><span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">current_min</span><span class="p">):</span>
+                <span class="n">min_temp_overall</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_temp_overall</span><span class="p">,</span> <span class="n">current_min</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">current_max</span><span class="p">):</span>
+                <span class="n">max_temp_overall</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_temp_overall</span><span class="p">,</span> <span class="n">current_max</span><span class="p">)</span>
+            <span class="n">valid_sample_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span>  <span class="c1"># Ignore errors in range finding</span>
+
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">min_temp_overall</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">max_temp_overall</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="n">valid_sample_count</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Cannot determine temperature range for interpolation.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">interpolated_temps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">min_temp_overall</span><span class="p">,</span> <span class="n">max_temp_overall</span> <span class="o">+</span> <span class="n">step</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">step</span><span class="p">),</span> <span class="mi">1</span>
+    <span class="p">)</span>
+    <span class="c1"># --- Determine Common Temp Grid --- End</span>
+
+    <span class="c1"># --- Process Each Sample --- Start</span>
+    <span class="n">processed_data_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">sample_id</span><span class="p">,</span> <span class="n">params</span> <span class="ow">in</span> <span class="n">baseline_parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">raw_data_list</span> <span class="o">=</span> <span class="n">raw_samples_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sample_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">raw_data_list</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">df_raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">raw_data_list</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">df_raw</span><span class="o">.</span><span class="n">empty</span> <span class="ow">or</span> <span class="s2">&quot;Temperature&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df_raw</span> <span class="ow">or</span> <span class="s2">&quot;dCp&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df_raw</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">df_subtracted</span> <span class="o">=</span> <span class="n">subtract_spline_baseline</span><span class="p">(</span>
+                <span class="n">df_raw</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;lower&quot;</span><span class="p">),</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;upper&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">df_subtracted</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">df_subtracted</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Prepare for interpolation</span>
+            <span class="n">df_for_interp</span> <span class="o">=</span> <span class="n">df_subtracted</span><span class="p">[[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+                <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">:</span> <span class="s2">&quot;dCp&quot;</span><span class="p">}</span>
+            <span class="p">)</span>
+            <span class="n">df_interpolated</span> <span class="o">=</span> <span class="n">interpolate_thermogram</span><span class="p">(</span>
+                <span class="n">df_for_interp</span><span class="p">,</span> <span class="n">temp_grid</span><span class="o">=</span><span class="n">interpolated_temps</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">df_interpolated</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">df_interpolated</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">df_interpolated</span><span class="p">[</span><span class="s2">&quot;SampleID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample_id</span>
+                <span class="c1"># Select and rename for final long format</span>
+                <span class="n">final_sample_df</span> <span class="o">=</span> <span class="n">df_interpolated</span><span class="p">[</span>
+                    <span class="p">[</span><span class="s2">&quot;SampleID&quot;</span><span class="p">,</span> <span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;dCp&quot;</span><span class="p">]</span>
+                <span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;dCp&quot;</span><span class="p">:</span> <span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">})</span>
+                <span class="n">processed_data_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">final_sample_df</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Error processing sample &#39;</span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">&#39; for report generation: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+    <span class="c1"># --- Process Each Sample --- End</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">processed_data_list</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No samples could be processed for dataset &#39;</span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># Combine all samples into one long dataframe</span>
+    <span class="n">final_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">processed_data_list</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Successfully generated processed data (long format) for &#39;</span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&#39;. Shape: </span><span class="si">{</span><span class="n">final_df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">final_df</span>
+
+
+<span class="c1"># --- Helper to Generate Processed Data --- End</span>
+
+
+<span class="c1"># --- Callback to Calculate Metrics --- Start</span>
+<div class="viewcode-block" id="calculate_metrics_for_report">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.report_builder_callbacks.calculate_metrics_for_report">[docs]</a>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span>
+        <span class="s2">&quot;report-calculated-metrics-temp&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span>
+    <span class="p">),</span>  <span class="c1"># Output result back to same store</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;report-calculated-metrics-temp&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>  <span class="c1"># Triggered by previous callback</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;processed-datasets-store&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;all-samples-data&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_metrics_for_report</span><span class="p">(</span>
+    <span class="n">trigger_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">processed_datasets</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">all_samples_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates metrics for the selected dataset when triggered.&quot;&quot;&quot;</span>
+    <span class="c1"># Check if triggered correctly</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">trigger_data</span> <span class="ow">or</span> <span class="s2">&quot;trigger&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">trigger_data</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;calculate_metrics callback triggered without valid trigger data.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return no_update or empty dict if it shouldn&#39;t clear?</span>
+        <span class="c1"># Let&#39;s clear if input is invalid</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid trigger data&quot;</span><span class="p">}</span>
+
+    <span class="n">dataset_id</span> <span class="o">=</span> <span class="n">trigger_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dataset_id&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">dataset_id</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Trigger data missing dataset_id.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Missing dataset_id in trigger&quot;</span><span class="p">}</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calculating metrics for report, triggered for dataset: </span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># --- Get Dataset Info --- Start</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">processed_datasets</span> <span class="ow">or</span> <span class="n">dataset_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">processed_datasets</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset &#39;</span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&#39; not found in processed-datasets-store.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Dataset </span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2"> not found&quot;</span><span class="p">}</span>
+    <span class="n">dataset_info</span> <span class="o">=</span> <span class="n">processed_datasets</span><span class="p">[</span><span class="n">dataset_id</span><span class="p">]</span>
+    <span class="n">data_type</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;data_type&quot;</span><span class="p">,</span> <span class="s2">&quot;saved_from_review&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset type: </span><span class="si">{</span><span class="n">data_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># --- Get Dataset Info --- End</span>
+
+    <span class="c1"># --- Get Processed Data --- Start</span>
+    <span class="n">processed_df</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">data_type</span> <span class="o">==</span> <span class="s2">&quot;uploaded_wide&quot;</span><span class="p">:</span>
+        <span class="n">df_json</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;data_json&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">df_json</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># ---&gt; Manual JSON Parsing and DataFrame Creation &lt;---</span>
+                <span class="c1"># Load JSON manually</span>
+                <span class="n">json_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">df_json</span><span class="p">)</span>
+                <span class="n">str_columns</span> <span class="o">=</span> <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;columns&quot;</span><span class="p">]</span>
+                <span class="n">sample_ids_index</span> <span class="o">=</span> <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;index&quot;</span><span class="p">]</span>
+                <span class="n">data_values</span> <span class="o">=</span> <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
+
+                <span class="c1"># Convert columns (temperatures) explicitly BEFORE creating DataFrame</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="c1"># Use errors=&#39;raise&#39; during conversion to catch issues early</span>
+                    <span class="n">numeric_columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span>
+                        <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">str_columns</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;raise&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span>
+                    <span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="s2">&quot;Successfully converted JSON columns list to numeric float64 index.&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e_col_conv</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Failed to convert string columns from JSON to numeric: </span><span class="si">{</span><span class="n">e_col_conv</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid numeric columns in JSON data&quot;</span><span class="p">}</span>
+
+                <span class="c1"># Create DataFrame</span>
+                <span class="n">processed_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                    <span class="n">data_values</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">sample_ids_index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">numeric_columns</span>
+                <span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Loaded wide uploaded data MANUALLY. Shape: </span><span class="si">{</span><span class="n">processed_df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+                <span class="c1"># ---&gt; Verify columns immediately after manual creation &lt;---</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;After MANUAL load: processed_df.columns.dtype = </span><span class="si">{</span><span class="n">processed_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;After MANUAL load: processed_df.columns[:5] = </span><span class="si">{</span><span class="n">processed_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">test_cols_range</span> <span class="o">=</span> <span class="n">processed_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_series</span><span class="p">()</span><span class="o">.</span><span class="n">between</span><span class="p">(</span>
+                        <span class="mi">50</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="n">inclusive</span><span class="o">=</span><span class="s2">&quot;both&quot;</span>
+                    <span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;After MANUAL load: Number of columns between 50-54 = </span><span class="si">{</span><span class="n">test_cols_range</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e_col_test</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Error testing columns range after manual load: </span><span class="si">{</span><span class="n">e_col_test</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="c1"># ---&gt; End column verification &lt;---</span>
+                <span class="c1"># ---&gt; END Manual JSON Parsing &lt;---</span>
+
+            <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">e_json</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed to decode wide data JSON string: </span><span class="si">{</span><span class="n">e_json</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Corrupted JSON data for </span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+            <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e_key</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Missing expected key (&#39;columns&#39;, &#39;index&#39;, or &#39;data&#39;) in JSON: </span><span class="si">{</span><span class="n">e_key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Incomplete JSON data structure for </span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e_manual_load</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed to manually load/process wide data JSON: </span><span class="si">{</span><span class="n">e_manual_load</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Failed to process wide data for </span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Missing data_json for uploaded_wide dataset.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Missing data JSON&quot;</span><span class="p">}</span>
+
+    <span class="k">elif</span> <span class="n">data_type</span> <span class="o">==</span> <span class="s2">&quot;uploaded_long&quot;</span><span class="p">:</span>
+        <span class="n">df_json</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;data_json&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">df_json</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Data is stored long, columns: SampleID, Temperature, dCp_subtracted</span>
+                <span class="c1"># Use orient=&#39;table&#39; for consistency</span>
+                <span class="n">processed_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">df_json</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;table&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded long uploaded data. Shape: </span><span class="si">{</span><span class="n">processed_df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to load long data JSON: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Failed to load data for </span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Missing data_json for uploaded_long dataset.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Missing data JSON&quot;</span><span class="p">}</span>
+
+    <span class="k">elif</span> <span class="n">data_type</span> <span class="o">==</span> <span class="s2">&quot;saved_from_review&quot;</span><span class="p">:</span>
+        <span class="n">processed_df</span> <span class="o">=</span> <span class="n">_get_processed_data_for_saved_review</span><span class="p">(</span>
+            <span class="n">dataset_id</span><span class="p">,</span> <span class="n">dataset_info</span><span class="p">,</span> <span class="n">all_samples_data</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">processed_df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to generate processed data for &#39;</span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Failed to generate data for </span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+        <span class="c1"># Result is already in long format</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown data_type &#39;</span><span class="si">{</span><span class="n">data_type</span><span class="si">}</span><span class="s2">&#39; for dataset &#39;</span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Unknown data type </span><span class="si">{</span><span class="n">data_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">processed_df</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">processed_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Processed DataFrame is empty or None after loading/generation.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Processed data is empty&quot;</span><span class="p">}</span>
+    <span class="c1"># --- Get Processed Data --- End</span>
+
+    <span class="c1"># --- Calculate Metrics Per Sample --- Start</span>
+    <span class="n">all_metrics</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">sample_ids</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Handle Wide vs Long format for iteration</span>
+    <span class="k">if</span> <span class="n">data_type</span> <span class="o">==</span> <span class="s2">&quot;uploaded_wide&quot;</span><span class="p">:</span>
+        <span class="n">sample_ids</span> <span class="o">=</span> <span class="n">processed_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Calculating metrics for </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">sample_ids</span><span class="p">)</span><span class="si">}</span><span class="s2"> samples from WIDE data.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">sample_id</span> <span class="ow">in</span> <span class="n">sample_ids</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Extract sample data (Series), index=float Temperature, values=dCp</span>
+                <span class="n">sample_series</span> <span class="o">=</span> <span class="n">processed_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sample_id</span><span class="p">]</span>
+
+                <span class="c1"># Convert Series to DataFrame (intermediate)</span>
+                <span class="n">df_temp</span> <span class="o">=</span> <span class="n">sample_series</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+                <span class="c1"># Now columns are &#39;index&#39; (Temperatures) and sample_id (dCp values)</span>
+
+                <span class="c1"># ---&gt; Create final sample_df with correct types directly &lt;---</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">sample_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                        <span class="p">{</span>
+                            <span class="s2">&quot;Temperature&quot;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span>
+                                <span class="n">df_temp</span><span class="p">[</span><span class="s2">&quot;index&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span>
+                            <span class="p">),</span>
+                            <span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span>
+                                <span class="n">df_temp</span><span class="p">[</span><span class="n">sample_id</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span>
+                            <span class="p">),</span>
+                        <span class="p">}</span>
+                    <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">({</span><span class="s2">&quot;Temperature&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">})</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Created sample_df directly for </span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">, dtypes:</span><span class="se">\\</span><span class="s2">n</span><span class="si">{</span><span class="n">sample_df</span><span class="o">.</span><span class="n">dtypes</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e_create_df</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Error creating final sample_df for </span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e_create_df</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">all_metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="p">{</span><span class="s2">&quot;SampleID&quot;</span><span class="p">:</span> <span class="n">sample_id</span><span class="p">,</span> <span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="s2">&quot;Dataframe creation error&quot;</span><span class="p">}</span>
+                    <span class="p">)</span>
+                    <span class="k">continue</span>  <span class="c1"># Skip sample</span>
+                <span class="c1"># ---&gt; End direct creation &lt;---</span>
+
+                <span class="c1"># ---&gt; Add logging BEFORE cleaning &lt;---</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;BEFORE cleaning for </span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">, dtypes:</span><span class="se">\\</span><span class="s2">n</span><span class="si">{</span><span class="n">sample_df</span><span class="o">.</span><span class="n">dtypes</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;BEFORE cleaning for </span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">, head():</span><span class="se">\\</span><span class="s2">n</span><span class="si">{</span><span class="n">sample_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;BEFORE cleaning for </span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">, isna().sum():</span><span class="se">\\</span><span class="s2">n</span><span class="si">{</span><span class="n">sample_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="c1"># ---&gt; END logging BEFORE cleaning &lt;---</span>
+
+                <span class="c1"># ---&gt; Add detailed logging before peak detection &lt;---</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;--- Preparing for Peak Detection (Sample: </span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">) ---&quot;</span>
+                <span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sample_df dtypes:</span><span class="se">\\</span><span class="s2">n</span><span class="si">{</span><span class="n">sample_df</span><span class="o">.</span><span class="n">dtypes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sample_df head():</span><span class="se">\\</span><span class="s2">n</span><span class="si">{</span><span class="n">sample_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;sample_df describe():</span><span class="se">\\</span><span class="s2">n</span><span class="si">{</span><span class="n">sample_df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;--- End Prepare Log ---&quot;</span><span class="p">)</span>
+                <span class="c1"># ---&gt; End detailed logging &lt;---</span>
+
+                <span class="k">if</span> <span class="n">sample_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>  <span class="c1"># Check again after logging</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Skipping sample &#39;</span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">&#39; due to empty data before peak detection.&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="c1"># ---&gt; Baseline subtraction REMOVED (already subtracted in processed data) &lt;---</span>
+
+                <span class="c1"># ---&gt; Use sample_df directly for Peaks/Metrics &lt;---</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detecting peaks for sample: </span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">peaks_data</span> <span class="o">=</span> <span class="n">detect_thermogram_peaks</span><span class="p">(</span><span class="n">sample_df</span><span class="p">)</span>  <span class="c1"># Use sample_df</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calculating final metrics for sample: </span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">metrics</span> <span class="o">=</span> <span class="n">calculate_thermogram_metrics</span><span class="p">(</span>
+                    <span class="n">sample_df</span><span class="p">,</span> <span class="n">peaks_data</span>
+                <span class="p">)</span>  <span class="c1"># Use sample_df</span>
+                <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;SampleID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample_id</span>  <span class="c1"># Add sample ID to results</span>
+                <span class="n">all_metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e_sample</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Error processing sample &#39;</span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">&#39; from uploaded wide data: </span><span class="si">{</span><span class="n">e_sample</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">placeholder_metrics</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;SampleID&quot;</span><span class="p">:</span> <span class="n">sample_id</span><span class="p">,</span>
+                    <span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Processing error: </span><span class="si">{</span><span class="n">e_sample</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="n">all_metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">placeholder_metrics</span><span class="p">)</span>
+                <span class="k">continue</span>  <span class="c1"># Skip to next sample</span>
+
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># Long format (uploaded_long or saved_from_review)</span>
+        <span class="c1"># This part assumes long format also contains dCp_subtracted correctly</span>
+        <span class="n">sample_ids</span> <span class="o">=</span> <span class="n">processed_df</span><span class="p">[</span><span class="s2">&quot;SampleID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Calculating metrics for </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">sample_ids</span><span class="p">)</span><span class="si">}</span><span class="s2"> samples from LONG data.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">sample_id</span> <span class="ow">in</span> <span class="n">sample_ids</span><span class="p">:</span>
+            <span class="n">sample_df</span> <span class="o">=</span> <span class="n">processed_df</span><span class="p">[</span><span class="n">processed_df</span><span class="p">[</span><span class="s2">&quot;SampleID&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">sample_id</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">sample_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Skipping sample &#39;</span><span class="si">{</span><span class="n">sample_id</span><span class="si">}</span><span class="s2">&#39; due to empty data.&quot;</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Ensure required columns are present and sorted</span>
+            <span class="n">sample_df</span> <span class="o">=</span> <span class="n">sample_df</span><span class="p">[[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;dCp_subtracted&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+                <span class="s2">&quot;Temperature&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">peaks_data</span> <span class="o">=</span> <span class="n">detect_thermogram_peaks</span><span class="p">(</span><span class="n">sample_df</span><span class="p">)</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="n">calculate_thermogram_metrics</span><span class="p">(</span><span class="n">sample_df</span><span class="p">,</span> <span class="n">peaks_data</span><span class="p">)</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;SampleID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample_id</span>  <span class="c1"># Add sample ID to results</span>
+            <span class="n">all_metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+    <span class="c1"># --- Calculate Metrics Per Sample --- End</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">all_metrics</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;No metrics could be calculated for any sample.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Metric calculation failed for all samples&quot;</span><span class="p">}</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully calculated metrics for </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_metrics</span><span class="p">)</span><span class="si">}</span><span class="s2"> samples.&quot;</span><span class="p">)</span>
+    <span class="c1"># Store the results list back into the temp store</span>
+    <span class="n">return_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;results&quot;</span><span class="p">:</span> <span class="n">all_metrics</span><span class="p">,</span> <span class="s2">&quot;dataset_id&quot;</span><span class="p">:</span> <span class="n">dataset_id</span><span class="p">}</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Returning data from calculate_metrics_for_report: </span><span class="si">{</span><span class="n">return_data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">return_data</span></div>
+
+
+
+<span class="c1"># --- Callback to Calculate Metrics --- End</span>
+
+
+<span class="c1"># Re-define available metrics here for easy access in the preview callback</span>
+<span class="c1"># TODO: Move this to a shared config/utils location later?</span>
+<span class="n">available_metrics_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Peak_F&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak F Height&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TPeak_F&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak F Temp (°C)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Peak_1&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 1 Height&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TPeak_1&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 1 Temp (°C)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Peak_2&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 2 Height&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TPeak_2&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 2 Temp (°C)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Peak_3&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 3 Height&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TPeak_3&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 3 Temp (°C)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Peak1_Peak2_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 1 / Peak 2 Ratio&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Peak1_Peak3_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 1 / Peak 3 Ratio&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Peak2_Peak3_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak 2 / Peak 3 Ratio&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;V1.2&quot;</span><span class="p">:</span> <span class="s2">&quot;Valley 1-2 Height&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TV1.2&quot;</span><span class="p">:</span> <span class="s2">&quot;Valley 1-2 Temp (°C)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;V1.2_Peak1_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;V1.2 / Peak 1 Ratio&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;V1.2_Peak2_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;V1.2 / Peak 2 Ratio&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;V1.2_Peak3_Ratio&quot;</span><span class="p">:</span> <span class="s2">&quot;V1.2 / Peak 3 Ratio&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Max&quot;</span><span class="p">:</span> <span class="s2">&quot;Max Height&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TMax&quot;</span><span class="p">:</span> <span class="s2">&quot;Temp at Max Height (°C)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Min&quot;</span><span class="p">:</span> <span class="s2">&quot;Min Height&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TMin&quot;</span><span class="p">:</span> <span class="s2">&quot;Temp at Min Height (°C)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Median&quot;</span><span class="p">:</span> <span class="s2">&quot;Median Height&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Area&quot;</span><span class="p">:</span> <span class="s2">&quot;Area Under Curve&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TFM&quot;</span><span class="p">:</span> <span class="s2">&quot;First Moment Temp (TFM) (°C)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;FWHM&quot;</span><span class="p">:</span> <span class="s2">&quot;Full Width at Half Max (FWHM) (°C)&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="c1"># --- Callback to Update Preview Table --- Start</span>
+<div class="viewcode-block" id="update_report_preview">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.report_builder_callbacks.update_report_preview">[docs]</a>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;report-preview-table-div&quot;</span><span class="p">,</span> <span class="s2">&quot;children&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;generate-report-button&quot;</span><span class="p">,</span> <span class="s2">&quot;disabled&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;report-calculated-metrics-temp&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>  <span class="c1"># Calculated metrics (or error)</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;report-metric-selector&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>  <span class="c1"># Selected metrics</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_report_preview</span><span class="p">(</span>
+    <span class="n">calculated_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">selected_metrics</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Updates the report preview table based on calculated metrics and selections.&quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;update_report_preview received calculated_data: </span><span class="si">{</span><span class="n">calculated_data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">calculated_data</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Report preview update: No calculated data.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Em</span><span class="p">(</span><span class="s2">&quot;Select a dataset to calculate metrics.&quot;</span><span class="p">),</span> <span class="kc">True</span>
+
+    <span class="c1"># Check if calculation resulted in an error</span>
+    <span class="k">if</span> <span class="s2">&quot;error&quot;</span> <span class="ow">in</span> <span class="n">calculated_data</span><span class="p">:</span>
+        <span class="n">error_msg</span> <span class="o">=</span> <span class="n">calculated_data</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Report preview update: Calculation error - </span><span class="si">{</span><span class="n">error_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Error calculating metrics: </span><span class="si">{</span><span class="n">error_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;danger&quot;</span>
+        <span class="p">),</span> <span class="kc">True</span>
+
+    <span class="c1"># Check if results are present</span>
+    <span class="n">all_metrics_results</span> <span class="o">=</span> <span class="n">calculated_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">all_metrics_results</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">all_metrics_results</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="s2">&quot;Report preview update: No valid &#39;results&#39; found in calculated data.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Em</span><span class="p">(</span><span class="s2">&quot;No metrics calculated or results are invalid.&quot;</span><span class="p">),</span> <span class="kc">True</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Updating report preview with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_metrics_results</span><span class="p">)</span><span class="si">}</span><span class="s2"> samples and selected metrics: </span><span class="si">{</span><span class="n">selected_metrics</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Prepare data for the table, filtering by selected metrics</span>
+    <span class="n">preview_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">sample_metrics</span> <span class="ow">in</span> <span class="n">all_metrics_results</span><span class="p">:</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;SampleID&quot;</span><span class="p">:</span> <span class="n">sample_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SampleID&quot;</span><span class="p">,</span> <span class="s2">&quot;N/A&quot;</span><span class="p">)}</span>
+        <span class="k">for</span> <span class="n">metric_key</span> <span class="ow">in</span> <span class="n">selected_metrics</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">sample_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">metric_key</span><span class="p">)</span>
+            <span class="c1"># Basic rounding for floats</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">floating</span><span class="p">)):</span>
+                <span class="c1"># Apply more specific rounding based on metric type later if needed</span>
+                <span class="n">row</span><span class="p">[</span><span class="n">metric_key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">row</span><span class="p">[</span><span class="n">metric_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">preview_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+    <span class="c1"># Define columns for the table based on selection</span>
+    <span class="n">preview_columns</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;SampleID&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;SampleID&quot;</span><span class="p">}]</span>
+    <span class="k">for</span> <span class="n">metric_key</span> <span class="ow">in</span> <span class="n">selected_metrics</span><span class="p">:</span>
+        <span class="c1"># Use the friendly name from our dict, default to key if not found</span>
+        <span class="n">friendly_name</span> <span class="o">=</span> <span class="n">available_metrics_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">metric_key</span><span class="p">,</span> <span class="n">metric_key</span><span class="p">)</span>
+        <span class="n">preview_columns</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">friendly_name</span><span class="p">),</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">metric_key</span><span class="p">)})</span>
+
+    <span class="c1"># Create the DataTable</span>
+    <span class="n">preview_table</span> <span class="o">=</span> <span class="n">dash_table</span><span class="o">.</span><span class="n">DataTable</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;report-preview-table&quot;</span><span class="p">,</span>
+        <span class="n">columns</span><span class="o">=</span><span class="n">preview_columns</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">preview_data</span><span class="p">,</span>
+        <span class="n">page_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>  <span class="c1"># Add pagination for potentially long reports</span>
+        <span class="n">style_table</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;overflowX&quot;</span><span class="p">:</span> <span class="s2">&quot;auto&quot;</span><span class="p">},</span>
+        <span class="n">style_cell</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;textAlign&quot;</span><span class="p">:</span> <span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;padding&quot;</span><span class="p">:</span> <span class="s2">&quot;5px&quot;</span><span class="p">,</span> <span class="s2">&quot;fontSize&quot;</span><span class="p">:</span> <span class="s2">&quot;0.8rem&quot;</span><span class="p">},</span>
+        <span class="n">style_header</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;fontWeight&quot;</span><span class="p">:</span> <span class="s2">&quot;bold&quot;</span><span class="p">},</span>
+        <span class="n">style_data_conditional</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;if&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;row_index&quot;</span><span class="p">:</span> <span class="s2">&quot;odd&quot;</span><span class="p">},</span> <span class="s2">&quot;backgroundColor&quot;</span><span class="p">:</span> <span class="s2">&quot;rgb(248, 248, 248)&quot;</span><span class="p">}</span>
+        <span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">preview_table</span><span class="p">,</span> <span class="kc">False</span>  <span class="c1"># Return table, enable Generate button</span></div>
+
+
+
+<span class="c1"># --- Callback to Update Preview Table --- End</span>
+
+
+<span class="c1"># --- Callback to Generate Report File --- Start</span>
+<div class="viewcode-block" id="generate_report">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.report_builder_callbacks.generate_report">[docs]</a>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;generated-reports-store&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;report-selector-message&quot;</span><span class="p">,</span> <span class="s2">&quot;children&quot;</span><span class="p">,</span> <span class="n">allow_duplicate</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;report-selector-message&quot;</span><span class="p">,</span> <span class="s2">&quot;is_open&quot;</span><span class="p">,</span> <span class="n">allow_duplicate</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;report-selector-message&quot;</span><span class="p">,</span> <span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="n">allow_duplicate</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;generate-report-button&quot;</span><span class="p">,</span> <span class="s2">&quot;n_clicks&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;report-calculated-metrics-temp&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;report-metric-selector&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;report-name-input&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;report-format-dropdown&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;generated-reports-store&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_report</span><span class="p">(</span>
+    <span class="n">n_clicks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">calculated_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">selected_metrics</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">report_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">report_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">existing_reports</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates report metadata and stores it, confirming to the user.&quot;&quot;&quot;</span>
+    <span class="n">button_id</span> <span class="o">=</span> <span class="n">callback_context</span><span class="o">.</span><span class="n">triggered_id</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">n_clicks</span> <span class="ow">or</span> <span class="n">button_id</span> <span class="o">!=</span> <span class="s2">&quot;generate-report-button&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span>
+
+    <span class="c1"># --- Validate Inputs --- Start</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">calculated_data</span> <span class="ow">or</span> <span class="s2">&quot;results&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">calculated_data</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Generate report: No valid metrics results found.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">no_update</span><span class="p">,</span> <span class="s2">&quot;Error: Metrics not calculated.&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;danger&quot;</span>
+    <span class="n">all_metrics_results</span> <span class="o">=</span> <span class="n">calculated_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">)</span>
+    <span class="n">dataset_id_from_calc</span> <span class="o">=</span> <span class="n">calculated_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dataset_id&quot;</span><span class="p">)</span>  <span class="c1"># Get associated dataset</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="ow">not</span> <span class="n">all_metrics_results</span>
+        <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">all_metrics_results</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="ow">not</span> <span class="n">dataset_id_from_calc</span>
+    <span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s2">&quot;Generate report: Invalid metrics results structure or missing dataset_id.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">no_update</span><span class="p">,</span> <span class="s2">&quot;Error: Invalid metric results.&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;danger&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">selected_metrics</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Generate report: No metrics selected.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">no_update</span><span class="p">,</span> <span class="s2">&quot;Warning: No metrics selected for report.&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;warning&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">report_name</span><span class="p">:</span>
+        <span class="n">report_name</span> <span class="o">=</span> <span class="s2">&quot;Thermogram_Report&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No report name provided, using default.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">report_format</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;No report format selected.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">no_update</span><span class="p">,</span> <span class="s2">&quot;Error: No report format selected.&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;danger&quot;</span>
+    <span class="c1"># --- Validate Inputs --- End</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Generating report metadata for &#39;</span><span class="si">{</span><span class="n">report_name</span><span class="si">}</span><span class="s2">&#39; (Format: </span><span class="si">{</span><span class="n">report_format</span><span class="si">}</span><span class="s2">) from dataset &#39;</span><span class="si">{</span><span class="n">dataset_id_from_calc</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># --- Generate Filename &amp; ID --- Start</span>
+    <span class="n">base_filename</span> <span class="o">=</span> <span class="n">report_name</span>
+    <span class="n">safe_filename_base</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">base_filename</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isalnum</span><span class="p">()</span> <span class="ow">or</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">safe_filename_base</span><span class="p">:</span>
+        <span class="n">safe_filename_base</span> <span class="o">=</span> <span class="s2">&quot;Thermogram_Report&quot;</span>
+    <span class="n">report_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">safe_filename_base</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">report_format</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">report_timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="n">report_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">safe_filename_base</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">report_timestamp</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">%H%M%S</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="c1"># --- Generate Filename &amp; ID --- End</span>
+
+    <span class="c1"># --- Prepare Metadata to Store --- Start</span>
+    <span class="n">report_metadata</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;report_filename&quot;</span><span class="p">:</span> <span class="n">report_filename</span><span class="p">,</span>
+        <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="n">report_format</span><span class="p">,</span>
+        <span class="s2">&quot;source_dataset_id&quot;</span><span class="p">:</span> <span class="n">dataset_id_from_calc</span><span class="p">,</span>
+        <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">report_timestamp</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+        <span class="s2">&quot;selected_metric_keys&quot;</span><span class="p">:</span> <span class="n">selected_metrics</span><span class="p">,</span>
+        <span class="c1"># Store the actual calculated metric results needed to generate the file later</span>
+        <span class="s2">&quot;metrics_results&quot;</span><span class="p">:</span> <span class="n">all_metrics_results</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="c1"># --- Prepare Metadata to Store --- End</span>
+
+    <span class="c1"># --- Update Store --- Start</span>
+    <span class="n">updated_reports</span> <span class="o">=</span> <span class="p">(</span><span class="n">existing_reports</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">updated_reports</span><span class="p">[</span><span class="n">report_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">report_metadata</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stored metadata for report ID: </span><span class="si">{</span><span class="n">report_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># --- Update Store --- End</span>
+
+    <span class="c1"># --- Return updated store and confirmation message --- Start</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">updated_reports</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;Successfully generated report &#39;</span><span class="si">{</span><span class="n">report_filename</span><span class="si">}</span><span class="s2">&#39;. View in Data Overview.&quot;</span><span class="p">,</span>
+        <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Make alert visible</span>
+        <span class="s2">&quot;success&quot;</span><span class="p">,</span>  <span class="c1"># Set alert color</span>
+    <span class="p">)</span></div>
+
+    <span class="c1"># --- Return updated store and confirmation message --- End</span>
+
+    <span class="c1"># REMOVED: File content generation and dcc.send_...</span>
+
+
+<span class="c1"># --- Callback to Generate Report File --- End</span>
+
+
+<span class="c1"># --- Callback to Update Reports Overview Display --- Start</span>
+<div class="viewcode-block" id="update_reports_overview">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.report_builder_callbacks.update_reports_overview">[docs]</a>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;reports-overview-display&quot;</span><span class="p">,</span> <span class="s2">&quot;children&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;generated-reports-store&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_reports_overview</span><span class="p">(</span>
+    <span class="n">generated_reports</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">dbc</span><span class="o">.</span><span class="n">ListGroupItem</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Updates the overview display for generated reports.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">generated_reports</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">dbc</span><span class="o">.</span><span class="n">ListGroupItem</span><span class="p">(</span><span class="s2">&quot;No reports generated yet.&quot;</span><span class="p">)]</span>
+
+    <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">report_id</span><span class="p">,</span> <span class="n">metadata</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span>
+        <span class="n">generated_reports</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">):</span>  <span class="c1"># Show newest first</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Skipping invalid metadata entry for report </span><span class="si">{</span><span class="n">report_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;report_filename&quot;</span><span class="p">,</span> <span class="s2">&quot;Unknown Report&quot;</span><span class="p">)</span>
+        <span class="n">timestamp_str</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span> <span class="s2">&quot;N/A&quot;</span><span class="p">)</span>
+        <span class="n">source_dataset</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source_dataset_id&quot;</span><span class="p">,</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">)</span>
+        <span class="n">report_format</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;format&quot;</span><span class="p">,</span> <span class="s2">&quot;?&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+        <span class="c1"># Format timestamp</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dt_obj</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">timestamp_str</span><span class="p">)</span>
+            <span class="n">timestamp_formatted</span> <span class="o">=</span> <span class="n">dt_obj</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+            <span class="n">timestamp_formatted</span> <span class="o">=</span> <span class="n">timestamp_str</span>
+
+        <span class="n">download_button</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Download </span><span class="si">{</span><span class="n">report_format</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="nb">id</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;download-report-btn&quot;</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="n">report_id</span><span class="p">},</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">,</span>
+            <span class="n">outline</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>
+            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;me-2&quot;</span><span class="p">,</span>
+            <span class="c1"># Disable PDF download for now</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="p">(</span><span class="n">report_format</span> <span class="o">==</span> <span class="s2">&quot;PDF&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">delete_button</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+            <span class="s2">&quot;Delete&quot;</span><span class="p">,</span>
+            <span class="nb">id</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;delete-report-btn&quot;</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="n">report_id</span><span class="p">},</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;danger&quot;</span><span class="p">,</span>
+            <span class="n">outline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">item_content</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">Strong</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+                <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Source: </span><span class="si">{</span><span class="n">source_dataset</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">),</span>
+                <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Created: </span><span class="si">{</span><span class="n">timestamp_formatted</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">),</span>
+                <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">download_button</span><span class="p">,</span> <span class="n">delete_button</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">className</span><span class="o">=</span><span class="s2">&quot;ms-auto&quot;</span>
+                <span class="p">),</span>
+            <span class="p">],</span>
+            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;d-flex align-items-center justify-content-between&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dbc</span><span class="o">.</span><span class="n">ListGroupItem</span><span class="p">(</span><span class="n">item_content</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">items</span> <span class="k">if</span> <span class="n">items</span> <span class="k">else</span> <span class="p">[</span><span class="n">dbc</span><span class="o">.</span><span class="n">ListGroupItem</span><span class="p">(</span><span class="s2">&quot;No reports generated yet.&quot;</span><span class="p">)]</span></div>
+
+
+
+<span class="c1"># --- Callback to Update Reports Overview Display --- End</span>
+
+
+<span class="c1"># --- Callback for Metric Selection Control Buttons --- Start</span>
+<div class="viewcode-block" id="update_metric_selection">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.report_builder_callbacks.update_metric_selection">[docs]</a>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;report-metric-selector&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">allow_duplicate</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;report-metric-select-all&quot;</span><span class="p">,</span> <span class="s2">&quot;n_clicks&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;report-metric-clear-all&quot;</span><span class="p">,</span> <span class="s2">&quot;n_clicks&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;report-metric-reset&quot;</span><span class="p">,</span> <span class="s2">&quot;n_clicks&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;report-metric-selector&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_metric_selection</span><span class="p">(</span>
+    <span class="n">select_all_clicks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">clear_all_clicks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">reset_clicks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">available_options</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Updates the selected metrics based on control button clicks.&quot;&quot;&quot;</span>
+    <span class="n">ctx</span> <span class="o">=</span> <span class="n">callback_context</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span><span class="o">.</span><span class="n">triggered_id</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span>
+
+    <span class="n">button_id</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">triggered_id</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Metric selection control triggered by: </span><span class="si">{</span><span class="n">button_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">button_id</span> <span class="o">==</span> <span class="s2">&quot;report-metric-select-all&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">available_options</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">all_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">option</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">available_options</span><span class="p">]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Selecting all report metrics.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">all_values</span>
+    <span class="k">elif</span> <span class="n">button_id</span> <span class="o">==</span> <span class="s2">&quot;report-metric-clear-all&quot;</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Clearing all report metrics selection.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="k">elif</span> <span class="n">button_id</span> <span class="o">==</span> <span class="s2">&quot;report-metric-reset&quot;</span><span class="p">:</span>
+        <span class="c1"># Redefine defaults here or get from a central config if needed</span>
+        <span class="n">default_selected_metrics</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;TPeak_1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;TPeak_2&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;TPeak_3&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Area&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;FWHM&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;TFM&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="c1"># Ensure defaults are valid within the current options</span>
+        <span class="n">valid_defaults</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">opt</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">available_options</span>
+            <span class="k">if</span> <span class="n">opt</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">default_selected_metrics</span>
+        <span class="p">]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Resetting report metrics selection to defaults: </span><span class="si">{</span><span class="n">valid_defaults</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">valid_defaults</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span></div>
+
+
+
+<span class="c1"># --- Callback for Metric Selection Control Buttons --- End</span>
+
+
+<span class="c1"># --- Callback for Report Download Button --- Start</span>
+<div class="viewcode-block" id="download_generated_report">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.report_builder_callbacks.download_generated_report">[docs]</a>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;download-report&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">({</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;download-report-btn&quot;</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="n">ALL</span><span class="p">},</span> <span class="s2">&quot;n_clicks&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;generated-reports-store&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">download_generated_report</span><span class="p">(</span>
+    <span class="n">n_clicks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">generated_reports</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handles clicks on report download buttons in the overview list.&quot;&quot;&quot;</span>
+    <span class="n">triggered_id_dict</span> <span class="o">=</span> <span class="n">callback_context</span><span class="o">.</span><span class="n">triggered_id</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">triggered_id_dict</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">n_clicks</span> <span class="k">if</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span>
+
+    <span class="n">report_id</span> <span class="o">=</span> <span class="n">triggered_id_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">report_id</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">generated_reports</span> <span class="ow">or</span> <span class="n">report_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">generated_reports</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not find report ID &#39;</span><span class="si">{</span><span class="n">report_id</span><span class="si">}</span><span class="s2">&#39; in store for download.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span>
+
+    <span class="n">report_metadata</span> <span class="o">=</span> <span class="n">generated_reports</span><span class="p">[</span><span class="n">report_id</span><span class="p">]</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">report_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;report_filename&quot;</span><span class="p">,</span> <span class="s2">&quot;report.file&quot;</span><span class="p">)</span>
+    <span class="n">report_format</span> <span class="o">=</span> <span class="n">report_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;format&quot;</span><span class="p">)</span>
+    <span class="n">metrics_results</span> <span class="o">=</span> <span class="n">report_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;metrics_results&quot;</span><span class="p">)</span>
+    <span class="n">selected_metrics</span> <span class="o">=</span> <span class="n">report_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;selected_metric_keys&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">report_format</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">metrics_results</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">selected_metrics</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing required metadata for downloading report &#39;</span><span class="si">{</span><span class="n">report_id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Download requested for report &#39;</span><span class="si">{</span><span class="n">report_id</span><span class="si">}</span><span class="s2">&#39; (</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">) Format: </span><span class="si">{</span><span class="n">report_format</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># --- Prepare DataFrame --- Start</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">report_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">metrics_results</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;SampleID&quot;</span> <span class="ow">in</span> <span class="n">report_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SampleID&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span>
+                <span class="n">col</span>
+                <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">selected_metrics</span>
+                <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">report_df</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="n">col</span> <span class="o">!=</span> <span class="s2">&quot;SampleID&quot;</span>
+            <span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">selected_metrics</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">report_df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+        <span class="n">report_df_filtered</span> <span class="o">=</span> <span class="n">report_df</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span>
+        <span class="n">report_df_renamed</span> <span class="o">=</span> <span class="n">report_df_filtered</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">available_metrics_dict</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Error preparing report DataFrame for download: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span>
+    <span class="c1"># --- Prepare DataFrame --- End</span>
+
+    <span class="c1"># --- Generate File Content --- Start</span>
+    <span class="k">if</span> <span class="n">report_format</span> <span class="o">==</span> <span class="s2">&quot;csv&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">dcc</span><span class="o">.</span><span class="n">send_data_frame</span><span class="p">(</span>
+            <span class="n">report_df_renamed</span><span class="o">.</span><span class="n">to_csv</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">report_format</span> <span class="o">==</span> <span class="s2">&quot;xlsx&quot;</span><span class="p">:</span>
+        <span class="n">excel_buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelWriter</span><span class="p">(</span><span class="n">excel_buffer</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;openpyxl&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+            <span class="n">report_df_renamed</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Metrics&quot;</span><span class="p">)</span>
+        <span class="n">excel_buffer</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dcc</span><span class="o">.</span><span class="n">send_bytes</span><span class="p">(</span><span class="n">excel_buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">(),</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">report_format</span> <span class="o">==</span> <span class="s2">&quot;pdf&quot;</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;PDF download requested but not implemented.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return alert?</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span>  <span class="c1"># Prevent download for unimplemented format</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown report format &#39;</span><span class="si">{</span><span class="n">report_format</span><span class="si">}</span><span class="s2">&#39; for download.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span></div>
+
+    <span class="c1"># --- Generate File Content --- End</span>
+
+
+<span class="c1"># --- Callback for Report Download Button --- End</span>
+
+
+<span class="c1"># --- Optional: Callback to Delete Report --- Start</span>
+<div class="viewcode-block" id="delete_generated_report">
+<a class="viewcode-back" href="../../../api/app.html#app.callbacks.report_builder_callbacks.delete_generated_report">[docs]</a>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;generated-reports-store&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">allow_duplicate</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">({</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;delete-report-btn&quot;</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="n">ALL</span><span class="p">},</span> <span class="s2">&quot;n_clicks&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;generated-reports-store&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_generated_report</span><span class="p">(</span>
+    <span class="n">n_clicks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">generated_reports</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handles clicks on report delete buttons.&quot;&quot;&quot;</span>
+    <span class="n">triggered_id_dict</span> <span class="o">=</span> <span class="n">callback_context</span><span class="o">.</span><span class="n">triggered_id</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="ow">not</span> <span class="n">triggered_id_dict</span>
+        <span class="ow">or</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">n_clicks</span> <span class="k">if</span> <span class="n">n</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="ow">not</span> <span class="n">generated_reports</span>
+    <span class="p">):</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span>
+
+    <span class="n">report_id_to_delete</span> <span class="o">=</span> <span class="n">triggered_id_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">report_id_to_delete</span> <span class="ow">or</span> <span class="n">report_id_to_delete</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">generated_reports</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Attempted to delete non-existent report ID: </span><span class="si">{</span><span class="n">report_id_to_delete</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span>
+
+    <span class="n">updated_reports</span> <span class="o">=</span> <span class="n">generated_reports</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">report_id_to_delete</span> <span class="ow">in</span> <span class="n">updated_reports</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">updated_reports</span><span class="p">[</span><span class="n">report_id_to_delete</span><span class="p">]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deleted report metadata for ID: </span><span class="si">{</span><span class="n">report_id_to_delete</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">updated_reports</span></div>
+
+
+
+<span class="c1"># --- Optional: Callback to Delete Report --- End</span>
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Chris Reger.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

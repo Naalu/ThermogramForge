@@ -304,7 +304,7 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project Structure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="coding_conventions.html">Coding Conventions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testing.html">Running Checks/Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Running Checks &amp; Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow.html">Contribution Workflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="building_docs.html">Building Documentation</a></li>
 </ul>
@@ -368,8 +368,65 @@
                 <article class="bd-article">
                   
   <section id="getting-started">
-<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
-<p>(Content to be added)</p>
+<span id="contributing-getting-started"></span><h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
+<p>Interested in contributing to ThermogramForge? Great! This guide will help you set up your development environment.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>You should have already followed the user <a class="reference internal" href="../user_guide/installation.html"><span class="doc">Installation</span></a> guide to clone the repository and ensure you have Python (&gt;=3.8) and Git installed.</p></li>
+<li><p>Familiarity with <cite>git</cite> for version control is essential.</p></li>
+</ul>
+</section>
+<section id="development-setup">
+<h2>Development Setup<a class="headerlink" href="#development-setup" title="Link to this heading">#</a></h2>
+<p>Instead of just installing the base requirements, the development setup installs the package in editable mode along with additional development dependencies (like testing tools and linters) specified in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>.</p>
+<ol class="arabic">
+<li><p><strong>Navigate to Project Root:</strong>
+Ensure you are in the main <code class="docutils literal notranslate"><span class="pre">ThermogramForge</span></code> directory.</p></li>
+<li><p><strong>Run Development Setup Script:</strong>
+The easiest way to set up the development environment is to run the provided script. This will create the virtual environment (if it doesn’t exist), activate it, and install all necessary dependencies.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup_dev.sh
+</pre></div>
+</div>
+<p><em>(Note: You might need to make the script executable first: ``chmod +x setup_dev.sh``)</em></p>
+<p>This script performs the following steps:
+*   Creates a virtual environment named <code class="docutils literal notranslate"><span class="pre">venv-v1</span></code> if it’s not already present.
+*   Activates the <code class="docutils literal notranslate"><span class="pre">venv-v1</span></code> environment.
+*   Installs the package in editable mode (<code class="docutils literal notranslate"><span class="pre">-e</span></code>) and includes the development dependencies (<code class="docutils literal notranslate"><span class="pre">[dev]</span></code>).</p>
+</li>
+<li><p><strong>Manual Setup (Alternative):</strong>
+If you prefer not to use the script, you can perform the steps manually:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create/activate virtual environment (if not done)</span>
+python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv-v1
+<span class="nb">source</span><span class="w"> </span>venv-v1/bin/activate<span class="w">  </span><span class="c1"># Or venv-v1\Scripts\activate on Windows</span>
+
+<span class="c1"># Install in editable mode with dev extras</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Set Up Pre-commit Hooks (Optional but Recommended):</strong>
+<em>(Note: Check ``pyproject.toml`` for pre-commit configuration details if you want to enable this).</em>
+While not automatically installed by <code class="docutils literal notranslate"><span class="pre">setup_dev.sh</span></code>, pre-commit hooks might be configured. If you wish to use them:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ensure pre-commit is installed (it may be in [dev] extras)</span>
+<span class="c1"># pip install pre-commit</span>
+pre-commit<span class="w"> </span>install
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<p>Once your development environment is set up, you should familiarize yourself with the:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="project_structure.html"><span class="doc">Project Structure</span></a></p></li>
+<li><p><a class="reference internal" href="coding_conventions.html"><span class="doc">Coding Conventions</span></a></p></li>
+<li><p><a class="reference internal" href="workflow.html"><span class="doc">Contribution Workflow</span></a> for contributing changes.</p></li>
+<li><p><a class="reference internal" href="testing.html"><span class="doc">Running Checks &amp; Tests</span></a> procedures.</p></li>
+<li><p>How to build the documentation (<a class="reference internal" href="building_docs.html"><span class="doc">Building Documentation</span></a>).</p></li>
+</ul>
+</section>
 </section>
 
 
@@ -410,6 +467,20 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#development-setup">Development Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 
